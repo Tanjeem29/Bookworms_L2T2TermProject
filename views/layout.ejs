@@ -21,9 +21,10 @@
         <%- include('./partials/header/header.ejs') %>
 
         <!-- body -->
+        <!-- NavBar -->>
         <%if(body.length >1){%>
             <div class="my-container container mx-auto my-1 px-0 row">
-                <%- include(body[1]) %>    
+                <%- include('./partials/navbar/navbar.ejs') %>    
             </div>
         <% } %>
         <div class="my-container container mx-auto my-1 px-0 row">

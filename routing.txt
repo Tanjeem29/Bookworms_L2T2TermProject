@@ -1,0 +1,7 @@
+1. 
+	1.1 Open a file in "routes" eg aboutRoutes
+	1.2 Copypaste contents from any preexisting route (eg home route)
+	1.3 Change "router.get" + agg router.post etc, inside aboutRoutes to display correct ejs
+2. Goto App.js 
+	2.1 and const aboutRoutes = ....
+	2.2 add an app.use (aboutRoutes) in
