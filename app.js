@@ -91,7 +91,7 @@ app.get('/login2', (req,res)=>{
 
 app.get('/login', (req,res)=>{
     res.render('layout.ejs', {
-        title : 'Expt',
+        title : 'Login',
         body : ['LoginTest'],
         user : null,
         books
@@ -134,7 +134,7 @@ app.post('/login', async (req, res) => {
             if(req.body.password == results[0].PASSWORD){
                 console.log(results[0].PASSWORD);
                 console.log('OKK');
-                res.redirect('/');
+                res.redirect('/home');
                 return;
                 
             }
@@ -153,7 +153,7 @@ app.post('/login', async (req, res) => {
         // if any error, redirect to login page but with form information, else redirect to homepage
         if(errors.length == 0){
             console.log('home');
-            res.redirect('/login');
+            res.redirect('/home');
             
         } else {
             console.log('rerender');
@@ -167,12 +167,18 @@ app.post('/login', async (req, res) => {
         }
     } else {
         console.log('last else');
-        res.redirect('/');
+        res.redirect('/home');
         return;
     }
 });
 
 app.get('/', (req,res)=>{
+    //res.send('<H3>Login</H3>');
+    //res.sendFile('./views/404.html', {root: __dirname});
+    res.redirect('/login');
+});
+
+app.get('/home', (req,res)=>{
     //res.send('<H3>Login</H3>');
     //res.sendFile('./views/404.html', {root: __dirname});
     res.render('layout.ejs', {
