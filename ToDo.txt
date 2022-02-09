@@ -1,22 +1,25 @@
-Authentication!!!
-
-User Profile Edit on Home Page
-
-Main reader page (Search)
-Specific Reader Tab 
-	Wallpost
-		Comment
-
-Main Author Page (search)
-Specific Author Tab
+Authentication (_____DONE____)
 
 
-Main Book Page (search)
-Specific Book Tab
+Cleaner UI [*******TARGET****]
+User Profile Edit on Home Page [*******TARGET****]
+
+Main reader page (Search by username) {EASY, JUST COPY from author/books}
+Specific Reader Tab [----LATER----]
+	Wallpost [---LATER---
+		Comment [---LATER---]
+
+Main Author Page (search by name)  {______DONE________}
+Specific Author Tab  [*******TARGET****]
+
+
+Main Book Page (search by Title) {DONE}
+		(search by Publisher, Genre) [*******TARGET****]
+Specific Book Tab [*******TARGET****]
 	Review
 	
 
-Publisher, Genre
+
 
 Low Priority:Comment, React
 Optional: Quotes
