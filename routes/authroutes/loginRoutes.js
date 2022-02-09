@@ -1,14 +1,14 @@
 const express = require('express');
 require('dotenv').config();
 const router = express.Router({mergeParams : true});
+//const passport = require('passport');
 
+// const books = [
+//     {title: 'HP1',  body: 'Sorcerers stone'},
+//     {title: 'HP2',  body: 'Chamber'},
+//     {title: 'HP3',  body: 'Azkaban'},
 
-const books = [
-    {title: 'HP1',  body: 'Sorcerers stone'},
-    {title: 'HP2',  body: 'Chamber'},
-    {title: 'HP3',  body: 'Azkaban'},
-
-];
+// ];
 
 
 
@@ -24,7 +24,7 @@ router.get('/login', (req,res)=>{
         title : 'Login',
         body : ['LoginTest'],
         user : null,
-        books
+        //books
         //errors : errors
     })
 });
@@ -83,7 +83,7 @@ router.post('/login', async (req, res) => {
                 title : 'Expt',
                 body : ['LoginTest'],
                 user : null,
-                books
+                //books
                 //errors : errors
             })
         }
@@ -93,5 +93,6 @@ router.post('/login', async (req, res) => {
         return;
     }
 });
+
 
 module.exports = router;

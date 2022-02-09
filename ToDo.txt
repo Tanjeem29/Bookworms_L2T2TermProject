@@ -1,0 +1,26 @@
+Authentication!!!
+User Profile Edit on Home Page
+
+Search By reader
+Reader Tab 
+	Wallpost
+		Comment
+
+Search by Author
+Author Tab
+
+
+Search by Book 
+Book Tab
+	Review
+	
+
+
+Low Priority: Publisher, Genre, Comment, React
+Optional: Quotes
+
+
+Dynamic Data reading OK
+Routing OK
+
+Dynamic Data Display !!

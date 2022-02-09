@@ -62,6 +62,7 @@ const morgan = require('morgan');
 
 
 const loginRoutes = require('./routes/authroutes/loginRoutes.js');
+const registerRoutes = require('./routes/authroutes/registerRoutes.js');
 const homeRoutes = require('.//routes/homeRoutes/homeRoutes.js');
 const aboutRoutes = require('.//routes/homeRoutes/aboutRoutes.js');
 const mainbookRoutes = require('.//routes/bookRoutes/mainbookRoutes.js');
@@ -88,6 +89,7 @@ app.use(loginRoutes);
 app.use(homeRoutes);
 app.use(aboutRoutes);
 app.use(mainbookRoutes);
+app.use(registerRoutes);
 // app.get('/expt', (req,res)=>{
 //     //res.send('<H3>Login</H3>');
 //     //res.sendFile('./views/404.html', {root: __dirname});

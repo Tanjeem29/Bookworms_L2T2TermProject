@@ -14,6 +14,7 @@ const router = express.Router({mergeParams : true});
 
 
 router.get('/home', (req,res)=>{
+    //console.log(user);
     //res.send('<H3>Login</H3>');
     //res.sendFile('./views/404.html', {root: __dirname});
     res.render('layout.ejs', {
