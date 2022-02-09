@@ -56,8 +56,37 @@ const books = [
 ];
 
 
+const oneDay = 1000 * 60 * 60 * 24;
+
+
 const express = require('express');
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
 const morgan = require('morgan');
+
+const app = express();
+app.listen(3000);
+app.set('view engine', 'ejs');
+app.use(morgan('tiny'));
+app.use(express.static('public'));
+
+//parse incoming data
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+
+require('dotenv').config()
+// console.log(process.env.DB_USER)
+// console.log(process.env.DB_PASS)
+// console.log(process.env.DB_CONNECTSTRING)
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false 
+}));
+
+// cookie parser middleware
+app.use(cookieParser());
 
 
 
@@ -70,17 +99,6 @@ const mainauthorRoutes = require('.//routes/authorRoutes/mainauthorRoutes.js');
 
 
 
-const app = express();
-app.listen(3000);
-app.set('view engine', 'ejs');
-app.use(morgan('tiny'));
-app.use(express.static('public'));
-app.use(express.urlencoded({extended:true}));
-
-require('dotenv').config()
-// console.log(process.env.DB_USER)
-// console.log(process.env.DB_PASS)
-// console.log(process.env.DB_CONNECTSTRING)
 
 
 

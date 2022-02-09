@@ -18,18 +18,41 @@ router.get('/', (req,res)=>{
     res.redirect('/login');
 });
 
+var session;
 
 router.get('/login', (req,res)=>{
-    res.render('layout.ejs', {
-        title : 'Login',
-        body : ['LoginTest'],
-        user : null,
-        //books
-        //errors : errors
-    })
+   
+    session = req.session;
+    console.log(session.userid);
+    console.log(req.user);
+    if(session.userid){
+        console.log('SESSION!!!!!');
+        res.redirect('/home');
+    }
+    else{
+        res.render('layout.ejs', {
+            title : 'Login',
+            body : ['LoginTest'],
+            user : null,
+            //books
+            //errors : errors
+        })
+    }
+    
 });
 
-
+router.get('/logout', (req,res)=>{
+   
+    session = req.session;
+    console.log(session.userid);
+    if(session.userid){
+        console.log("YESSSS!!!");
+    }
+    console.log(req.user);
+    req.session.destroy();
+    res.redirect('/');
+    
+});
 
 
 const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
@@ -43,7 +66,13 @@ router.post('/login', async (req, res) => {
     //console.log(process.env.DB_USER);
     //console.log(req);
     // if not logged in take perform the post
-    if(req.user == null){
+    // a variable to save a session
+    
+
+    session=req.session;
+
+    if(!session.userid){
+        console.log("NO SESS UID")
         let results, errors = [];
         // get login info for handle (id, handle, password)
         results = await DB_auth.getRIDByEmail(req.body.email);
@@ -60,6 +89,15 @@ router.post('/login', async (req, res) => {
                 console.log('OKK');
 
                 //Cookie goes here
+                session=req.session;
+                session.userid=results[0].READER_ID;
+                
+                if(session.userid){
+                    console.log("YESSSS!!!");
+                }
+
+
+
                 res.redirect('/home');
                 return;
                 

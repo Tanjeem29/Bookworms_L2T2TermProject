@@ -14,15 +14,22 @@ const router = express.Router({mergeParams : true});
 
 
 router.get('/about', (req,res)=>{
-    //res.send('<H3>Login</H3>');
-    //res.sendFile('./views/404.html', {root: __dirname});
-    res.render('layout.ejs', {
-        title : 'About',
-        body : ['AboutTest','partials/navbar/navbar'],
-        user : null,
-        books
-        //errors : errors
-    })
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+
+        res.render('layout.ejs', {
+            title : 'About',
+            body : ['AboutTest','partials/navbar/navbar'],
+            user : null,
+            books
+            //errors : errors
+        })
+    }
 });
 
 module.exports = router;

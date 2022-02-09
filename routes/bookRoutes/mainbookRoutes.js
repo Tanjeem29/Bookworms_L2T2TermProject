@@ -16,15 +16,34 @@ const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
 
 
 router.get('/books', (req,res)=>{
-    //res.send('<H3>Login</H3>');
-    //res.sendFile('./views/404.html', {root: __dirname});
-    res.render('layout.ejs', {
-        title : 'Books',
-        body : ['BookTest','partials/navbar/navbar'],
-        user : null,
-        books
-        //errors : errors
-    })
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        res.render('layout.ejs', {
+            title : 'Books',
+            body : ['BookTest','partials/navbar/navbar'],
+            user : null,
+            books
+            //errors : errors
+        })
+    }
+    
+});
+router.get('/books/search', (req,res)=>{
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        res.redirect('/books');
+    }
+    
 });
 
 
@@ -56,20 +75,27 @@ router.get('/books', (req,res)=>{
 
 
 router.post('/books/search', async (req, res) => {
-    console.log(req.body.search);
-    //console.log(res.query);
-    
-    let results = await DB_Searches.searchByBookname(req.body.search);
-    console.log(results);
-    res.render('layout.ejs', {
-        title : 'Books',
-        body : ['BookSearchTest','partials/navbar/navbar', req.body.search],
-        user : null,
-        SearchResults: results,
-        books
-        //errors : errors
-    })
-    //DB.shutdown();
+    session = req.session;
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        console.log(req.body.search);
+        //console.log(res.query);
+        
+        let results = await DB_Searches.searchByBookname(req.body.search);
+        console.log(results);
+        res.render('layout.ejs', {
+            title : 'Books',
+            body : ['BookSearchTest','partials/navbar/navbar', req.body.search],
+            user : null,
+            SearchResults: results,
+            books
+            //errors : errors
+        })
+        //DB.shutdown();
+    }
 
 });
 

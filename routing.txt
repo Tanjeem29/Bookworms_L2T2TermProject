@@ -5,3 +5,18 @@
 2. Goto App.js 
 	2.1 and const aboutRoutes = ....
 	2.2 add an app.use (aboutRoutes) in
+
+
+copypaste into each (get) route, for restricted access
+
+session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+
+---main body
+
+}
