@@ -35,6 +35,9 @@ router.get('/login', (req,res)=>{
 const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
 DB.startup();
 const DB_auth = require(process.env.ROOT + '\\DB\\DB_Auth_Api');
+
+
+
 router.post('/login', async (req, res) => {
     // console.log(req.body.email);
     // console.log(req.body.password);
@@ -56,6 +59,8 @@ router.post('/login', async (req, res) => {
             if(req.body.password == results[0].PASSWORD){
                 console.log(results[0].PASSWORD);
                 console.log('OKK');
+
+                //Cookie goes here
                 res.redirect('/home');
                 return;
                 
@@ -83,6 +88,10 @@ router.post('/login', async (req, res) => {
                 title : 'Expt',
                 body : ['LoginTest'],
                 user : null,
+                form : {
+                    email : req.body.email,
+                    password : req.body.password
+                }
                 //books
                 //errors : errors
             })

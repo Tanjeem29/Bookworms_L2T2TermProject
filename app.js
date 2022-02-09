@@ -76,8 +76,6 @@ app.use(morgan('tiny'));
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}));
 
-
-
 require('dotenv').config()
 // console.log(process.env.DB_USER)
 // console.log(process.env.DB_PASS)

@@ -1,22 +1,24 @@
 Authentication!!!
+
 User Profile Edit on Home Page
 
-Search By reader
-Reader Tab 
+Main reader page (Search)
+Specific Reader Tab 
 	Wallpost
 		Comment
 
-Search by Author
-Author Tab
+Main Author Page (search)
+Specific Author Tab
 
 
-Search by Book 
-Book Tab
+Main Book Page (search)
+Specific Book Tab
 	Review
 	
 
+Publisher, Genre
 
-Low Priority: Publisher, Genre, Comment, React
+Low Priority:Comment, React
 Optional: Quotes
 
 
