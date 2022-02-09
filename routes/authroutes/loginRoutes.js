@@ -35,8 +35,7 @@ router.get('/login', (req,res)=>{
 const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
 DB.startup();
 const DB_auth = require(process.env.ROOT + '\\DB\\DB_Auth_Api');
-
-
+//DB.shutdown();
 
 router.post('/login', async (req, res) => {
     // console.log(req.body.email);

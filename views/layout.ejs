@@ -23,10 +23,14 @@
         <!-- body -->
         <!-- NavBar -->>
         <%if(body.length >1){%>
+            <H1><%=title%> </H1>>
             <div class="my-container container mx-auto my-1 px-0 row">
                 <%- include('./partials/navbar/navbar.ejs') %>    
             </div>
         <% } %>
+
+        
+
         <div class="my-container container mx-auto my-1 px-0 row">
             <%- include('body/' + body[0]) %>    
         </div>

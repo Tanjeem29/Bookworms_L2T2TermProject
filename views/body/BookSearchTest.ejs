@@ -1,0 +1,15 @@
+</div>
+<h2> Search Results for Books on "<%= body[2]%>" </h2>
+<% if(SearchResults.length == 0) {  %>
+    <p>No Search Results</p>
+<% } %>
+<% if(SearchResults.length > 0) { %>
+    <%  for (var i = 0; i< SearchResults.length; i++) {  %>
+        <% console.log('this is ' + i + ' ' + SearchResults[0].title)  %>
+        <h2><%=  SearchResults[i].TITLE  %></h2>
+    <%  }  %>
+<% } %>
+
+<% console.log('this is ' + SearchResults[1])  %>
+    
+</div>
