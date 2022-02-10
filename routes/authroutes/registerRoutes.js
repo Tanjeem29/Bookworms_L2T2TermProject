@@ -31,8 +31,8 @@ router.get('/register', (req,res)=>{
 
 
 
-const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
-DB.startup();
+// const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
+// DB.startup();
 const DB_auth = require(process.env.ROOT + '\\DB\\DB_Auth_Api');
 
 

@@ -10,8 +10,8 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router({mergeParams : true});
 
-const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
-    DB.startup();
+// const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
+//     DB.startup();
     const DB_Searches = require(process.env.ROOT + '\\DB\\DB_Searches');
     const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
 
@@ -112,7 +112,7 @@ router.post('/books/search', async (req, res) => {
     else{
         console.log(req.body.search);
         //console.log(res.query);
-        
+        //Check parameter for type of search
         let results = await DB_Searches.searchByBookname(req.body.search);
         console.log(results);
         res.render('layout.ejs', {

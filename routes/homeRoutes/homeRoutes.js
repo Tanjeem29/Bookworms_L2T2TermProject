@@ -10,8 +10,8 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router({mergeParams : true});
 
-const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
-DB.startup();
+// const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
+// DB.startup();
 //const DB_Searches = require(process.env.ROOT + '\\DB\\DB_Searches');
 const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
 const DB_updates = require(process.env.ROOT + '\\DB\\DB_Updates');

@@ -59,6 +59,7 @@ const books = [
 const oneDay = 1000 * 60 * 60 * 24;
 
 
+
 const express = require('express');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
@@ -78,6 +79,13 @@ require('dotenv').config()
 // console.log(process.env.DB_USER)
 // console.log(process.env.DB_PASS)
 // console.log(process.env.DB_CONNECTSTRING)
+
+const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
+DB.startup();
+
+
+
+
 app.use(sessions({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
     saveUninitialized:true,
