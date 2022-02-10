@@ -10,9 +10,10 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router({mergeParams : true});
 
-const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
-    DB.startup();
+// const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
+//     DB.startup();
     const DB_Searches = require(process.env.ROOT + '\\DB\\DB_Searches');
+    const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
 
 
 router.get('/books', (req,res)=>{
@@ -42,6 +43,34 @@ router.get('/books/search', (req,res)=>{
     }
     else{
         res.redirect('/books');
+    }
+    
+});
+
+
+router.get('/books/:id', async (req,res)=>{
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        const id = req.params.id;
+        //console.log(id);
+        let results;
+        //results = DB_getByID;
+        results = await DB_getByID.getByBookID(id);
+        //console.log(results);
+        res.render('layout.ejs', {
+            title : 'Books',
+            body : ['OneBookPage','partials/navbar/navbar'],
+            user : null,
+            book: results[0]
+            //books
+            //errors : errors
+        })
+
     }
     
 });
@@ -83,7 +112,7 @@ router.post('/books/search', async (req, res) => {
     else{
         console.log(req.body.search);
         //console.log(res.query);
-        
+        //Check parameter for type of search
         let results = await DB_Searches.searchByBookname(req.body.search);
         console.log(results);
         res.render('layout.ejs', {

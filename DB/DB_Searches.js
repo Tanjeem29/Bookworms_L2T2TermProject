@@ -24,6 +24,8 @@ async function searchByAuthorname(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+
+
 module.exports = {
     searchByBookname,
     searchByAuthorname

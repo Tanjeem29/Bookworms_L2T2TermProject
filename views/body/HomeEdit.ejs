@@ -1,0 +1,57 @@
+<form action="/home/edit" method="POST" class="card-body">
+
+    <div class="form-group row">
+      <!-- <label for="email" class="col-4 col-form-label">email</label> -->
+      <div class="col-12">
+          <label for="username"> Username:</label>
+          <input type="text" placeholder="Username" id = "username" class="form-control" name="username" required 
+          value="<%= (typeof form != 'undefined')? form.username : '' %>" >
+      </div>
+  </div>
+  <div class="form-group row">
+      <!-- <label for="email" class="col-4 col-form-label">email</label> -->
+      <div class="col-12">
+        <label> First Name:</label>
+          <input type="text" placeholder="First Name" class="form-control" name="fname" required 
+          value="<%= (typeof form != 'undefined')? form.fname : '' %>" >
+      </div>
+  </div>
+  <div class="form-group row">
+      <!-- <label for="email" class="col-4 col-form-label">email</label> -->
+      <div class="col-12">
+        <label> Last Name:</label>
+          <input type="text" placeholder="Last Name" class="form-control" name="lname" required 
+          value="<%= (typeof form != 'undefined')? form.lname : '' %>" >
+      </div>
+  </div>
+    
+    <div class="form-group row">
+        <!-- <label for="password" class="col-4 col-form-label">Password</label> -->
+        <div class="col-12">
+            <label> Password:</label>
+            <input type="password" placeholder="Password" class="form-control" name="password" required 
+            value="<%= (typeof form != 'undefined')? form.password : '' %>" >
+        </div>
+    </div>
+
+    <div class="form-group row">
+      <!-- <label for="email" class="col-4 col-form-label">email</label> -->
+      <div class="col-12">
+        <label> Re-Enter New Password:</label>
+          <input type="password" placeholder="Re-Confirm Password" class="form-control" name="password2" required>
+      </div>
+  </div>
+  <div class="form-group row">
+    <!-- <label for="email" class="col-4 col-form-label">email</label> -->
+    <div class="col-12">
+      <label> Bio:</label>
+        <input type="textarea" placeholder="Short Bio" class="form-control" name="bio" required 
+        value="<%= (typeof form != 'undefined')? form.bio : '' %>" >
+    </div>
+</div>
+
+    <div class="form-group row">
+        <label style="color:#ffffff"> --- - - - - - ----------------</label>
+      <input  type="submit" value="Done" class="btn btn-outline-dark btn-lg px-6">
+    </div>
+  </form>

@@ -6,7 +6,9 @@
 <% if(SearchResults.length > 0) { %>
     <%  for (var i = 0; i< SearchResults.length; i++) {  %>
         <% console.log('this is ' + i + ' ' + SearchResults[0].title)  %>
+        <a = class = "single" href = "/books/<%=SearchResults[i].BOOK_ID%>" >
         <h2><%=  SearchResults[i].TITLE  %></h2>
+        </a>
     <%  }  %>
 <% } %>
 

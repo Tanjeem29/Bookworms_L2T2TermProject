@@ -55,8 +55,8 @@ router.get('/logout', (req,res)=>{
 });
 
 
-const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
-DB.startup();
+// const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
+// DB.startup();
 const DB_auth = require(process.env.ROOT + '\\DB\\DB_Auth_Api');
 //DB.shutdown();
 
@@ -72,7 +72,9 @@ router.post('/login', async (req, res) => {
     session=req.session;
 
     if(!session.userid){
-        console.log("NO SESS UID")
+        console.log("NO SESS UID");
+        const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
+        await DB.startup();
         let results, errors = [];
         // get login info for handle (id, handle, password)
         results = await DB_auth.getRIDByEmail(req.body.email);
