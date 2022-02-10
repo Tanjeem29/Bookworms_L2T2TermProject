@@ -1,22 +1,25 @@
-Authentication (_____DONE____)
 
++++ -> Needs Beautification
 
 Cleaner UI [*******TARGET****]
-User Profile Edit on Home Page [*******TARGET****]
+DBCONNECTION SINGLETON [*******TARGET****]
+
 
 Main reader page (Search by username) {EASY, JUST COPY from author/books}
 Specific Reader Tab [----LATER----]
 	Wallpost [---LATER---
 		Comment [---LATER---]
 
-Main Author Page (search by name)  {______DONE________}
-Specific Author Tab  [*******TARGET****]
+
++++Specific Author Tab 
+	-Add bio, info etc [*******TARGET****]
+	-Add books[*******TARGET****]+++
 
 
-Main Book Page (search by Title) {DONE}
-		(search by Publisher, Genre) [*******TARGET****]
-Specific Book Tab [*******TARGET****]
-	Review
+
++++Main Book Page (search by Publisher, Genre) [*******TARGET****]
++++Specific Book Tab [*******TARGET****]
+	Review [*******TARGET****]
 	
 
 
@@ -24,8 +27,12 @@ Specific Book Tab [*******TARGET****]
 Low Priority:Comment, React
 Optional: Quotes
 
+DONES:
+Authentication (_____DONE____)
++++User Profile Edit on Home Page [_______DONE_______] {*********NO EMAIL + BORN EDIT********}
++++Main Author Page (search by name)  {______DONE________}
++++Main Book Page (search by Title) [________DONE_________]
++++Specific Author Tab Basics [________DONE__________]+++
 
-Dynamic Data reading OK
-Routing OK
-
-Dynamic Data Display !!
+####Dangers:
+Date Checking during registration (and editing if added later)

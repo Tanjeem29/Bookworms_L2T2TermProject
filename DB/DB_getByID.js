@@ -13,6 +13,18 @@ async function getByBookID(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function getByReaderID(strin){
+    const sql = `
+    SELECT * FROM READER R
+    WHERE R.READER_ID = :RID
+    `;
+    const binds = {
+        RID : strin
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 
 //console.log(getByBookID(1));
 
@@ -31,5 +43,6 @@ async function getByAuthorID(strin){
 module.exports =
 { 
     getByBookID,
-    getByAuthorID
+    getByAuthorID,
+    getByReaderID
 }
