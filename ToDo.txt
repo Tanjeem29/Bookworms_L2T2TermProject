@@ -1,25 +1,28 @@
 
 +++ -> Needs Beautification
+*** -> Target
+____ -> Done
 
-Cleaner UI [*******TARGET****]
-DBCONNECTION SINGLETON [*******TARGET****]
+
+*****Cleaner UI *****
+*****DBCONNECTION SINGLETON *****
+****Main reader page (Search by username) {EASY, JUST COPY from author/books} *****
 
 
-Main reader page (Search by username) {EASY, JUST COPY from author/books}
 Specific Reader Tab [----LATER----]
 	Wallpost [---LATER---
 		Comment [---LATER---]
 
 
-+++Specific Author Tab 
-	-Add bio, info etc [*******TARGET****]
-	-Add books[*******TARGET****]+++
++++Specific Author Tab+++++
+	-********Add bio, info etc **********
+	-******Add written By books****
 
 
 
-+++Main Book Page (search by Publisher, Genre) [*******TARGET****]
-+++Specific Book Tab [*******TARGET****]
-	Review [*******TARGET****]
++++ *********Main Book Page (search by Publisher, Genre-->> DROPDOWN??) **********
++++Specific Book Tab 
+	********Review*********
 	
 
 
@@ -33,6 +36,7 @@ Authentication (_____DONE____)
 +++Main Author Page (search by name)  {______DONE________}
 +++Main Book Page (search by Title) [________DONE_________]
 +++Specific Author Tab Basics [________DONE__________]+++
++++Specific Book Tab Basics [________DONE__________]+++
 
 ####Dangers:
 Date Checking during registration (and editing if added later)
