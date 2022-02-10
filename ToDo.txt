@@ -4,8 +4,10 @@
 ____ -> Done
 
 
-*****Cleaner UI *****
+
 *****DBCONNECTION SINGLETON *****
+*****How to use pictures (eg User pic, author pic, book cover etc  *****
+*****Cleaner UI *****
 ****Main reader page (Search by username) {EASY, JUST COPY from author/books} *****
 
 
