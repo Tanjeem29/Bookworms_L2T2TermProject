@@ -1,3 +1,20 @@
-<h2>Title: <%=book.TITLE%></h2>
- 
-<H3>Preview: <%=book.PREVIEW%> </H3>
+<h4>Title: <%=book.TITLE%><br></h4>
+
+
+ <p>
+Preview: <%=book.PREVIEW%> <br>
+</p>
+
+
+<p>
+Authors: <br>
+<%  for (var i = 0; i< authors.length; i++) {  %>
+    <li>
+            <a = class = "single" href ="/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME  %> </a>
+    </li>
+<%  }  %>
+</p>
+
+<p><br>
+    Publisher: <%=publisher[0].NAME%>
+</p>

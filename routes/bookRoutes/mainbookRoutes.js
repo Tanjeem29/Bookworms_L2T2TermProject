@@ -7,12 +7,14 @@ const books = [
 
 
 const express = require('express');
+const session = require('express-session');
 require('dotenv').config();
 const router = express.Router({mergeParams : true});
 
 // const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
 //     DB.startup();
     const DB_Searches = require(process.env.ROOT + '\\DB\\DB_Searches');
+    const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
     const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
 
 
@@ -58,15 +60,23 @@ router.get('/books/:id', async (req,res)=>{
     else{
         const id = req.params.id;
         //console.log(id);
-        let results;
+        let books;
         //results = DB_getByID;
-        results = await DB_getByID.getByBookID(id);
-        //console.log(results);
+        books = await DB_getByID.getByBookID(id);
+        publisher = await DB_getByID.getByPublisherID(books[0].PUBLISHER_ID);
+        authors = await DB_RelSearches.getAuthorByBookID(id);
+        reader = await DB_getByID.
+        console.log(authors[0]);
+        console.log(publisher[0]);
         res.render('layout.ejs', {
             title : 'Books',
             body : ['OneBookPage','partials/navbar/navbar'],
             user : null,
-            book: results[0]
+            book: books[0],
+            author: authors,
+            publisher: publisher,
+            rid : session.userid
+
             //books
             //errors : errors
         })
@@ -113,14 +123,25 @@ router.post('/books/search', async (req, res) => {
         console.log(req.body.search);
         //console.log(res.query);
         //Check parameter for type of search
-        let results = await DB_Searches.searchByBookname(req.body.search);
+        let results;
+        let fl = req.body.fl;
+        if(fl == 1){
+            results = await DB_Searches.searchByBookname(req.body.search);
+        }
+        else if(fl == 2){
+            results = await DB_Searches.searchBookByPublisherName(req.body.search);
+        }
+        else if(fl == 3){
+            results = await DB_Searches.searchBookByAuthorName(req.body.search);
+        }
+        
         console.log(results);
         res.render('layout.ejs', {
             title : 'Books',
             body : ['BookSearchTest','partials/navbar/navbar', req.body.search],
             user : null,
             SearchResults: results,
-            books
+            fl   : req.body.fl
             //errors : errors
         })
         //DB.shutdown();

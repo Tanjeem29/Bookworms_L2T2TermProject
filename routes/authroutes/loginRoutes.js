@@ -73,8 +73,8 @@ router.post('/login', async (req, res) => {
 
     if(!session.userid){
         console.log("NO SESS UID");
-        const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
-        await DB.startup();
+        // const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
+        // await DB.startup();
         let results, errors = [];
         // get login info for handle (id, handle, password)
         results = await DB_auth.getRIDByEmail(req.body.email);
