@@ -3,14 +3,36 @@
 <% if(SearchResults.length == 0) {  %>
     <p>No Search Results</p>
 <% } %>
+<ul>
 <% if(SearchResults.length > 0) { %>
+    <p>Search Yielded <%=SearchResults.length%> Results</p>
     <%  for (var i = 0; i< SearchResults.length; i++) {  %>
         <% console.log('this is ' + i + ' ' + SearchResults[0].title)  %>
-        <a = class = "single" href = "/books/<%=SearchResults[i].BOOK_ID%>" >
-        <h2><%=  SearchResults[i].TITLE  %></h2>
-        </a>
+        
+        <li><h5><a = class = "single" href = "/books/<%=SearchResults[i].BOOK_ID%>" ><%=  SearchResults[i].TITLE  %> </a></h5>
+            <% if(fl == 2) { %>
+                
+                <h6>
+                    <b>Publisher: </b>
+                    <a = class = "single" href = "#" ><%=  SearchResults[i].PUBLISHER_NAME  %></a>
+                </h6>
+                
+            <% } %>
+            <% if(fl == 3) { %>
+                
+                <h6>
+                    <b>Author: </b>
+                    <a = class = "single" href = "/authors/<%=SearchResults[i].AUTHOR_ID%>" ><%=  SearchResults[i].FIRST_NAME + ' ' + SearchResults[i].LAST_NAME  %></a>
+                </h6>
+                
+            <% } %>
+        
+        </li>
+        
+        
     <%  }  %>
 <% } %>
+</ul>
 
 <% console.log('this is ' + SearchResults[1])  %>
     

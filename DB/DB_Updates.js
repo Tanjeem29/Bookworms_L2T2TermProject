@@ -24,7 +24,26 @@ async function updateReaderByID(id, uname, pass, fname, lname, bio){
 }
 
 
+async function updateReadStatus(RID, BID, NRS){
+    const sql = `
+    UPDATE READ_STATUS RS
+    SET
+    STATUS = :NRS,
+    DATED = SYSDATE
+    WHERE RS.READER_ID = :RID AND RS.BOOK_ID = :BID
+    `;
+    const binds = {
+        RID : RID,
+        BID : BID,
+        NRS : NRS
+    }
+
+    return (await db.execute(sql, binds, db.options));
+}
+
+
 module.exports =
 { 
-    updateReaderByID
+    updateReaderByID,
+    updateReadStatus
 }

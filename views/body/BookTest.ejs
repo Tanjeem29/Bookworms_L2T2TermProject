@@ -1,25 +1,20 @@
-<div>
-
-
 <div class="input-group">
+
     <form action="/books/search" method="POST">
+        <label for="fl">Search Books By:</label>
+        <select name="fl" id="fl">
+            <option value="1">Book Title</option>
+            <option value="2">Publisher Name</option>
+            <option value="3">Author Name</option>
+        </select>
         <input
           type="text"
           name="search"
           id="search"
-          placeholder="Search for Books by Title"
+          placeholder="Search for Books"
           class="search"
         />
         <button class="search-btn" type="submit">Submit</button>
-    <div class="imae"></div>
-  </form>
+    </form>
+<div class="imae"></div>
   
-</div>
-    <h2> Books </h2>
-    <% if(books.length > 0) {  %>
-        <%  for (var i = 0; i< books.length; i++) {  %>
-            <h2><%=  books[i].title  %></h2>
-            <p><%=  books[i].body  %> <p>
-        <%  }  %>
-    <% } %>
-</div>
