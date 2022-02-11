@@ -18,6 +18,7 @@ const router = express.Router({mergeParams : true});
     const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
     const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
     const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
+    const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
 
 
 router.get('/books', (req,res)=>{
@@ -181,7 +182,12 @@ router.post('/books/:id', async (req, res) => {
             results = await DB_inserts.insertReadStatus(session.userid, id, RS);
        }
        else{
+           if(RS == 4){
+            results = await DB_Deletes.resetReadStatus(session.userid, id);
+           }
+           else{
             results = await DB_Updates.updateReadStatus(session.userid, id, RS);
+           }
        }
 
 

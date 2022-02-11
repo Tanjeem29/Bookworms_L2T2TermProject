@@ -27,6 +27,11 @@ Specific Reader Tab [----LATER----]
 	********Review*********
 	
 
+Tanjeem's To-DO:
+Make "Reader" page
+Add option for FOllow/Unfollow on author/Reader Page
+Show books and READ status on Reader/User Page
+
 
 
 Low Priority:Comment, React
