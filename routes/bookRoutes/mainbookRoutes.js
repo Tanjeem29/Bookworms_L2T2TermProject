@@ -7,15 +7,17 @@ const books = [
 
 
 const express = require('express');
-const session = require('express-session');
+//const session = require('express-session');
 require('dotenv').config();
 const router = express.Router({mergeParams : true});
 
 // const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
 //     DB.startup();
     const DB_Searches = require(process.env.ROOT + '\\DB\\DB_Searches');
+    const DB_Updates = require(process.env.ROOT + '\\DB\\DB_Updates');
     const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
     const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
+    const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
 
 
 router.get('/books', (req,res)=>{
@@ -59,15 +61,23 @@ router.get('/books/:id', async (req,res)=>{
     }
     else{
         const id = req.params.id;
-        //console.log(id);
+        
         let books;
         //results = DB_getByID;
         books = await DB_getByID.getByBookID(id);
         publisher = await DB_getByID.getByPublisherID(books[0].PUBLISHER_ID);
         authors = await DB_RelSearches.getAuthorByBookID(id);
-        reader = await DB_getByID.
-        console.log(authors[0]);
-        console.log(publisher[0]);
+        ReadStatus = await DB_RelSearches.getReadStatusForBook(session.userid, id);
+        // console.log(authors[0]);
+        // console.log(publisher[0]);
+        // console.log(id);
+        // console.log(session.userid);
+        // console.log(ReadStatus[0].STATUS);
+        let newReadStatus;
+        if(ReadStatus.length == 0) newReadStatus = 0;
+        else newReadStatus = ReadStatus[0].STATUS;
+
+
         res.render('layout.ejs', {
             title : 'Books',
             body : ['OneBookPage','partials/navbar/navbar'],
@@ -75,8 +85,9 @@ router.get('/books/:id', async (req,res)=>{
             book: books[0],
             author: authors,
             publisher: publisher,
-            rid : session.userid
-
+            rid : session.userid,
+            ReadStatus : newReadStatus
+            
             //books
             //errors : errors
         })
@@ -84,6 +95,8 @@ router.get('/books/:id', async (req,res)=>{
     }
     
 });
+
+
 
 
 // router.get('/books/search', (req,res)=>{
@@ -145,6 +158,36 @@ router.post('/books/search', async (req, res) => {
             //errors : errors
         })
         //DB.shutdown();
+    }
+
+});
+
+router.post('/books/:id', async (req, res) => {
+    session = req.session;
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        //console.log(str);
+        const id = req.params.id;
+        let str = '/books/' + id;
+       // console.log(str);
+       let RS = req.body.ReadStatus;
+       console.log(RS);
+       ReadStatus = await DB_RelSearches.getReadStatusForBook(session.userid, id);
+       let results;
+       if(ReadStatus.length == 0){
+            results = await DB_inserts.insertReadStatus(session.userid, id, RS);
+       }
+       else{
+            results = await DB_Updates.updateReadStatus(session.userid, id, RS);
+       }
+
+
+
+
+        res.redirect(str);
     }
 
 });
