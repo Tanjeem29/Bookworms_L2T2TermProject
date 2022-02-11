@@ -73,7 +73,7 @@ app.use(express.static('public'));
 
 //parse incoming data
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded ( { extended:true } ));
 
 require('dotenv').config()
 // console.log(process.env.DB_USER)
