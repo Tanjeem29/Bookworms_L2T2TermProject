@@ -1,1 +1,24 @@
 <h2>Name: <%=author.FIRST_NAME + ' ' + author.LAST_NAME%></h2>
+
+
+<% if(FollowStatus == 0) { %>
+                
+    <h6>
+        <b>Not Followed </b>
+    </h6>
+    <form action="/authors/<%=author.AUTHOR_ID%>" method="POST">
+        <button name="follow" value="1">Follow this Author</button>
+    </form>
+    
+<% } %>
+
+<% if(FollowStatus == 1) { %>
+                
+    <h6>
+        <b> Following this Author </b>
+    </h6>
+    <form action="/authors/<%=author.AUTHOR_ID%>" method="POST">
+        <button name="follow" value="0">Unfollow this Author</button>
+    </form>
+    
+<% } %>

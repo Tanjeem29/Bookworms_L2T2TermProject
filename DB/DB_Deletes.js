@@ -14,7 +14,21 @@ async function resetReadStatus(RID, BID){
     return (await db.execute(sql, binds, db.options));
 }
 
+async function resetFollowAuthor(RID, AID){
+    const sql = `
+    DELETE FROM FOLLOWER_AUTHOR FA
+    WHERE FA.FOLLOWER_ID = :RID AND FA.AUTHOR_ID = :AID
+    `;
+    const binds = {
+        RID : RID,
+        AID : AID
+    }
+
+    return (await db.execute(sql, binds, db.options));
+}
+
 
 module.exports = {
-    resetReadStatus
+    resetReadStatus,
+    resetFollowAuthor
 }

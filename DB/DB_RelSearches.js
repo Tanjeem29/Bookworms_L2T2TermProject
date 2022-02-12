@@ -27,8 +27,23 @@ async function getReadStatusForBook(RID, BID){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function getFollowAuthor(RID, AID){
+    const sql = `
+    SELECT * 
+    FROM FOLLOWER_AUTHOR FA
+    WHERE FA.AUTHOR_ID = :AID AND FA.FOLLOWER_ID = :RID
+    `;
+    const binds = {
+        AID : AID,
+        RID : RID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 
 module.exports ={
     getAuthorByBookID,
-    getReadStatusForBook
+    getReadStatusForBook,
+    getFollowAuthor
 }
