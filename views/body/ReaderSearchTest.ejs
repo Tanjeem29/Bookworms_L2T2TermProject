@@ -1,0 +1,32 @@
+</div>
+<h2> Search Results for Authors on "<%= body[2]%>" </h2>
+<% if(SearchResults.length == 0) {  %>
+    <p>No Search Results</p>
+<% } %>
+
+<ul>
+    <% if(SearchResults.length > 0) { %>
+        <p>Search Yielded <%=SearchResults.length%> Results</p>
+        <%  for (var i = 0; i< SearchResults.length; i++) {  %>
+            <% console.log('this is ' + i + ' ' + SearchResults[0].title)  %>
+            
+            <li>
+                <h5>
+                    <a = class = "single" href ="/authors/<%=SearchResults[i].READER_ID%>" ><%=  SearchResults[i].FIRST_NAME + ' ' + SearchResults[i].LAST_NAME  %> </a>
+                </h5>
+                <h6>
+                    <b>Username: </b>
+                    <%=  SearchResults[i].USERNAME  %>
+                </h6>
+            
+            </li>
+            
+            
+        <%  }  %>
+    <% } %>
+    </ul>
+
+
+<% console.log('this is ' + SearchResults[1])  %>
+    
+</div>

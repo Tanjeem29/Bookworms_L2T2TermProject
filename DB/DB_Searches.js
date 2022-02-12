@@ -24,6 +24,21 @@ async function searchByAuthorname(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function searchByReadername(strin){
+    const sql = `
+    select * from READER
+    where UPPER(FIRST_NAME || ' ' || LAST_NAME) like '%' || UPPER(:aname) || '%' 
+    OR
+    UPPER (USERNAME) like '%' || UPPER(:aname) || '%' 
+    `;
+    const binds = {
+        aname : strin
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+
 async function searchBookByPublisherName(strin){
     const sql = `
     select b.TITLE, BOOK_ID, b.PREVIEW BOOK_PREVIEW, b.ISMDB_RATINGS, b.LATEST_EDITION, PUBLISHER_ID, p.NAME PUBLISHER_NAME
@@ -56,5 +71,6 @@ module.exports = {
     searchByBookname,
     searchByAuthorname,
     searchBookByPublisherName,
-    searchBookByAuthorName
+    searchBookByAuthorName,
+    searchByReadername
 }

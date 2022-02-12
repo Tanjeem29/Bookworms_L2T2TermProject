@@ -104,6 +104,7 @@ const homeRoutes = require('.//routes/homeRoutes/homeRoutes.js');
 const aboutRoutes = require('.//routes/homeRoutes/aboutRoutes.js');
 const mainbookRoutes = require('.//routes/bookRoutes/mainbookRoutes.js');
 const mainauthorRoutes = require('.//routes/authorRoutes/mainauthorRoutes.js');
+const mainreaderRoutes = require('.//routes/readerRoutes/mainreaderRoutes.js');
 
 
 
@@ -115,6 +116,7 @@ app.use(homeRoutes);
 app.use(aboutRoutes);
 app.use(mainbookRoutes);
 app.use(mainauthorRoutes);
+app.use(mainreaderRoutes);
 app.use(registerRoutes);
 // app.get('/expt', (req,res)=>{
 //     //res.send('<H3>Login</H3>');

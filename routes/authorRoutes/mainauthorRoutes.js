@@ -29,6 +29,35 @@ router.get('/authors', (req,res)=>{
     }
 });
 
+
+
+
+router.post('/authors/search', async (req, res) => {
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        console.log(req.body.search);
+        //console.log(res.query);
+        
+        let results = await DB_Searches.searchByAuthorname(req.body.search);
+        console.log(results);
+        res.render('layout.ejs', {
+            title : 'Authors',
+            body : ['AuthorSearchTest','partials/navbar/navbar', req.body.search],
+            user : null,
+            SearchResults: results,
+            //books
+            //errors : errors
+        })
+    }
+
+
+});
+
 router.get('/authors/:id', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
@@ -70,34 +99,6 @@ router.get('/authors/:id', async (req,res)=>{
 });
 
 
-
-router.post('/authors/search', async (req, res) => {
-    session = req.session;
-    //No Login access tried, so redirect to login
-    if(!session.userid){
-        console.log('NO SESSION!!!!!');
-        res.redirect('/login');
-    }
-    else{
-        console.log(req.body.search);
-        //console.log(res.query);
-        
-        let results = await DB_Searches.searchByAuthorname(req.body.search);
-        console.log(results);
-        res.render('layout.ejs', {
-            title : 'Authors',
-            body : ['AuthorSearchTest','partials/navbar/navbar', req.body.search],
-            user : null,
-            SearchResults: results,
-            //books
-            //errors : errors
-        })
-    }
-
-
-});
-
-
 router.post('/authors/:id', async (req, res) => {
     session = req.session;
     //No Login access tried, so redirect to login
@@ -132,5 +133,11 @@ router.post('/authors/:id', async (req, res) => {
 
 
 });
+
+
+
+
+
+
 
 module.exports = router;
