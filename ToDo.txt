@@ -5,8 +5,14 @@ ____ -> Done
 ### -> Concept issues
 
 
+Questions:
+1. PL/SQL Good, not mandatory
+2. Admin Side? NOt necessary
+3. Connection Pool OK? OK
+4. How to incorporate genre YOur wish
 
-*****How to use pictures (eg User pic, author pic, book cover etc  *****
+
+*****How to use pictures (eg User pic, author pic, book cover etc)  *****
 *****Cleaner UI *****
 ****Main reader page (Search by username) {EASY, JUST COPY from author/books} *****
 ###Same page many buttons??
