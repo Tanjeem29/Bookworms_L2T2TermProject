@@ -1,5 +1,33 @@
 <h2>Name: <%=author.FIRST_NAME + ' ' + author.LAST_NAME%></h2>
 
+<% if(books.length == 0) {  %>
+    <p>No Books By This Author</p>
+<% } %>
+
+<ul>
+    <% if(books.length > 0) { %>
+        <p>We have <%=books.length%> Books by This Author</p>
+        <%  for (var i = 0; i< books.length; i++) {  %>
+            <% console.log('this is ' + i + ' ' + books[0].title)  %>
+            
+            <li>
+                <h5>
+                    <a = class = "single" href = "/books/<%=books[i].BOOK_ID%>" ><%=  books[i].TITLE  %> </a>
+                </h5>
+                <h6>
+                    <b>Publisher: </b>
+                    <%= books[i].NAME  %>
+                </h6>
+            </li>
+            
+            
+        <%  }  %>
+    <% } %>
+</ul>
+
+
+
+
 
 <% if(FollowStatus == 0) { %>
                 

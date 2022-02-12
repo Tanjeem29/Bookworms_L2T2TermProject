@@ -5,20 +5,19 @@ ____ -> Done
 ### -> Concept issues
 
 
-*****DBCONNECTION SINGLETON *****
+
 *****How to use pictures (eg User pic, author pic, book cover etc  *****
 *****Cleaner UI *****
 ****Main reader page (Search by username) {EASY, JUST COPY from author/books} *****
 ###Same page many buttons??
 
-Specific Reader Tab [----LATER----]
-	Wallpost [---LATER---
+*************Specific Reader Tab
+	Wallpost [---LATER---]
 		Comment [---LATER---]
 
 
 +++Specific Author Tab+++++
-	-********Add bio, info etc **********
-	-******Add written By books****
+	Add Common FOllowers [Later]
 
 
 
@@ -28,8 +27,9 @@ Specific Reader Tab [----LATER----]
 	
 
 Tanjeem's To-DO:
+
 Make "Reader" page
-Add option for FOllow/Unfollow on author/Reader Page
+Add option for FOllow/Unfollow on Reader Page
 Show books and READ status on Reader/User Page
 
 
@@ -44,6 +44,9 @@ Authentication (_____DONE____)
 +++Main Book Page (search by Title) [________DONE_________]
 +++Specific Author Tab Basics [________DONE__________]+++
 +++Specific Book Tab Basics [________DONE__________]+++
+Add option for FOllow/Unfollow on author page  [________DONE__________]
+DBCONNECTION SINGLETON {_______________Not needed, since Pools used________}
+Add Author Written books[_______DONE_________]
 
 ####Dangers:
-Date Checking during registration (and editing if added later)
+Date Checking during registration (and editing profile, if added later)

@@ -13,6 +13,22 @@ async function getAuthorByBookID(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+
+async function getBooksByAuthorID(strin){
+    const sql = `
+    Select * from 
+    (Select * from WRITTEN_BY 
+    WHERE AUTHOR_ID = :AID
+    ) NATURAL JOIN BOOKS NATURAL JOIN PUBLISHER
+    ORDER BY TITLE
+    `;
+    const binds = {
+        AID : strin
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 async function getReadStatusForBook(RID, BID){
     const sql = `
     SELECT * 
@@ -45,5 +61,6 @@ async function getFollowAuthor(RID, AID){
 module.exports ={
     getAuthorByBookID,
     getReadStatusForBook,
-    getFollowAuthor
+    getFollowAuthor,
+    getBooksByAuthorID
 }

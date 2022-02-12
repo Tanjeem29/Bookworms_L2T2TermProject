@@ -47,13 +47,20 @@ router.get('/authors/:id', async (req,res)=>{
         let FS = FollowStatus.length;
 
 
+
+        books = await DB_RelSearches.getBooksByAuthorID(id);
+
+        console.log(books);
+
+
+
         res.render('layout.ejs', {
             title : 'Author',
             body : ['OneAuthorPage','partials/navbar/navbar'],
             //user : null,
             author: author[0],
-            FollowStatus : FS
-            
+            FollowStatus : FS,
+            books : books
             //books
             //errors : errors
         })
