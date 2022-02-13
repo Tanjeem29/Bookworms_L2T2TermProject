@@ -105,6 +105,9 @@ const aboutRoutes = require('.//routes/homeRoutes/aboutRoutes.js');
 const mainbookRoutes = require('.//routes/bookRoutes/mainbookRoutes.js');
 const mainauthorRoutes = require('.//routes/authorRoutes/mainauthorRoutes.js');
 const mainreaderRoutes = require('.//routes/readerRoutes/mainreaderRoutes.js');
+//photoUpload
+const photoUploadRoutes = require('./routes/photoRoutes/photoUploadRoute.js');
+
 
 
 
@@ -118,6 +121,12 @@ app.use(mainbookRoutes);
 app.use(mainauthorRoutes);
 app.use(mainreaderRoutes);
 app.use(registerRoutes);
+//photoUpload
+app.use(photoUploadRoutes);
+
+
+
+
 // app.get('/expt', (req,res)=>{
 //     //res.send('<H3>Login</H3>');
 //     //res.sendFile('./views/404.html', {root: __dirname});
