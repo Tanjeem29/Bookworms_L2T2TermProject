@@ -44,9 +44,19 @@ router.get('/home/edit', async(req,res)=>{
     }
     else{
         let results = await DB_getByID.getByReaderID(session.userid);
+        let path;
         console.log(results);
         console.log(results[0].USERNAME);
-
+        
+        //photo handling
+        if(results[0].PHOTO == null) {
+            console.log("Dummyy");
+            path = "dummy.png";
+        }
+        else {
+            path = results[0].PHOTO;
+        }
+        console.log(path);
         res.render('layout.ejs', {
             title : 'Edit Profile',
             body : ['HomeEdit','partials/navbar/navbar'],
@@ -56,6 +66,7 @@ router.get('/home/edit', async(req,res)=>{
                 password: results[0].PASSWORD,
                 fname: results[0].FIRST_NAME,
                 lname: results[0].LAST_NAME,
+                photo: path,
                 bio: results[0].BIO
             }
 
@@ -77,8 +88,8 @@ router.post('/home/edit', async(req,res)=>{
         let errors = [];
         console.log(results);
         console.log(results[0].USERNAME);
-        
-        console.log(req.body)
+        console.log(req.body);
+
         if(results[0].PASSWORD != req.body.password){
             console.log('new pass');
             if(req.body.password != req.body.password2){
