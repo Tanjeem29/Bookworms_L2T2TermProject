@@ -163,7 +163,7 @@ router.post('/books/search', async (req, res) => {
 
 });
 
-router.post('/books/:id', async (req, res) => {
+router.post('/books/readStatus/:id', async (req, res) => {
     session = req.session;
     if(!session.userid){
         console.log('NO SESSION!!!!!');

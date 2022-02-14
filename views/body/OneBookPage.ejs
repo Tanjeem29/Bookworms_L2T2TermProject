@@ -36,7 +36,7 @@ Authors: <br>
     <h6>
         <b>Not added to bookshelf </b>
     </h6>
-    <form action="/books/<%=book.BOOK_ID%>" method="POST">
+    <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
     <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
         <option value="none" selected disabled hidden>Add to Bookshelf</option>
         <option value="1">Already Read</option>
@@ -52,7 +52,7 @@ Authors: <br>
     <h6>
         <b> Already Read </b>
     </h6>
-    <form action="/books/<%=book.BOOK_ID%>" method="POST">
+    <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
         <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
             <option value="none" selected disabled hidden>Already Read </option>
             <option value="2">Currently Reading</option>
@@ -68,7 +68,7 @@ Authors: <br>
     <h6>
         <b> Currently Reading </b>
     </h6>
-    <form action="/books/<%=book.BOOK_ID%>" method="POST">
+    <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
         <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
             <option value="none" selected disabled hidden>Currently Reading</option>
             <option value="1">Already Read</option>
@@ -84,7 +84,7 @@ Authors: <br>
     <h6>
         <b> Want to read </b>
     </h6>
-    <form action="/books/<%=book.BOOK_ID%>" method="POST">
+    <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
         <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
             <option value="none" selected disabled hidden>Want to read</option>
             <option value="1">Already Read</option>
