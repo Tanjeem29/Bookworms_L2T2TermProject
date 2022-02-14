@@ -132,10 +132,19 @@ router.post('/upload', async(req,res)=>{
     }
     else{
         let results = await DB_getByID.getByReaderID(session.userid);
+        let path;
         let errors = [];
         console.log(results);
         console.log(results[0].USERNAME);
         console.log(req.body);
+
+        if(results[0].PHOTO == null) {
+            console.log("Dummy Photo rendering");
+            path = "dummy.png";
+        }
+        else {
+            path = results[0].PHOTO;
+        }
 
         if(results[0].PASSWORD != req.body.password){
             console.log('new pass');
@@ -152,13 +161,14 @@ router.post('/upload', async(req,res)=>{
             console.log(errors);
             res.render('layout.ejs', {
                 title : 'Edit Profile',
-                body : ['HomeEdit','partials/navbar/navbar'],
+                body : ['photoUpload','partials/navbar/navbar'],
                 form:{
                     reader: results[0],
                     username: req.body.username,
                     password: req.body.password,
                     fname: req.body.fname,
                     lname: req.body.lname,
+                    photo: path,
                     bio: req.body.bio
                 }
 
