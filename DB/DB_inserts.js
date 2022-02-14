@@ -32,8 +32,24 @@ async function insertFollowAuthor(RID, AID){
     return (await db.execute(sql, binds, {}));
 }
 
+async function insertFollowReader(FID, RID){
+    const sql = `
+    INSERT INTO FOLLOWER_READER 
+	(FOLLOWER_ID, READER_ID) 
+	VALUES 
+	(:FID, :RID)
+    `;
+    const binds = {
+        RID : RID,
+        FID : FID
+    }
+
+    return (await db.execute(sql, binds, {}));
+}
+
 module.exports =
 { 
     insertReadStatus,
-    insertFollowAuthor
+    insertFollowAuthor,
+    insertFollowReader
 }
