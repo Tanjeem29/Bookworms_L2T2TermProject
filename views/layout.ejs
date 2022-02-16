@@ -34,6 +34,9 @@
         <div class="my-container container mx-auto my-1 px-0 row">
             <%- include('body/' + body[0]) %>    
         </div>
+        <%if(createWallPost == true) { %>
+            <%- include('./partials/newWallPost/wallPost.ejs') %>
+        <% } %>
 
         <!-- footer -->
         <%- include('./partials/footer/footer.ejs') %>
