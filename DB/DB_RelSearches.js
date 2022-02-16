@@ -63,6 +63,9 @@ async function getBooksByReaderIDStatus(RID, S){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+
+
+
 async function getReadStatusForBook(RID, BID){
     const sql = `
     SELECT * 
@@ -144,6 +147,83 @@ async function otherAuthorsFollowed(MeID, RID){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+
+async function getAllBooksByReaderID(RID){
+    const sql = `
+    SELECT * from BOOKS B, (
+		SELECT BOOK_ID, RS.STATUS, ROUND(SYSDATE - RS.DATED, 1) TD from READ_STATUS RS
+		WHERE READER_ID = :RID) T1
+	WHERE (B.BOOK_ID = T1.BOOK_ID)
+    ORDER BY TD
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function getAuthorsFollowedByReaderID2(RID){
+    const sql = `
+    SELECT * from AUTHOR A, (
+		SELECT AUTHOR_ID, ROUND(SYSDATE - FA.DATED, 1) TD from FOLLOWER_AUTHOR FA
+		WHERE FOLLOWER_ID = :RID) T1
+	WHERE (A.AUTHOR_ID = T1.AUTHOR_ID)
+    ORDER BY TD
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function getAuthorsFollowedByReaderID(RID){
+    const sql = `
+    SELECT * from AUTHOR A, (
+		SELECT AUTHOR_ID, TIMEDIFF(FA.DATED) TD, DATED from FOLLOWER_AUTHOR FA
+		WHERE FOLLOWER_ID = :RID) T1
+	WHERE (A.AUTHOR_ID = T1.AUTHOR_ID)
+    ORDER BY DATED DESC
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function getReadersFollowedByReaderID(RID){
+    const sql = `
+    SELECT * from READER R, (
+		SELECT READER_ID, TIMEDIFF(FR.DATED) TD, DATED from FOLLOWER_READER FR
+		WHERE FOLLOWER_ID = :RID) T1
+	WHERE (R.READER_ID = T1.READER_ID)
+    ORDER BY DATED DESC
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function getFollowersByReaderID(RID){
+    const sql = `
+    SELECT * from READER R, (
+		SELECT FOLLOWER_ID, TIMEDIFF(FR.DATED) TD, DATED from FOLLOWER_READER FR
+		WHERE READER_ID = :RID) T1
+	WHERE (R.READER_ID = T1.FOLLOWER_ID)
+    ORDER BY DATED DESC
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+
 module.exports ={
     getBooksByPublisherID,
     getAuthorByBookID,
@@ -154,6 +234,10 @@ module.exports ={
     getBooksByReaderIDStatus,
     commonAuthorsFollowed,
     otherAuthorsFollowed,
+    getAllBooksByReaderID,
+    getAuthorsFollowedByReaderID,
+    getReadersFollowedByReaderID,
+    getFollowersByReaderID
     
 
 }

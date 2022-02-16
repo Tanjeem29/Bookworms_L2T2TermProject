@@ -1,8 +1,14 @@
-<h2>Name: <%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%></h2>
-<p>Username: <%=reader.USERNAME%></p>
+<div class="container">
+    <img src="<%=photo%>" alt="Profile picture" width="150">
+</div>   
 
 
+<div class="container">
+<h4><%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%></h4>
+<h5><p><%=reader.USERNAME%></h5>
+</div>
 
+<div class="container">
 <h6>
     <b> Books Already Read  (Total: <%=booksread.length%>) </b>
     <% if(booksread.length == 0) {  %>
@@ -15,9 +21,9 @@
                 <% console.log('this is ' + i + ' ' + booksread[0].title)  %>
                 
                 <li>
-                    <h5>
+                    
                         <a = class = "single" href = "/books/<%=booksread[i].BOOK_ID%>" ><%=  booksread[i].TITLE  %> </a>
-                    </h5>
+                    
                 </li>
                 
                 
@@ -25,7 +31,10 @@
         <% } %>
     </ul>
 </h6>
+</div>
 
+
+<div class="container">
 <h6>
     <b> Books Currently Reading (Total: <%=booksreading.length%>) </b>
     <% if(booksreading.length == 0) {  %>
@@ -38,9 +47,9 @@
                 <% console.log('this is ' + i + ' ' + booksreading[0].title)  %>
                 
                 <li>
-                    <h5>
+                    
                         <a = class = "single" href = "/books/<%=booksreading[i].BOOK_ID%>" ><%=  booksreading[i].TITLE  %> </a>
-                    </h5>
+                    
                 </li>
                 
                 
@@ -49,6 +58,11 @@
     </ul>
 </h6>
 
+
+</div>
+
+
+<div class="container">
 <h6>
     <b> Books to be Read (Total: <%=bookswillread.length%>) </b>
     <% if(booksreading.length == 0) {  %>
@@ -61,9 +75,9 @@
                 <% console.log('this is ' + i + ' ' + bookswillread[0].title)  %>
                 
                 <li>
-                    <h5>
+                    
                         <a = class = "single" href = "/books/<%=bookswillread[i].BOOK_ID%>" ><%=  bookswillread[i].TITLE  %> </a>
-                    </h5>
+                    
                 </li>
                 
                 
@@ -71,6 +85,12 @@
         <% } %>
     </ul>
 </h6>
+
+</div>
+
+
+<div class="container">
+
 
 <h6>
     <% if(commonAuthors.length == 0) {  %>
@@ -83,9 +103,9 @@
             <%  for (var i = 0; i< commonAuthors.length; i++) {  %>
                 
                 <li>
-                    <h5>
+                    
                         <a = class = "single" href = "/authors/<%=commonAuthors[i].AUTHOR_ID%>" ><%=  commonAuthors[i].FIRST_NAME + ' ' + commonAuthors[i].LAST_NAME  %> </a>
-                    </h5>
+                
                 </li>
         
             

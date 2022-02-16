@@ -1,37 +1,37 @@
 <h4>Title: <%=book.TITLE%><br></h4>
 
-
+<div class="container">
  <p>
 Preview: <%=book.PREVIEW%> <br>
 </p>
+</div>
 
 
-
-
+<div class="container">
 <p>
-Authors: <br>
+Authors:
 <%  for (var i = 0; i< authors.length; i++) {  %>
     <li>
             <a = class = "single" href ="/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME  %> </a>
     </li>
 <%  }  %>
 </p>
+</div>
 
 
 
-
-
+<div class="container">
 <p><br>
     Publisher: 
     <a = class = "single" href = "/publishers/<%=book.PUBLISHER_ID%>" ><%=  publisher[0].NAME  %></a>
 </p>
+</div>
 
 
 
 
 
-
-
+<div class="container">
 <% if(ReadStatus == 0) { %>
                 
     <h6>
@@ -95,3 +95,4 @@ Authors: <br>
     </form>
     
 <% } %>
+</div>

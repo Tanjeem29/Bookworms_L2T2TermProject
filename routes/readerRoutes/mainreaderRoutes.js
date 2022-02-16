@@ -70,13 +70,13 @@ router.get('/readers/:id', async (req,res)=>{
             res.redirect('/profile');
         }
         else{
-
-            //console.log(id);
+            let path;
+            console.log(id);
             let results;
             //results = DB_getByID;
             reader = await DB_getByID.getByReaderID(id);
             FollowStatus = await DB_RelSearches.getFollowReader(session.userid, id);
-            console.log(FollowStatus);
+            //console.log(FollowStatus);
             let FS = FollowStatus.length;
 
 
@@ -86,7 +86,16 @@ router.get('/readers/:id', async (req,res)=>{
             let commonAuthorsFollowed = await DB_RelSearches.commonAuthorsFollowed(req.session.userid , id);
             let otherAuthorsFollowed = await DB_RelSearches.otherAuthorsFollowed(req.session.userid , id);
             
-
+            //Pic Add (NOTOWRKING)
+            console.log('BEFOREEEEEEE')
+            if(reader[0].PHOTO == null) {
+                console.log("Dummy Photo rendering");
+                path = "dummy.jpg";
+            }
+            else {
+                path = reader[0].PHOTO;
+            }
+            console.log('AFTERRERRE')
 
 
             //books = await DB_RelSearches.getBooksByAuthorID(id);
@@ -94,8 +103,8 @@ router.get('/readers/:id', async (req,res)=>{
             // console.log(booksread);
             // console.log(booksreading);
             // console.log(bookswillread);
-            console.log(commonAuthorsFollowed);
-            console.log(otherAuthorsFollowed);
+            // console.log(commonAuthorsFollowed);
+            // console.log(otherAuthorsFollowed);
 
 
 
@@ -109,7 +118,8 @@ router.get('/readers/:id', async (req,res)=>{
                 booksreading : booksreading,
                 bookswillread : bookswillread,
                 otherAuthors : otherAuthorsFollowed,
-                commonAuthors : commonAuthorsFollowed
+                commonAuthors : commonAuthorsFollowed,
+                photo : path ///new stuff
                 //books : books
                 //books
                 //errors : errors
@@ -121,7 +131,7 @@ router.get('/readers/:id', async (req,res)=>{
 });
 
 
-router.post('/readers/:id', async (req, res) => {
+router.post('/readers/follow/:id', async (req, res) => {
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){

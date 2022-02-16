@@ -1,9 +1,13 @@
+
+<div class="container">
 <h2>Name: <%=author.FIRST_NAME + ' ' + author.LAST_NAME%></h2>
 
 <% if(books.length == 0) {  %>
     <p>No Books By This Author</p>
 <% } %>
+</div>
 
+<div class="container">
 <ul>
     <% if(books.length > 0) { %>
         <p>We have <%=books.length%> Books by This Author</p>
@@ -25,9 +29,9 @@
     <% } %>
 </ul>
 
+</div>
 
-
-
+<div class="container">
 
 <% if(FollowStatus == 0) { %>
                 
@@ -50,3 +54,4 @@
     </form>
     
 <% } %>
+</div>
