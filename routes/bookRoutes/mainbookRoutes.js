@@ -198,4 +198,43 @@ router.post('/books/readStatus/:id', async (req, res) => {
 
 });
 
+
+
+router.get('/publishers/:id', async (req,res)=>{
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        const id = req.params.id;
+        
+        let books;
+        //results = DB_getByID;
+    
+        publisher = await DB_getByID.getByPublisherID(id);
+        books = await DB_RelSearches.getBooksByPublisherID(id);
+ 
+        console.log(publisher[0]);
+        console.log(books);
+
+        
+
+
+        res.render('layout.ejs', {
+            title : 'Publisher:',
+            body : ['OnePublisherPage','partials/navbar/navbar'],
+            user : null,
+            books: books,
+            publisher: publisher[0]
+            
+            //books
+            //errors : errors
+        })
+
+    }
+    
+});
+
 module.exports = router;

@@ -13,6 +13,10 @@
             <li>
                 <h5>
                     <a = class = "single" href ="/readers/<%=SearchResults[i].READER_ID%>" ><%=  SearchResults[i].FIRST_NAME + ' ' + SearchResults[i].LAST_NAME  %> </a>
+                    <% if(SearchResults[i].READER_ID == uid) { %>
+                        (You)
+
+                    <%}%>
                 </h5>
                 <h6>
                     <b>Username: </b>

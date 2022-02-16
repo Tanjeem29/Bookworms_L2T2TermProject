@@ -1,32 +1,6 @@
 <h2>Name: <%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%></h2>
-<h3>Username: <%=reader.USERNAME%></h3>
+<p>Username: <%=reader.USERNAME%></p>
 
-
-
-
-
-
-<% if(FollowStatus == 0) { %>
-                
-    <h6>
-        <b>Not Followed </b>
-    </h6>
-    <form action="/readers/<%=reader.READER_ID%>" method="POST">
-        <button name="follow" value="1">Follow this Reader</button>
-    </form>
-    
-<% } %>
-
-<% if(FollowStatus == 1) { %>
-                
-    <h6>
-        <b> Following this Reader </b>
-    </h6>
-    <form action="/readers/<%=reader.READER_ID%>" method="POST">
-        <button name="follow" value="0">Unfollow this Reader</button>
-    </form>
-    
-<% } %>
 
 
 <h6>
@@ -99,43 +73,28 @@
 </h6>
 
 <h6>
-    <b> Authors Followed (Total: <%=commonAuthors.length + otherAuthors.length%>) </b>
-</h6>
     <% if(commonAuthors.length == 0) {  %>
-        <p>No Common Followed Authors</p>
+        <b>No Followed Authors</b>
     <% } %>
     <% if(commonAuthors.length > 0) {  %>
-        <p>Common Followed Authors</p>
-        <%  for (var i = 0; i< commonAuthors.length; i++) {  %>
-            
-            <li>
-                <h5>
-                    <a = class = "single" href = "/authors/<%=commonAuthors[i].AUTHOR_ID%>" ><%=  commonAuthors[i].FIRST_NAME + ' ' + commonAuthors[i].LAST_NAME  %> </a>
-                </h5>
-            </li>
-            
+        <b>Followed Authors (<%=commonAuthors.length%>)</b>
+        <ul>
+        
+            <%  for (var i = 0; i< commonAuthors.length; i++) {  %>
+                
+                <li>
+                    <h5>
+                        <a = class = "single" href = "/authors/<%=commonAuthors[i].AUTHOR_ID%>" ><%=  commonAuthors[i].FIRST_NAME + ' ' + commonAuthors[i].LAST_NAME  %> </a>
+                    </h5>
+                </li>
+        
             
         <%  }  %>
+        </ul>
     <% } %>
+</h6>
     
 
-
-    <% if(otherAuthors.length == 0) {  %>
-        <p>No Other Followed Authors</p>
-    <% } %>
-    <% if(otherAuthors.length > 0) {  %>
-        <p>Other Followed Authors</p>
-        <%  for (var i = 0; i< otherAuthors.length; i++) {  %>
-            
-            <li>
-                <h5>
-                    <a = class = "single" href = "/authors/<%=otherAuthors[i].AUTHOR_ID%>" ><%=  otherAuthors[i].FIRST_NAME + ' ' + otherAuthors[i].LAST_NAME  %> </a>
-                </h5>
-            </li>
-            
-            
-        <%  }  %>
-    <% } %>
     
 
 

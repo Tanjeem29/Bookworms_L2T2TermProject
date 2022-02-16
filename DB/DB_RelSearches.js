@@ -1,5 +1,23 @@
 const db = require('./DB_Basics');
 
+
+async function getBooksByPublisherID(PubID){
+    const sql = `
+    SELECT * 
+    FROM BOOKS B
+    WHERE B.PUBLISHER_ID = :PubID
+    `;
+    const binds = {
+        PubID : PubID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+
+
+
+
 async function getAuthorByBookID(strin){
     const sql = `
     SELECT * 
@@ -73,6 +91,8 @@ async function getFollowAuthor(RID, AID){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+
+
 async function getFollowReader(FID, RID){
     const sql = `
     SELECT * 
@@ -88,11 +108,52 @@ async function getFollowReader(FID, RID){
 }
 
 
+async function commonAuthorsFollowed(MeID, RID){
+    const sql = `
+    Select * from 
+    AUTHOR NATURAL JOIN (
+    (SELECT AUTHOR_ID from FOLLOWER_AUTHOR 
+    Where FOLLOWER_ID = :MeID)
+    INTERSECT
+    (Select AUTHOR_ID from FOLLOWER_AUTHOR
+    where FOLLOWER_ID = :RID))
+    `;
+    const binds = {
+        MeID : MeID,
+        RID : RID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function otherAuthorsFollowed(MeID, RID){
+    const sql = `
+    Select * from 
+    AUTHOR NATURAL JOIN (
+    (SELECT AUTHOR_ID from FOLLOWER_AUTHOR 
+    Where FOLLOWER_ID = :MeID)
+    MINUS
+    (Select AUTHOR_ID from FOLLOWER_AUTHOR
+    where FOLLOWER_ID = :RID))
+    `;
+    const binds = {
+        MeID : MeID,
+        RID : RID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 module.exports ={
+    getBooksByPublisherID,
     getAuthorByBookID,
     getReadStatusForBook,
     getFollowAuthor,
     getBooksByAuthorID,
     getFollowReader,
-    getBooksByReaderIDStatus
+    getBooksByReaderIDStatus,
+    commonAuthorsFollowed,
+    otherAuthorsFollowed,
+    
+
 }

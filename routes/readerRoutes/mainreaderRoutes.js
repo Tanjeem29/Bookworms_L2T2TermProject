@@ -47,6 +47,7 @@ router.post('/readers/search', async (req, res) => {
             body : ['ReaderSearchTest','partials/navbar/navbar', req.body.search],
             user : null,
             SearchResults: results,
+            uid : req.session.userid
             //books
             //errors : errors
         })
@@ -64,43 +65,57 @@ router.get('/readers/:id', async (req,res)=>{
     }
     else{
         const id = req.params.id;
-        //console.log(id);
-        let results;
-        //results = DB_getByID;
-        reader = await DB_getByID.getByReaderID(id);
-        FollowStatus = await DB_RelSearches.getFollowReader(session.userid, id);
-        console.log(FollowStatus);
-        let FS = FollowStatus.length;
+        let uid = req.session.userid;
+        if(id == uid){
+            res.redirect('/profile');
+        }
+        else{
+
+            //console.log(id);
+            let results;
+            //results = DB_getByID;
+            reader = await DB_getByID.getByReaderID(id);
+            FollowStatus = await DB_RelSearches.getFollowReader(session.userid, id);
+            console.log(FollowStatus);
+            let FS = FollowStatus.length;
 
 
-        let booksread = await DB_RelSearches.getBooksByReaderIDStatus(id, 1);
-        let booksreading = await DB_RelSearches.getBooksByReaderIDStatus(id, 2);
-        let bookswillread = await DB_RelSearches.getBooksByReaderIDStatus(id, 3);
+            let booksread = await DB_RelSearches.getBooksByReaderIDStatus(id, 1);
+            let booksreading = await DB_RelSearches.getBooksByReaderIDStatus(id, 2);
+            let bookswillread = await DB_RelSearches.getBooksByReaderIDStatus(id, 3);
+            let commonAuthorsFollowed = await DB_RelSearches.commonAuthorsFollowed(req.session.userid , id);
+            let otherAuthorsFollowed = await DB_RelSearches.otherAuthorsFollowed(req.session.userid , id);
+            
 
 
 
-        //books = await DB_RelSearches.getBooksByAuthorID(id);
+            //books = await DB_RelSearches.getBooksByAuthorID(id);
+            
+            // console.log(booksread);
+            // console.log(booksreading);
+            // console.log(bookswillread);
+            console.log(commonAuthorsFollowed);
+            console.log(otherAuthorsFollowed);
 
-        console.log(booksread);
-        console.log(booksreading);
-        console.log(bookswillread);
 
 
+            res.render('layout.ejs', {
+                title : 'Reader',
+                body : ['OneReaderPage','partials/navbar/navbar'],
+                //user : null,
+                reader: reader[0],
+                FollowStatus : FS,
+                booksread : booksread,
+                booksreading : booksreading,
+                bookswillread : bookswillread,
+                otherAuthors : otherAuthorsFollowed,
+                commonAuthors : commonAuthorsFollowed
+                //books : books
+                //books
+                //errors : errors
+            })
 
-        res.render('layout.ejs', {
-            title : 'Reader',
-            body : ['OneReaderPage','partials/navbar/navbar'],
-            //user : null,
-            reader: reader[0],
-            FollowStatus : FS,
-            booksread : booksread,
-            booksreading : booksreading,
-            bookswillread : bookswillread
-            //books : books
-            //books
-            //errors : errors
-        })
-
+        }
     }
     
 });
@@ -134,7 +149,7 @@ router.post('/readers/:id', async (req, res) => {
                 r = await DB_Deletes.resetFollowReader(session.userid, id);
             }
             else{
-                console.log('Inserting FOllowReader');
+                console.log('Inserting FollowReader');
                 r = await DB_inserts.insertFollowReader(session.userid, id);
             }
        }
