@@ -30,6 +30,7 @@ router.get('/upload', async (req, res) => {
 
     else {
         let results = await DB_getByID.getByReaderID(session.userid);
+        //edit to absolute path /reader
         let path;
         console.log(results);
         console.log(results[0].USERNAME);
@@ -71,6 +72,7 @@ router.post('/save_photo', upload.single("photo"),async (req, res) => {
     else {
         if(req.file != null) {
             const tempPath = req.file.path;
+            //edit /reader
             let savePath = path.join("./public/"+session.userid);
             let extension;
 
@@ -83,6 +85,7 @@ router.post('/save_photo', upload.single("photo"),async (req, res) => {
             else {
                 const oldpath = results[0].PHOTO;
                 console.log(results[0].PHOTO);
+                //edit /reader
                 fs.unlinkSync("./public/"+oldpath, (err) => {
                     if(err) {
                         console.log(err);

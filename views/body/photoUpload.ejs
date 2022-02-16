@@ -1,6 +1,6 @@
 
 <div class="photo-group">
-    <label for="photo">Profile Picture:</label>
+    <label for="photo">Profile Picture:</label>    
     <img src="<%= (typeof form != 'undefined')? form.photo : '' %>" alt="Profile picture" width="200">
     <form method="post" enctype="multipart/form-data" action="/save_photo">
         <input type="file" name="photo">
