@@ -1,21 +1,28 @@
-<h4>Title: <%=book.TITLE%><br></h4>
-
 <div class="container">
- <p>
-Preview: <%=book.PREVIEW%> <br>
-</p>
+    <div class="row">
+        <h4>Title: <%=book.TITLE%><br></h4>
+    </div>
 </div>
 
-
 <div class="container">
-<p>
+    <div class="row">
+        <p>
+        Preview: <%=book.PREVIEW%> <br>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+<div class="container">
+    
+    <ul>
 Authors:
 <%  for (var i = 0; i< authors.length; i++) {  %>
     <li>
             <a = class = "single" href ="/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME  %> </a>
     </li>
 <%  }  %>
-</p>
+    </ul>
 </div>
 
 
@@ -25,6 +32,7 @@ Authors:
     Publisher: 
     <a = class = "single" href = "/publishers/<%=book.PUBLISHER_ID%>" ><%=  publisher[0].NAME  %></a>
 </p>
+</div>
 </div>
 
 

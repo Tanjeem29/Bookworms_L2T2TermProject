@@ -10,7 +10,7 @@
 
 <div class="container">
 <h6>
-    <b> Books Already Read  (Total: <%=booksread.length%>) </b>
+    <b> Books Already Read  (Total: <%=booksread.length%>) </b></h6>
     <% if(booksread.length == 0) {  %>
         <p>No Books Finished Reading yet</p>
     <% } %>
@@ -30,13 +30,13 @@
             <%  }  %>
         <% } %>
     </ul>
-</h6>
+
 </div>
 
 
 <div class="container">
 <h6>
-    <b> Books Currently Reading (Total: <%=booksreading.length%>) </b>
+    <b> Books Currently Reading (Total: <%=booksreading.length%>) </b> </h6>
     <% if(booksreading.length == 0) {  %>
         <p>No Books Currently Reading</p>
     <% } %>
@@ -56,7 +56,7 @@
             <%  }  %>
         <% } %>
     </ul>
-</h6>
+
 
 
 </div>
@@ -64,7 +64,7 @@
 
 <div class="container">
 <h6>
-    <b> Books to be Read (Total: <%=bookswillread.length%>) </b>
+    <b> Books to be Read (Total: <%=bookswillread.length%>) </b> </h6>
     <% if(booksreading.length == 0) {  %>
         <p>No Books to be Read</p>
     <% } %>
@@ -84,7 +84,7 @@
             <%  }  %>
         <% } %>
     </ul>
-</h6>
+
 
 </div>
 
@@ -97,7 +97,7 @@
         <b>No Followed Authors</b>
     <% } %>
     <% if(commonAuthors.length > 0) {  %>
-        <b>Followed Authors (<%=commonAuthors.length%>)</b>
+        <b>Followed Authors (<%=commonAuthors.length%>)</b> </h6>
         <ul>
         
             <%  for (var i = 0; i< commonAuthors.length; i++) {  %>
@@ -112,7 +112,7 @@
         <%  }  %>
         </ul>
     <% } %>
-</h6>
+
     
 
     
