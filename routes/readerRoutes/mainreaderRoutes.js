@@ -72,6 +72,7 @@ router.get('/readers/:id', async (req,res)=>{
         else{
             let path;
             console.log(id);
+            console.log("GENJAAAM");
             let results;
             //results = DB_getByID;
             reader = await DB_getByID.getByReaderID(id);
@@ -90,10 +91,11 @@ router.get('/readers/:id', async (req,res)=>{
             console.log('BEFOREEEEEEE')
             if(reader[0].PHOTO == null) {
                 console.log("Dummy Photo rendering");
-                path = "dummy.jpg";
+                path = "/reader/dummy.png";
             }
             else {
-                path = reader[0].PHOTO;
+                console.log('else');
+                path = "/reader/" + reader[0].PHOTO;
             }
             console.log('AFTERRERRE')
 
@@ -119,10 +121,7 @@ router.get('/readers/:id', async (req,res)=>{
                 bookswillread : bookswillread,
                 otherAuthors : otherAuthorsFollowed,
                 commonAuthors : commonAuthorsFollowed,
-                photo : path ///new stuff
-                //books : books
-                //books
-                //errors : errors
+                photo : path 
             })
 
         }

@@ -1,4 +1,6 @@
-
+<div class="container">
+    <img src=<%=photo%> alt="Profile picture" width="150">
+</div>   
 
 
 <div class="container">
@@ -67,7 +69,6 @@
     <ul>
         <% if(booksreading.length > 0) { %>
             <%  for (var i = 0; i< booksreading.length; i++) {  %>
-                <% console.log('this is ' + i + ' ' + booksreading[0].title)  %>
                 
                 <li>
                     
@@ -91,7 +92,6 @@
     <ul>
         <% if(bookswillread.length > 0) { %>
             <%  for (var i = 0; i< bookswillread.length; i++) {  %>
-                <% console.log('this is ' + i + ' ' + bookswillread[0].title)  %>
                 
                 <li>
                     

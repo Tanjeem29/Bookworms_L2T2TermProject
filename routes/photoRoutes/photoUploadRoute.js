@@ -17,7 +17,7 @@ require('dotenv').config();
 const router = express.Router({mergeParams: true});
 
 const upload = multer({
-    dest : __dirname + "/public"
+    dest : __dirname + "/public/reader"
 });
 
 
@@ -38,10 +38,10 @@ router.get('/upload', async (req, res) => {
         //photo handling
         if(results[0].PHOTO == null) {
             console.log("Dummy Photo rendering");
-            path = "dummy.png";
+            path = "/reader/dummy.png";
         }
         else {
-            path = results[0].PHOTO;
+            path = "/reader/" + results[0].PHOTO;
         }
         console.log(path);
         res.render('layout.ejs', {
@@ -73,7 +73,7 @@ router.post('/save_photo', upload.single("photo"),async (req, res) => {
         if(req.file != null) {
             const tempPath = req.file.path;
             //edit /reader
-            let savePath = path.join("./public/"+session.userid);
+            let savePath = path.join("./public/reader/"+session.userid);
             let extension;
 
             //first check if there exists a profile picture already. If exists, delete it.
@@ -86,7 +86,7 @@ router.post('/save_photo', upload.single("photo"),async (req, res) => {
                 const oldpath = results[0].PHOTO;
                 console.log(results[0].PHOTO);
                 //edit /reader
-                fs.unlinkSync("./public/"+oldpath, (err) => {
+                fs.unlinkSync("./public/reader/"+oldpath, (err) => {
                     if(err) {
                         console.log(err);
                     }
@@ -143,10 +143,10 @@ router.post('/upload', async(req,res)=>{
 
         if(results[0].PHOTO == null) {
             console.log("Dummy Photo rendering");
-            path = "dummy.png";
+            path = "/reader/dummy.png";
         }
         else {
-            path = results[0].PHOTO;
+            path = "/reader/" + results[0].PHOTO;
         }
 
         if(results[0].PASSWORD != req.body.password){

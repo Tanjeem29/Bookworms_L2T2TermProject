@@ -39,10 +39,10 @@ router.get('/profile', async (req,res)=>{
 
         if(reader[0].PHOTO == null) {
             console.log("Dummy Photo rendering");
-            path = "dummy.png";
+            path = "/reader/dummy.png";
         }
         else {
-            path = reader[0].PHOTO;
+            path = "/reader/" + reader[0].PHOTO;
         }
 
 
