@@ -31,22 +31,24 @@ router.get('/upload', async (req, res) => {
     else {
         let results = await DB_getByID.getByReaderID(session.userid);
         //edit to absolute path /reader
-        let path;
+        let path = '/reader/';
         console.log(results);
         console.log(results[0].USERNAME);
 
         //photo handling
         if(results[0].PHOTO == null) {
             console.log("Dummy Photo rendering");
-            path = "dummy.png";
+            path += "dummy.png";
         }
         else {
-            path = results[0].PHOTO;
+            path += results[0].PHOTO;
         }
         console.log(path);
         res.render('layout.ejs', {
             title : 'Edit Profile',
             body : ['photoUpload','partials/navbar/navbar'],
+            createWallPost : false,
+            showWallPost : false,
             form:{
                 reader: results[0],
                 username: results[0].USERNAME,
@@ -73,7 +75,7 @@ router.post('/save_photo', upload.single("photo"),async (req, res) => {
         if(req.file != null) {
             const tempPath = req.file.path;
             //edit /reader
-            let savePath = path.join("./public/"+session.userid);
+            let savePath = path.join("./public/reader/"+session.userid);
             let extension;
 
             //first check if there exists a profile picture already. If exists, delete it.
@@ -86,7 +88,7 @@ router.post('/save_photo', upload.single("photo"),async (req, res) => {
                 const oldpath = results[0].PHOTO;
                 console.log(results[0].PHOTO);
                 //edit /reader
-                fs.unlinkSync("./public/"+oldpath, (err) => {
+                fs.unlinkSync("./public/reader/"+oldpath, (err) => {
                     if(err) {
                         console.log(err);
                     }
@@ -135,7 +137,7 @@ router.post('/upload', async(req,res)=>{
     }
     else{
         let results = await DB_getByID.getByReaderID(session.userid);
-        let path;
+        let path = "/reader/";
         let errors = [];
         console.log(results);
         console.log(results[0].USERNAME);
@@ -143,10 +145,10 @@ router.post('/upload', async(req,res)=>{
 
         if(results[0].PHOTO == null) {
             console.log("Dummy Photo rendering");
-            path = "dummy.png";
+            path += "dummy.png";
         }
         else {
-            path = results[0].PHOTO;
+            path += results[0].PHOTO;
         }
 
         if(results[0].PASSWORD != req.body.password){

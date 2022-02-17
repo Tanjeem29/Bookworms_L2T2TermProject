@@ -1,0 +1,67 @@
+<div class="header">
+    <h4>Your Timeline: </h4>
+  </div>
+  
+  <div class="row">
+    <div class="leftcolumn">
+        <div class="post-show-pane">
+          <ul>
+             <% for(var i = 0; i < wallposts.length; i++) { %>
+              <li>
+                <form action="/wallpost/<%= wallposts[i].wallpostID %>" method="POST" class="card-body"></form>
+                    <h5 class="username-style" name="username">Posted By:  <%= wallposts[i].USERNAME %> </h5>
+                    <h6 class="time-style" name="time">Posten on: <%- wallposts[i].TIMEDIF%> ago</h6>>
+                    <p class="post-body-style" name="postBody"><%= wallposts[i].POST_BODY%></p>
+                    <p id="likeCount-<%= wallposts[i].WALLPOST_ID %>" class="reaction-style" name="likeCount"><%= wallposts[i].LIKE_COUNT%></p>
+                    <% if(wallposts[i].REACTION_STATUS) { %>
+                      <form action="/wallpost/unlike/<%= wallposts[i].WALLPOST_ID %>" method="POST">
+                        <input type="submit" value="Remove Like">
+                      </form>
+                    <% } else { %>
+                      <form action="/wallpost/like/<%= wallposts[i].WALLPOST_ID %>" method="POST">
+                        <input type="submit" value="Like">
+                      </form>
+                    <% } %>
+                    <form action="wallpost/<%= wallposts[i].WALLPOST_ID %>">
+                      <input type="submit" value="View Comments" method="GET">
+                    </form>
+                </form>  
+                </li> 
+            <% } %>
+            </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        function removeReaction(tagid) {
+        const reqBody = {
+          current : 1
+        }
+        console.log("In remove");
+        const wallid = tagid.split('-')[1];
+        fetch("/wallpost/toggleReaction/"+wallid, {
+          method : 'POST',
+          headers: {
+                "Content-Type": "application/json"
+            },
+          body : JSON.stringify(reqBody)
+        });
+      }
+
+      function insertReaction(tagid) {
+        const reqBody = {
+          current : 0
+        }
+        console.log("In insert");
+        const wallid = tagid.split('-')[1];
+        fetch("/wallpost/toggleReaction/"+wallid, {
+          method: 'POST',
+          headers: {
+                "Content-Type": "application/json"
+            },
+          body : JSON.stringify(reqBody)
+        });
+      }
+
+    </script>

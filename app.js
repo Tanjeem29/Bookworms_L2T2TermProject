@@ -107,6 +107,8 @@ const mainauthorRoutes = require('.//routes/authorRoutes/mainauthorRoutes.js');
 const mainreaderRoutes = require('.//routes/readerRoutes/mainreaderRoutes.js');
 //photoUpload
 const photoUploadRoutes = require('./routes/photoRoutes/photoUploadRoute.js');
+//wallpost
+const wallPostRoutes = require('./routes/wallPostRoutes/wallpostRoutes.js');
 
 
 
@@ -123,6 +125,7 @@ app.use(mainreaderRoutes);
 app.use(registerRoutes);
 //photoUpload
 app.use(photoUploadRoutes);
+app.use(wallPostRoutes);
 
 
 
