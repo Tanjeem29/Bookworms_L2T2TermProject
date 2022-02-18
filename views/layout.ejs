@@ -35,6 +35,21 @@
             <%- include('body/' + body[0]) %>    
         </div>
 
+        
+
+        <%if(typeof createWallPost != 'undefined' && createWallPost == true) { %>
+            <div class="my-container container mx-auto my-1 px-0 row"></div>
+            <%- include('./partials/wallPost/createWallPost.ejs') %>
+            </div>
+        <% } %>
+
+        
+        <%if(typeof showWallPost != 'undefined' && showWallPost == true) { %>
+            <div class="my-container container mx-auto my-1 px-0 row">
+            <%- include('./partials/wallPost/showWallPost.ejs') %>
+            </div>
+        <% } %>
+
         <!-- footer -->
         <%- include('./partials/footer/footer.ejs') %>
     </div>

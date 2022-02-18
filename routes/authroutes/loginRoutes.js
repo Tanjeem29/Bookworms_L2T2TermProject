@@ -34,6 +34,8 @@ router.get('/login', (req,res)=>{
             title : 'Login',
             body : ['LoginTest'],
             user : null,
+            createWallPost: false,
+            showWallPost : false
             //books
             //errors : errors
         })
@@ -127,6 +129,8 @@ router.post('/login', async (req, res) => {
                 title : 'Expt',
                 body : ['LoginTest'],
                 user : null,
+                createWallPost: false,
+                showWallPost : false,
                 form : {
                     email : req.body.email,
                     password : req.body.password

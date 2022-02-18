@@ -50,8 +50,11 @@ const mainauthorRoutes = require('.//routes/authorRoutes/mainauthorRoutes.js');
 const mainreaderRoutes = require('.//routes/readerRoutes/mainreaderRoutes.js');
 //photoUpload
 const photoUploadRoutes = require('./routes/photoRoutes/photoUploadRoute.js');
+
 const otherRoutes = require('.//routes/homeRoutes/otherRoutes.js');
 const genreRoutes = require('.//routes/genreRoutes/maingenreRoutes.js');
+//wallpost
+const wallPostRoutes = require('./routes/wallPostRoutes/wallpostRoutes.js');
 
 
 
@@ -68,11 +71,13 @@ app.use(mainreaderRoutes);
 app.use(registerRoutes);
 //photoUpload
 app.use(photoUploadRoutes);
+
 //profile and Dashboard
 app.use(otherRoutes);
 app.use(genreRoutes);
 
 
+app.use(wallPostRoutes);
 
 
 

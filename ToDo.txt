@@ -33,11 +33,10 @@ Questions:
 	
 
 Tanjeem's To-DO:
+Reader Prefer Genre (Add on profile page)
+Genre Page
+Fill Up pages
 
-Make "Reader" page
-Add option for FOllow/Unfollow on Reader Page
-Show books and READ status on Reader/User Page
-Multiple post request from book.
 Review and Wallpost into DB
 
 

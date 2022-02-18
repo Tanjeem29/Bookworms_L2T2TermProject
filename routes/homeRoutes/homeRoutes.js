@@ -7,6 +7,7 @@ const books = [
 
 
 const express = require('express');
+//const session = require('express-session');
 require('dotenv').config();
 const router = express.Router({mergeParams : true});
 
@@ -15,9 +16,39 @@ const router = express.Router({mergeParams : true});
 //const DB_Searches = require(process.env.ROOT + '\\DB\\DB_Searches');
 const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
 const DB_updates = require(process.env.ROOT + '\\DB\\DB_Updates');
+const DB_wallpost = require(process.env.ROOT + '\\DB\\DB_wallpost');
+const DB_reaction = require(process.env.ROOT + '\\DB\\DB_reaction');
+
+/*router.get('/test',async (req,res) => {
+    session = req.session;
+    //No Login access tried, so redirect to login
+    // if(!session.userid){
+    //     console.log('NO SESSION!!!!!');
+    //     res.redirect('/login');
+    // }
+    // else{
+        //fetching wallpost here: 
+        let results = await DB_wallpost.fetchWallPost(3);
+        for(var i = 0; i < results.length ; i++) {
+
+        }
+        console.log(results);
+
+        res.render('./partials/wallPost/showWallPost.ejs', {
+            title : 'Home',
+            body : ['HomeTest','partials/navbar/navbar'],
+            user : null,
+            createWallPost : true,
+            showWallPost : true,
+            wallposts : results
+            //books
+            //errors : errors
+        });
+    //}   
+}); */
 
 
-router.get('/home', (req,res)=>{
+router.get('/home',async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -25,13 +56,24 @@ router.get('/home', (req,res)=>{
         res.redirect('/login');
     }
     else{
+        //fetching wallpost here: 
+        let results = await DB_wallpost.fetchWallPost(session.userid);
+        for(var i = 0; i < results.length ; i++) {
+            let reaction = await DB_reaction.getReactionStatus(results[i].WALLPOST_ID, session.userid);
+            results[i].REACTION_STATUS = reaction[0].STATUS;
+        }
+        console.log(results);
+
         res.render('layout.ejs', {
             title : 'Home',
             body : ['HomeTest','partials/navbar/navbar'],
             user : null,
-            books
+            createWallPost : true,
+            showWallPost : true,
+            wallposts : results,
+            //books
             //errors : errors
-        })
+        });
     }
 });
 

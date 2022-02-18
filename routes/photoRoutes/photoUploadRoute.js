@@ -31,7 +31,7 @@ router.get('/upload', async (req, res) => {
     else {
         let results = await DB_getByID.getByReaderID(session.userid);
         //edit to absolute path /reader
-        let path;
+        let path = '/reader/';
         console.log(results);
         console.log(results[0].USERNAME);
 
@@ -47,6 +47,8 @@ router.get('/upload', async (req, res) => {
         res.render('layout.ejs', {
             title : 'Edit Profile',
             body : ['photoUpload','partials/navbar/navbar'],
+            createWallPost : false,
+            showWallPost : false,
             form:{
                 reader: results[0],
                 username: results[0].USERNAME,
@@ -135,7 +137,7 @@ router.post('/upload', async(req,res)=>{
     }
     else{
         let results = await DB_getByID.getByReaderID(session.userid);
-        let path;
+        let path = "/reader/";
         let errors = [];
         console.log(results);
         console.log(results[0].USERNAME);
