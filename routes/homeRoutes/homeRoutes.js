@@ -62,7 +62,7 @@ router.get('/home',async (req,res)=>{
             let reaction = await DB_reaction.getReactionStatus(results[i].WALLPOST_ID, session.userid);
             results[i].REACTION_STATUS = reaction[0].STATUS;
         }
-        console.log(results);
+        //console.log(results);
 
         res.render('layout.ejs', {
             title : 'Home',

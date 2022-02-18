@@ -1,0 +1,57 @@
+
+<div class="review-post">
+    <h4>
+        <b>Share Your Journey With the book: </b>
+    </h4>
+    <form action="/books/review/<%= bookID %>" method="POST" class="review-form">
+        <input type="text" name="reviewBody" placeholder="The journey starts.." required>
+        <h5>
+            <b>Share Your Rating: </b>
+        </h5>
+        <div class="rate">
+            <input type="radio" id="star1" name="rating" value="1" />
+            <label for="star1" title="text">1 star</label>
+            <input type="radio" id="star2" name="rating" value="2" />
+            <label for="star2" title="text">2 star</label>
+            <input type="radio" id="star3" name="rating" value="3" />
+            <label for="star3" title="text">3 star</label>
+            <input type="radio" id="star4" name="rating" value="4" />
+            <label for="star2" title="text">4 star</label>
+            <input type="radio" id="star5" name="rating" value="5" checked/>
+            <label for="star1" title="text">5 star</label>
+        </div>
+        <button class="btn btn-outline-dark btn-lg px-3" type="submit">Post Review</button>
+    </form>
+</div>
+
+<div class="review-header">
+    <h4>Shared Reviews: </h4>
+</div>
+
+<div class="row">
+    <div class="leftcolumn">
+        <ul>
+        <div class="review-show-pane">
+                <% if(!reviews.length) { %>
+
+                <h6><b>Be the First One to Review this Book!</b></h6>
+
+                <% } else {%>
+                    
+                    <% for(var i = 0; i < reviews.length; i++) { %>
+                        <li>
+                            <h6 class="username-style" name="username">Reviewed By: <%= reviews[i].USERNAME %> </h6>
+                            <p class="time-style" name="time"><b>Posten on: <%= reviews[i].TIMEDIF%> ago</b></p>
+                            <p class="rating-style" name="rating"><b>User Rating: <%= reviews[i].RATING%> star</b></p>
+                            <p class="post-body-style" name="postBody"><%= reviews[i].TEXT_BODY%></p>
+                        </li>
+                    <% } %>
+
+                <% } %>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+  

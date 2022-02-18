@@ -19,6 +19,7 @@ const router = express.Router({mergeParams : true});
     const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
     const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
     const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
+    const DB_review = require(process.env.ROOT + '\\DB\\DB_review');
 
 
 router.get('/books', (req,res)=>{
@@ -69,6 +70,13 @@ router.get('/books/:id', async (req,res)=>{
         publisher = await DB_getByID.getByPublisherID(books[0].PUBLISHER_ID);
         authors = await DB_RelSearches.getAuthorByBookID(id);
         ReadStatus = await DB_RelSearches.getReadStatusForBook(session.userid, id);
+        
+        //review stuff
+        let allReviews = await DB_review.geyReviewByBookID(id);
+        let reviewSummary = await DB_review.getReviewSummary(id);
+        //console.log(reviewSummary);
+        //console.log(allReviews);
+
         // console.log(authors[0]);
         // console.log(publisher[0]);
         // console.log(id);
@@ -83,11 +91,14 @@ router.get('/books/:id', async (req,res)=>{
             title : 'Books',
             body : ['OneBookPage','partials/navbar/navbar'],
             user : null,
+            bookID : id,
             book: books[0],
             author: authors,
             publisher: publisher,
             rid : session.userid,
-            ReadStatus : newReadStatus
+            ReadStatus : newReadStatus,
+            reviews : allReviews,
+            summary : reviewSummary
             
             //books
             //errors : errors
@@ -96,35 +107,6 @@ router.get('/books/:id', async (req,res)=>{
     }
     
 });
-
-
-
-
-// router.get('/books/search', (req,res)=>{
-//     //res.send('<H3>Login</H3>');
-//     //res.sendFile('./views/404.html', {root: __dirname});
-//     console.log(res.query);
-//     res.render('layout.ejs', {
-//         title : 'Books',
-//         body : ['BookSearchTest','partials/navbar/navbar'],
-//         user : null,
-//         books
-//         //errors : errors
-//     })
-// });
-
-// router.post('/books', async (req, res) => {
-//     console.log(req.query);
-//     console.log(res.query);
-//     res.render('layout.ejs', {
-//         title : 'Books',
-//         body : ['BookSearchTest','partials/navbar/navbar'],
-//         user : null,
-//         books
-//         //errors : errors
-//     })
-
-// });
 
 
 router.post('/books/search', async (req, res) => {
@@ -190,12 +172,30 @@ router.post('/books/readStatus/:id', async (req, res) => {
            }
        }
 
-
-
-
         res.redirect(str);
     }
 
+});
+
+router.post('/books/review/:id', async (req, res) => {
+    session = req.session;
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else {
+        const id = req.params.id;
+        const reviewInfo = {
+            reviewBody : req.body.reviewBody,
+            rating : req.body.rating,
+            usr : session.userid,
+            book : id
+        }
+
+        let result = await DB_review.insertReview(reviewInfo);
+        console.log(result);
+        res.redirect('/books/'+id);
+    }
 });
 
 
@@ -236,5 +236,6 @@ router.get('/publishers/:id', async (req,res)=>{
     }
     
 });
+
 
 module.exports = router;

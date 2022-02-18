@@ -31,13 +31,10 @@ Authors:
 <p><br>
     Publisher: 
     <a = class = "single" href = "/publishers/<%=book.PUBLISHER_ID%>" ><%=  publisher[0].NAME  %></a>
+    <br>
 </p>
 </div>
 </div>
-
-
-
-
 
 <div class="container">
 <% if(ReadStatus == 0) { %>
@@ -104,3 +101,13 @@ Authors:
     
 <% } %>
 </div>
+<h2>Review Section: </h2>
+<div class="container">
+    <%- include('../partials/review/reviewSummary.ejs') %>
+</div>
+
+
+<div>
+    <%- include('../partials/review/reviewSection.ejs') %>
+</div>
+
