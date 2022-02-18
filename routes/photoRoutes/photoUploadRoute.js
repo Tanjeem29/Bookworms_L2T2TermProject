@@ -17,7 +17,7 @@ require('dotenv').config();
 const router = express.Router({mergeParams: true});
 
 const upload = multer({
-    dest : __dirname + "/public"
+    dest : __dirname + "/public/reader"
 });
 
 
@@ -38,10 +38,10 @@ router.get('/upload', async (req, res) => {
         //photo handling
         if(results[0].PHOTO == null) {
             console.log("Dummy Photo rendering");
-            path += "dummy.png";
+            path = "/reader/dummy.png";
         }
         else {
-            path += results[0].PHOTO;
+            path = "/reader/" + results[0].PHOTO;
         }
         console.log(path);
         res.render('layout.ejs', {
@@ -145,10 +145,10 @@ router.post('/upload', async(req,res)=>{
 
         if(results[0].PHOTO == null) {
             console.log("Dummy Photo rendering");
-            path += "dummy.png";
+            path = "/reader/dummy.png";
         }
         else {
-            path += results[0].PHOTO;
+            path = "/reader/" + results[0].PHOTO;
         }
 
         if(results[0].PASSWORD != req.body.password){

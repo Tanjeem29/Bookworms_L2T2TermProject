@@ -1,0 +1,28 @@
+<div class="container">
+    <%  for (var i = 0; i< Math.ceil(genres.length/4); i++) {  %>
+        <%console.log(genres.length);%>
+        <div class="row">
+
+        <%  for (var j = 0; j< 4 && 4*i + j < genres.length; j++) {  %>
+            
+            <div class="col-sm-3">
+                
+                <div class="container">
+                    <ul>
+                    <h4><i><%=genres[4*i+j][0].GENRE_NAME%></i></h4>
+                    <%  for (var k = 0; k < Math.min(genres[4*i+j].length, 3); k++) {  %>
+                        <li>
+                            <a = class = "single" href = "/books/<%=genres[4*i+j][k].BOOK_ID%>" style="color: rgb(33, 81, 240)"><%=  genres[4*i+j][k].TITLE  %> </a>
+                            <i><br>ISMDB Rating: <%=genres[4*i+j][k].ISMDB_RATINGS %></i>
+                        </li>
+                    <%}%>
+                    </ul>
+                </div>
+            </div>
+        <%  }  %>
+        </div>
+
+    <%  }  %>
+
+
+</div>

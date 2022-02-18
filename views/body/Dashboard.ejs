@@ -1,0 +1,107 @@
+<div class="container">
+    <h4>Name: <%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%></h4>
+    <h5><p>Username: <%=reader.USERNAME%></h5>
+    </div>
+    
+    <div class="container">
+    <div class = "row">
+    <div class = "col-sm-12">
+    <h6>
+        <b> Recent BookShelf Activities: </b> </h6>
+        <ul>
+                <%  for (var i = 0; i< bLen; i++) {  %>
+                    
+                    <li>
+                            Added 
+                            <a = class = "single" href = "/books/<%=books[i].BOOK_ID%>" ><%=  books[i].TITLE  %> </a>
+                            to 
+                            <%if(books[i].STATUS == 1){%> 
+                                <b>"Has Read"</b>
+                            <%}%>
+                            <%if(books[i].STATUS == 2){%> 
+                                <b>"Is Reading"</b>
+                            <%}%>
+                            <%if(books[i].STATUS == 3){%> 
+                                <b>"Will Read"</b>
+                            <%}%>
+
+                            <%if(books[i].TD < 1){%> 
+                                <%if(Math.round(books[i].TD * 24) == 0){%>
+                                    <i>less than an hour</i> ago
+                                <%}%>
+                                <%if(Math.round(books[i].TD * 24) > 0){%>
+                                    <i><%= Math.round(books[i].TD * 24)%> hours</i> ago
+                                <%}%>
+
+                            <%}%>
+                            
+                            <%if(books[i].TD > 30){%> 
+                                <i><%= Math.round(books[i].TD / 30)%> month(s)</i> ago
+                            <%}%>
+                            <%if(books[i].TD > 1 && books[i].TD < 30){%> 
+                                <i> <%= Math.round(books[i].TD)%> days</i> ago
+                            <%}%>
+
+                    </li>
+                    
+                    
+                <%  }  %>
+        </ul>
+    
+    
+        <h6>
+            <b> Recently started following these Authors: </b> </h6>
+            <ul>
+                    <%  for (var i = 0; i< AfLen; i++) {  %>
+                        
+                        <li>
+                                Followed 
+                                <a = class = "single" href = "/authors/<%=Afollows[i].AUTHOR_ID%>" ><%=  Afollows[i].FIRST_NAME + ' ' + Afollows[i].LAST_NAME   %> </a>
+                                <i><%=Afollows[i].TD%></i> ago
+    
+                        </li>
+                        
+                        
+                    <%  }  %>
+            </ul>
+        
+        
+        <h6>
+            <b>  Recently started following these Readers: </b> </h6>
+            <ul>
+                    <%  for (var i = 0; i< RfLen; i++) {  %>
+                        
+                        <li>
+                                Followed 
+                                <a = class = "single" href = "/readers/<%=Rfollows[i].READER_ID%>" ><%=  Rfollows[i].FIRST_NAME + ' ' + Rfollows[i].LAST_NAME   %> </a>
+                                <i><%=Rfollows[i].TD%></i> ago
+    
+                        </li>
+                        
+                        
+                    <%  }  %>
+            </ul>
+        
+        
+
+
+
+        
+            <h6>
+                <b> Recent Followers: </b> </h6>
+                <ul>
+                        <%  for (var i = 0; i< fbLen; i++) {  %>
+                            
+                            <li>
+                                    <a = class = "single" href = "/readers/<%=followers[i].READER_ID%>" ><%=  followers[i].FIRST_NAME + ' ' + followers[i].LAST_NAME   %> </a>
+                                    started following you
+                                    <i><%=followers[i].TD%></i> ago
+        
+                            </li>
+                            
+                            
+                        <%  }  %>
+                </ul>
+            
+            </div>
+        </div>

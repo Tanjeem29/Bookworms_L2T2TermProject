@@ -1,60 +1,3 @@
-/*
-// libraries
-const express = require('express');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-
-// middlewares/
-////const errorHandling = require('./middlewares/errorHandling');
-////const auth = require('./middlewares/auth');
-
-// router
-///const router = require('./router/indexRouter');
-
-// app creation
-const app = express();
-
-// using libraries
-// app.use(fileUpload({ createParentPath : true }));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-//app.use(auth);
-app.use(morgan('tiny'));
-
-// setting ejs to be view engine
-app.set('view engine', 'ejs');
-
-// allow public directory
-app.use(express.static('public'));
-
-//app.set('strict routing', true);
-// using router
-////app.use('/', router);
-
-// using error handling middlware
-////app.use(errorHandling.notFound);
-////app.use(errorHandling.errorHandler);
-
-module.exports = app; */
-/*
-netstat -ano | findstr :3000
-tskill typeyourPIDhere
-
-*/
-
-
-
-
-
-const books = [
-    {title: 'HP1',  body: 'Sorcerers stone'},
-    {title: 'HP2',  body: 'Chamber'},
-    {title: 'HP3',  body: 'Azkaban'},
-
-];
-
 
 const oneDay = 1000 * 60 * 60 * 24;
 
@@ -109,6 +52,8 @@ const mainreaderRoutes = require('.//routes/readerRoutes/mainreaderRoutes.js');
 const photoUploadRoutes = require('./routes/photoRoutes/photoUploadRoute.js');
 //wallpost
 const wallPostRoutes = require('./routes/wallPostRoutes/wallpostRoutes.js');
+const otherRoutes = require('.//routes/homeRoutes/otherRoutes.js');
+const genreRoutes = require('.//routes/genreRoutes/maingenreRoutes.js');
 
 
 
@@ -126,6 +71,11 @@ app.use(registerRoutes);
 //photoUpload
 app.use(photoUploadRoutes);
 app.use(wallPostRoutes);
+//profile and Dashboard
+app.use(otherRoutes);
+app.use(genreRoutes);
+
+
 
 
 

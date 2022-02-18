@@ -1,0 +1,120 @@
+<div class="container">
+    <img src="<%=photo%>" alt="Profile picture" width="150">
+</div>   
+
+
+<div class="container">
+<h4><%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%></h4>
+<h5><p><%=reader.USERNAME%></h5>
+</div>
+
+<div class="container">
+<h6>
+    <b> Books Already Read  (Total: <%=booksread.length%>) </b></h6>
+    <% if(booksread.length == 0) {  %>
+        <p>No Books Finished Reading yet</p>
+    <% } %>
+    
+    <ul>
+        <% if(booksread.length > 0) { %>
+            <%  for (var i = 0; i< booksread.length; i++) {  %>
+                <% console.log('this is ' + i + ' ' + booksread[0].title)  %>
+                
+                <li>
+                    
+                        <a = class = "single" href = "/books/<%=booksread[i].BOOK_ID%>" ><%=  booksread[i].TITLE  %> </a>
+                    
+                </li>
+                
+                
+            <%  }  %>
+        <% } %>
+    </ul>
+
+</div>
+
+
+<div class="container">
+<h6>
+    <b> Books Currently Reading (Total: <%=booksreading.length%>) </b> </h6>
+    <% if(booksreading.length == 0) {  %>
+        <p>No Books Currently Reading</p>
+    <% } %>
+    
+    <ul>
+        <% if(booksreading.length > 0) { %>
+            <%  for (var i = 0; i< booksreading.length; i++) {  %>
+                <% console.log('this is ' + i + ' ' + booksreading[0].title)  %>
+                
+                <li>
+                    
+                        <a = class = "single" href = "/books/<%=booksreading[i].BOOK_ID%>" ><%=  booksreading[i].TITLE  %> </a>
+                    
+                </li>
+                
+                
+            <%  }  %>
+        <% } %>
+    </ul>
+
+
+
+</div>
+
+
+<div class="container">
+<h6>
+    <b> Books to be Read (Total: <%=bookswillread.length%>) </b> </h6>
+    <% if(booksreading.length == 0) {  %>
+        <p>No Books to be Read</p>
+    <% } %>
+    
+    <ul>
+        <% if(bookswillread.length > 0) { %>
+            <%  for (var i = 0; i< bookswillread.length; i++) {  %>
+                <% console.log('this is ' + i + ' ' + bookswillread[0].title)  %>
+                
+                <li>
+                    
+                        <a = class = "single" href = "/books/<%=bookswillread[i].BOOK_ID%>" ><%=  bookswillread[i].TITLE  %> </a>
+                    
+                </li>
+                
+                
+            <%  }  %>
+        <% } %>
+    </ul>
+
+
+</div>
+
+
+<div class="container">
+
+
+<h6>
+    <% if(commonAuthors.length == 0) {  %>
+        <b>No Followed Authors</b>
+    <% } %>
+    <% if(commonAuthors.length > 0) {  %>
+        <b>Followed Authors (<%=commonAuthors.length%>)</b> </h6>
+        <ul>
+        
+            <%  for (var i = 0; i< commonAuthors.length; i++) {  %>
+                
+                <li>
+                    
+                        <a = class = "single" href = "/authors/<%=commonAuthors[i].AUTHOR_ID%>" ><%=  commonAuthors[i].FIRST_NAME + ' ' + commonAuthors[i].LAST_NAME  %> </a>
+                
+                </li>
+        
+            
+        <%  }  %>
+        </ul>
+    <% } %>
+
+    
+
+    
+
+

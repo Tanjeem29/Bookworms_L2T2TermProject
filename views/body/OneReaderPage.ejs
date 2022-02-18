@@ -1,0 +1,155 @@
+<div class="container">
+    <img src=<%=photo%> alt="Profile picture" width="150">
+</div>   
+
+
+<div class="container">
+<h4><%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%></h4>
+<h5><p><%=reader.USERNAME%></h5>
+</div>
+
+
+
+<div class="container">
+<% if(FollowStatus == 0) { %>
+                
+    <h6>
+        <b>Not Followed </b>
+    </h6>
+    <form action="/readers/follow/<%=reader.READER_ID%>" method="POST">
+        <button name="follow" value="1">Follow this Reader</button>
+    </form>
+    
+<% } %>
+
+<% if(FollowStatus == 1) { %>
+                
+    <h6>
+        <b> Following this Reader </b>
+    </h6>
+    <form action="/readers/follow/<%=reader.READER_ID%>" method="POST">
+        <button name="follow" value="0">Unfollow this Reader</button>
+    </form>
+    
+<% } %>
+</div>
+
+
+<div class="container">
+<h6>
+    <b> Books Already Read  (Total: <%=booksread.length%>) </b>
+    <% if(booksread.length == 0) {  %>
+        <p>No Books Finished Reading yet</p>
+    <% } %>
+    
+    <ul>
+        <% if(booksread.length > 0) { %>
+            <%  for (var i = 0; i< booksread.length; i++) {  %>
+                <% console.log('this is ' + i + ' ' + booksread[0].title)  %>
+                
+                <li>
+                    
+                        <a = class = "single" href = "/books/<%=booksread[i].BOOK_ID%>" ><%=  booksread[i].TITLE  %> </a>
+                    
+                </li>
+                
+                
+            <%  }  %>
+        <% } %>
+    </ul>
+</h6>
+</div>
+<div class="container">
+<h6>
+    <b> Books Currently Reading (Total: <%=booksreading.length%>) </b>
+    <% if(booksreading.length == 0) {  %>
+        <p>No Books Currently Reading</p>
+    <% } %>
+    
+    <ul>
+        <% if(booksreading.length > 0) { %>
+            <%  for (var i = 0; i< booksreading.length; i++) {  %>
+                
+                <li>
+                    
+                        <a = class = "single" href = "/books/<%=booksreading[i].BOOK_ID%>" ><%=  booksreading[i].TITLE  %> </a>
+                    
+                </li>
+                
+                
+            <%  }  %>
+        <% } %>
+    </ul>
+</h6>
+</div>
+<div class="container">
+<h6>
+    <b> Books to be Read (Total: <%=bookswillread.length%>) </b>
+    <% if(booksreading.length == 0) {  %>
+        <p>No Books to be Read</p>
+    <% } %>
+    
+    <ul>
+        <% if(bookswillread.length > 0) { %>
+            <%  for (var i = 0; i< bookswillread.length; i++) {  %>
+                
+                <li>
+                    
+                        <a = class = "single" href = "/books/<%=bookswillread[i].BOOK_ID%>" ><%=  bookswillread[i].TITLE  %> </a>
+                    
+                </li>
+                
+                
+            <%  }  %>
+        <% } %>
+    </ul>
+</h6>
+</div>
+<div class="container">
+<h6>
+    <b> Authors Followed (Total: <%=commonAuthors.length + otherAuthors.length%>) </b>
+</h6>
+</div>
+
+<div class="container">
+    <% if(commonAuthors.length == 0) {  %>
+        <p>No Common Followed Authors</p>
+    <% } %>
+    <% if(commonAuthors.length > 0) {  %>
+        Common Followed Authors:
+        <ul>
+        <%  for (var i = 0; i< commonAuthors.length; i++) {  %>
+            
+            <li>
+                
+                    <a = class = "single" href = "/authors/<%=commonAuthors[i].AUTHOR_ID%>" ><%=  commonAuthors[i].FIRST_NAME + ' ' + commonAuthors[i].LAST_NAME  %> </a>
+                
+            </li>
+            
+            
+        <%  }  %>
+    </ul>
+    <% } %>
+</div>
+
+<div class="container">
+    
+    <% if(otherAuthors.length == 0) {  %>
+    No Other Followed Authors
+    <% } %>
+    <% if(otherAuthors.length > 0) {  %>
+    Other Followed Authors:
+    <ul>
+        <%  for (var i = 0; i< otherAuthors.length; i++) {  %>
+            
+            <li>
+                    <a = class = "single" href = "/authors/<%=otherAuthors[i].AUTHOR_ID%>" ><%=  otherAuthors[i].FIRST_NAME + ' ' + otherAuthors[i].LAST_NAME  %> </a>
+            </li>
+            
+            
+        <%  }  %>
+    <% } %>
+    </ul>
+    
+</div>
+

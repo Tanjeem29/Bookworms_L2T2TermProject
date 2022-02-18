@@ -1,0 +1,26 @@
+ROOT = "D:\L2T2\CSE216\SampleTP\OracleExpressEjs"
+//Use own ROOT
+
+Paste this into .env
+
+
+
+
+Commands Before starting new session:
+
+Go to OracleNodeEjs using cmd and Do the following:
+
+git pull
+git merge origin/ratul_branch
+
+
+
+*Do necessary edits*
+
+
+Before ending a session:
+
+git status -s
+git add .
+git commit -am "message here"
+git push

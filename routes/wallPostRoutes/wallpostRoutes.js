@@ -33,7 +33,7 @@ router.post('/createWallPost',async (req, res) => {
             uid : session.userid
         }
         console.log('Inserting new Wallpost: ');
-        console.log(wallpost);
+        //console.log(wallpost);
         await DB_wallpost.insertWallPost(wallpost);
         console.log('New wallpost inserted');
         

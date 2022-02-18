@@ -1,4 +1,4 @@
-</div>
+</div class="container">
 <h2> Search Results for Books on "<%= body[2]%>" </h2>
 <% if(SearchResults.length == 0) {  %>
     <p>No Search Results</p>
@@ -14,7 +14,7 @@
                 
                 <h6>
                     <b>Publisher: </b>
-                    <a = class = "single" href = "#" ><%=  SearchResults[i].PUBLISHER_NAME  %></a>
+                    <a = class = "single" href = "/publishers/<%=SearchResults[i].PUBLISHER_ID%>" ><%=  SearchResults[i].PUBLISHER_NAME  %></a>
                 </h6>
                 
             <% } %>
