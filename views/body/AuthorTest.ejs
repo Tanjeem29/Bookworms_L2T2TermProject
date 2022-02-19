@@ -20,8 +20,8 @@
           
         <li>
                 <a = class = "single" href = "/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME   %> </a>
-                <ul>Wrote:
-                  <%  for (var j = 0; j< books[i].length; j++) {  %>
+                <ul>Books liked (<%=authors[i].C %>):
+                  <%  for (var j = 0; j< Math.min(books[i].length, 3); j++) {  %>
                       <li>
                         <a = class = "single" href = "/books/<%=books[i][j].BOOK_ID%>" ><%=  books[i][j].TITLE  %> </a>
                       </li>

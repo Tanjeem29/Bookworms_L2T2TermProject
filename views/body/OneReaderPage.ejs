@@ -116,7 +116,7 @@
         <p>No Common Followed Authors</p>
     <% } %>
     <% if(commonAuthors.length > 0) {  %>
-        Common Followed Authors:
+        Common Followed Authors: (<%=commonAuthors.length%>)
         <ul>
         <%  for (var i = 0; i< commonAuthors.length; i++) {  %>
             
@@ -138,7 +138,7 @@
     No Other Followed Authors
     <% } %>
     <% if(otherAuthors.length > 0) {  %>
-    Other Followed Authors:
+    Other Followed Authors: (<%=otherAuthors.length%>)
     <ul>
         <%  for (var i = 0; i< otherAuthors.length; i++) {  %>
             

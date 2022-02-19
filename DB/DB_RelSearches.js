@@ -225,16 +225,22 @@ async function getFollowersByReaderID(RID){
 
 
 
-
-async function authorPageQuery1(RID){ //gets authors of books in my bookshelf, that I've not followed
+async function authorPageQuery1(RID){ //gets authors of most books in my bookshelf, that I've not followed
     const sql = `
-    SELECT * FROM AUTHOR NATURAL JOIN (
-        (SELECT AUTHOR_ID FROM WRITTEN_BY NATURAL JOIN
-            (SELECT BOOK_ID FROM READ_STATUS
-            WHERE READER_ID = :RID))
-        MINUS
-        (Select AUTHOR_ID from FOLLOWER_AUTHOR
-        WHERE FOLLOWER_ID = :RID))
+    SELECT AUTHOR_ID, FIRST_NAME, LAST_NAME, C FROM AUTHOR NATURAL JOIN (
+        (SELECT AUTHOR_ID, COUNT(BOOK_ID) AS C
+						FROM 
+						WRITTEN_BY 
+						NATURAL JOIN
+						(SELECT BOOK_ID FROM READ_STATUS
+						WHERE READER_ID = :RID) 
+				GROUP BY AUTHOR_ID 
+				HAVING AUTHOR_ID NOT IN 
+									(Select AUTHOR_ID from FOLLOWER_AUTHOR
+									WHERE FOLLOWER_ID = :RID)
+				ORDER BY COUNT(BOOK_ID) DESC 
+				FETCH NEXT 5 ROWS ONLY) 
+		)
     `;
     const binds = {
         RID : RID,
@@ -252,7 +258,7 @@ async function authorPageQuery2(RID, AID){ //gets books in my bookshelf, of an a
     INTERSECT
     SELECT BOOK_ID FROM READ_STATUS
     WHERE READER_ID = :RID
-)
+)ORDER BY ISMDB_RATINGS DESC
     `;
     const binds = {
         RID : RID,
@@ -263,17 +269,23 @@ async function authorPageQuery2(RID, AID){ //gets books in my bookshelf, of an a
 }
 
 
-
 async function readerPageQuery1(RID){ //gets readers who like similar books, that I've not followed
     const sql = `
-    SELECT * FROM READER NATURAL JOIN (
-        (SELECT READER_ID FROM READ_STATUS NATURAL JOIN
-        (SELECT BOOK_ID FROM READ_STATUS
-        WHERE READER_ID = :RID)
-        WHERE READER_ID <> :RID)
-        MINUS
-        (Select READER_ID from FOLLOWER_READER
-        WHERE FOLLOWER_ID = :RID))
+    SELECT READER_ID, FIRST_NAME, LAST_NAME, USERNAME, C FROM READER NATURAL JOIN (
+        (SELECT READER_ID, COUNT(BOOK_ID) AS C
+						FROM 
+						READ_STATUS 
+						NATURAL JOIN
+						(SELECT BOOK_ID FROM READ_STATUS
+						WHERE READER_ID = :RID) 
+				WHERE READER_ID <> :RID 
+				GROUP BY READER_ID 
+				HAVING READER_ID NOT IN 
+									(Select READER_ID from FOLLOWER_READER
+									WHERE FOLLOWER_ID = :RID)
+				ORDER BY COUNT(BOOK_ID) DESC 
+				FETCH NEXT 5 ROWS ONLY) 
+		)
     `;
     const binds = {
         RID : RID,
@@ -291,7 +303,7 @@ async function readerPageQuery2(FID, RID){ //gets books in my bookshelf, liked b
     INTERSECT
     SELECT BOOK_ID FROM READ_STATUS
     WHERE READER_ID = :FID
-    )
+    ) ORDER BY ISMDB_RATINGS DESC
     `;
     const binds = {
         RID : RID,

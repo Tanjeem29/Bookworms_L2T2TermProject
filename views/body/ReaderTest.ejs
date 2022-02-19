@@ -18,8 +18,8 @@
       <%  for (var i = 0; i< RLen; i++) {  %>
           
         <li>
-                <%=readers[i].FIRST_NAME + ' ' + readers[i].LAST_NAME%> <a = class = "single" href = "/readers/<%=readers[i].AUTHOR_ID%>" > <i> <%=" (" + readers[i].USERNAME + ") "   %> </i></a>
-                <ul>Also likes:
+                <%=readers[i].FIRST_NAME + ' ' + readers[i].LAST_NAME%> <a = class = "single" href = "/readers/<%=readers[i].READER_ID%>" > <i> <%=" (" + readers[i].USERNAME + ") "   %> </i></a>
+                <ul>Common books liked (<%=readers[i].C %>):
                   <%  for (var j = 0; j< books[i].length; j++) {  %>
                     <li>
                       <a = class = "single" href = "/books/<%=books[i][j].BOOK_ID%>" ><%=  books[i][j].TITLE  %> </a>
