@@ -224,6 +224,84 @@ async function getFollowersByReaderID(RID){
 }
 
 
+
+
+async function authorPageQuery1(RID){ //gets authors of books in my bookshelf, that I've not followed
+    const sql = `
+    SELECT * FROM AUTHOR NATURAL JOIN (
+        (SELECT AUTHOR_ID FROM WRITTEN_BY NATURAL JOIN
+            (SELECT BOOK_ID FROM READ_STATUS
+            WHERE READER_ID = :RID))
+        MINUS
+        (Select AUTHOR_ID from FOLLOWER_AUTHOR
+        WHERE FOLLOWER_ID = :RID))
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function authorPageQuery2(RID, AID){ //gets books in my bookshelf, of an author that I've not followed
+    const sql = `
+    SELECT * FROM BOOKS
+    NATURAL JOIN (
+    SELECT BOOK_ID FROM WRITTEN_BY
+    WHERE AUTHOR_ID = :AID
+    INTERSECT
+    SELECT BOOK_ID FROM READ_STATUS
+    WHERE READER_ID = :RID
+)
+    `;
+    const binds = {
+        RID : RID,
+        AID : AID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+
+
+async function readerPageQuery1(RID){ //gets readers who like similar books, that I've not followed
+    const sql = `
+    SELECT * FROM READER NATURAL JOIN (
+        (SELECT READER_ID FROM READ_STATUS NATURAL JOIN
+        (SELECT BOOK_ID FROM READ_STATUS
+        WHERE READER_ID = :RID)
+        WHERE READER_ID <> :RID)
+        MINUS
+        (Select READER_ID from FOLLOWER_READER
+        WHERE FOLLOWER_ID = :RID))
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function readerPageQuery2(FID, RID){ //gets books in my bookshelf, liked by an unfollowed reader
+    const sql = `
+    SELECT * FROM BOOKS
+    NATURAL JOIN (
+    SELECT BOOK_ID FROM READ_STATUS
+    WHERE READER_ID = :RID
+    INTERSECT
+    SELECT BOOK_ID FROM READ_STATUS
+    WHERE READER_ID = :FID
+    )
+    `;
+    const binds = {
+        RID : RID,
+        FID : FID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+
 module.exports ={
     getBooksByPublisherID,
     getAuthorByBookID,
@@ -237,7 +315,11 @@ module.exports ={
     getAllBooksByReaderID,
     getAuthorsFollowedByReaderID,
     getReadersFollowedByReaderID,
-    getFollowersByReaderID
+    getFollowersByReaderID,
+    authorPageQuery1,
+    authorPageQuery2,
+    readerPageQuery1,
+    readerPageQuery2
     
 
 }

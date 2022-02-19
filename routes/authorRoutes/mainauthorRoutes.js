@@ -11,7 +11,7 @@ const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
 const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
 const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
 
-router.get('/authors', (req,res)=>{
+router.get('/authors', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -19,10 +19,26 @@ router.get('/authors', (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let id = req.session.userid;
+        let authors = await DB_RelSearches.authorPageQuery1(id);
+        //console.log(authors); 
+        let ALen = Math.min(authors.length, 5);
+        let books = [];
+        for(var i = 0; i< ALen; i++){
+            let temp = await DB_RelSearches.authorPageQuery2(id, authors[i].AUTHOR_ID);
+            books.push(temp);
+            //console.log(books[i].length);
+        }
+        //console.log(books);
+        
+
         res.render('layout.ejs', {
             title : 'Authors',
             body : ['AuthorTest','partials/navbar/navbar'],
             user : null,
+            authors : authors,
+            AfLen : ALen,
+            books : books,
             //books
             //errors : errors
         })

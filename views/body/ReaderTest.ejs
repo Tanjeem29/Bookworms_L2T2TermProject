@@ -10,3 +10,30 @@
         <button class="search-btn" type="submit">Submit</button>
     <div class="imae"></div>
   </form>
+
+  <div class="container">
+    <h5>Readers with similar interests:</h5>
+    
+      <ul>
+      <%  for (var i = 0; i< RLen; i++) {  %>
+          
+        <li>
+                <%=readers[i].FIRST_NAME + ' ' + readers[i].LAST_NAME%> <a = class = "single" href = "/readers/<%=readers[i].AUTHOR_ID%>" > <i> <%=" (" + readers[i].USERNAME + ") "   %> </i></a>
+                <ul>Also likes:
+                  <%  for (var j = 0; j< books[i].length; j++) {  %>
+                    <li>
+                      <a = class = "single" href = "/books/<%=books[i][j].BOOK_ID%>" ><%=  books[i][j].TITLE  %> </a>
+                    </li>
+
+                    <%  }  %>
+                
+                  </ul>
+        </li>
+      
+        
+        
+    <%  }  %>
+      </ul>
+
+
+  </div>

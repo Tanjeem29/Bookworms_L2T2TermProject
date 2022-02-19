@@ -10,3 +10,31 @@
         <button class="search-btn" type="submit">Submit</button>
     <div class="imae"></div>
   </form>
+
+
+  <div class="container">
+    <h5>Unfollowed Authors with books in your Bookshelf:</h5>
+    
+      <ul>
+      <%  for (var i = 0; i< AfLen; i++) {  %>
+          
+        <li>
+                <a = class = "single" href = "/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME   %> </a>
+                <ul>Wrote:
+                  <%  for (var j = 0; j< books[i].length; j++) {  %>
+                      <li>
+                        <a = class = "single" href = "/books/<%=books[i][j].BOOK_ID%>" ><%=  books[i][j].TITLE  %> </a>
+                      </li>
+
+                    <%  }  %>
+                
+                  </ul>
+        </li>
+      
+        
+        
+    <%  }  %>
+      </ul>
+
+
+  </div>

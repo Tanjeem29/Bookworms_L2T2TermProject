@@ -11,7 +11,7 @@ const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
 const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
 const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
 
-router.get('/readers', (req,res)=>{
+router.get('/readers', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -19,10 +19,26 @@ router.get('/readers', (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let id = req.session.userid;
+        let readers = await DB_RelSearches.readerPageQuery1(id);
+        console.log(readers); 
+        let RLen = Math.min(readers.length, 5);
+        let books = [];
+        for(var i = 0; i< RLen; i++){
+            let temp = await DB_RelSearches.readerPageQuery2(id, readers[i].READER_ID);
+            books.push(temp);
+        }
+        console.log(books);
+
+
+
         res.render('layout.ejs', {
             title : 'Readers',
             body : ['ReaderTest','partials/navbar/navbar'],
             user : null,
+            readers : readers,
+            RLen : RLen,
+            books : books,
             //books
             //errors : errors
         })
