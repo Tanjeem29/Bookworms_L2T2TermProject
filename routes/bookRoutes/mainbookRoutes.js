@@ -21,8 +21,9 @@ const router = express.Router({mergeParams : true});
     const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
     const DB_review = require(process.env.ROOT + '\\DB\\DB_review');
 
+    const DB_Genre = require(process.env.ROOT + '\\DB\\DB_Genre');
 
-router.get('/books', (req,res)=>{
+router.get('/books', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -30,11 +31,22 @@ router.get('/books', (req,res)=>{
         res.redirect('/login');
     }
     else{
+        genre = await DB_Genre.getGenres();
+        //console.log(genre);
+        let mainGenre = [];
+        let temp;
+        for (let i = 0; i < genre.length; i++) {
+            temp = await DB_Genre.getBooksByGenreID(genre[i].GENRE_ID);
+            //console.log(temp);
+            mainGenre.push(temp);
+          }
+          console.log(mainGenre);
+
         res.render('layout.ejs', {
             title : 'Books',
             body : ['BookTest','partials/navbar/navbar'],
             user : null,
-            books
+            genres : mainGenre,
             //errors : errors
         })
     }
