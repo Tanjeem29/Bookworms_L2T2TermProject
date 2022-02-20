@@ -59,33 +59,43 @@ router.post('/readers/search', async (req, res) => {
         let results;
         let fl = req.body.fl;
         let type;
-        console.log(fl)
-        if(fl == 1){
-            results = await DB_Searches.searchByReadername(req.body.search);
-            type = 'All';
+        console.log(fl);
+
+
+        if(typeof fl == 'undefined'){
+            res.redirect('/readers');
         }
-        else if(fl == 2){
-            results = await DB_Searches.searchByReadername_Followed(id,req.body.search);
-            type = 'Followed';
+        else{
+            if(fl == 1){
+                results = await DB_Searches.searchByReadername(req.body.search);
+                type = 'All';
+            }
+            else if(fl == 2){
+                results = await DB_Searches.searchByReadername_Followed(id,req.body.search);
+                type = 'Followed';
+            }
+            else if(fl == 3){
+                results = await DB_Searches.searchByReadername_NotFollowed(id,req.body.search);
+                type = 'Not Followed';
+            }
+            //let results = await DB_Searches.searchByReadername(req.body.search);
+            //let results = await DB_Searches.searchByReadername_Followed(id, req.body.search);
+            //let results = await DB_Searches.searchByReadername_NotFollowed(id, req.body.search);
+            //console.log(results);
+            res.render('layout.ejs', {
+                title : 'Readers',
+                body : ['ReaderSearchTest','partials/navbar/navbar', req.body.search],
+                user : null,
+                SearchResults: results,
+                uid : req.session.userid,
+                type : type
+                //books
+                //errors : errors
+            })
         }
-        else if(fl == 3){
-            results = await DB_Searches.searchByReadername_NotFollowed(id,req.body.search);
-            type = 'Not Followed';
-        }
-        //let results = await DB_Searches.searchByReadername(req.body.search);
-        //let results = await DB_Searches.searchByReadername_Followed(id, req.body.search);
-        //let results = await DB_Searches.searchByReadername_NotFollowed(id, req.body.search);
-        //console.log(results);
-        res.render('layout.ejs', {
-            title : 'Readers',
-            body : ['ReaderSearchTest','partials/navbar/navbar', req.body.search],
-            user : null,
-            SearchResults: results,
-            uid : req.session.userid,
-            type : type
-            //books
-            //errors : errors
-        })
+
+
+        
     }
 
 

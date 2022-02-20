@@ -62,8 +62,15 @@ router.post('/authors/search', async (req, res) => {
         let id = req.session.userid;
         let results;
         let fl = req.body.fl;
+    
         let type;
         console.log(fl)
+        if(typeof fl == 'undefined'){
+            res.redirect('/authors');
+        }
+        else
+        {
+            
         if(fl == 1){
             results = await DB_Searches.searchByAuthorname(req.body.search);
             type = 'All';
@@ -88,6 +95,8 @@ router.post('/authors/search', async (req, res) => {
             //books
             //errors : errors
         })
+
+        }
     }
 
 
