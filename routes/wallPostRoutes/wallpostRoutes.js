@@ -75,13 +75,13 @@ router.delete('/wallpost/:id', async (req, res) => {
         console.log("No Session!!!!");
         res.redirect('/login');
     }
-    // else {
-    //     const wallid = req.params.id;
-    //     await DB_wallpost.deleteWallpostByID(wid);
-    //     res.json({
-    //         redirect = '/'
-    //     });
-    // }
+    else {
+        const wallid = req.params.id;
+        await DB_wallpost.deleteWallpostByID(wallid);
+        res.json({
+            redirect : '/dashboard'
+        });
+    }
 })
 
 

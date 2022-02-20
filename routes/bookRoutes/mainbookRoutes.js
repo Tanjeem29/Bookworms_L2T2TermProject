@@ -32,12 +32,12 @@ router.get('/books', async (req,res)=>{
     }
     else{
         genre = await DB_Genre.getGenres();
-        //console.log(genre);
+        console.log(genre);
         let mainGenre = [];
         let temp;
         for (let i = 0; i < genre.length; i++) {
             temp = await DB_Genre.getBooksByGenreID(genre[i].GENRE_ID);
-            //console.log(temp);
+            console.log(temp);
             mainGenre.push(temp);
           }
           console.log(mainGenre);
@@ -201,11 +201,18 @@ router.delete('/review/:id',async (req, res) => {
         console.log(req.params.id);
         const rid = req.params.id.split('-')[0];
         const bid = req.params.id.split('-')[1];
+        
         let results = await DB_review.deleteReview(rid);
-        console.log(results);
-        res.json({
-            redirect : '/books/'+bid
-        });
+        if(bid == 'dashboard') {
+            res.json({
+                redirect : '/dashboard'
+            });
+        }
+        else {
+            res.json({
+                redirect : '/books/'+bid
+            });
+        }
     }
 });
 

@@ -342,34 +342,9 @@ async function readerPageQuery2(FID, RID){ //gets books in my bookshelf, liked b
 }
 
 //Move to review later
-async function getBooknReviewByReaderID(usr) {
-    const sql = `
-    SELECT * 
-    FROM (SELECT * FROM REVIEW
-    WHERE READER_ID = :RID)
-    NATURAL JOIN BOOKS
-    ORDER BY DATED DESC
-    `;
-    const binds = {
-        RID : usr
-    }
 
-    return (await db.execute(sql, binds, db.options)).rows;
-}
 
-async function getWallpostByReaderID(usr) {
-    const sql = `
-    SELECT * 
-    FROM WALLPOST
-    WHERE POSTED_BY_ID = :RID
-    ORDER BY DATED DESC
-    `;
-    const binds = {
-        RID : usr
-    }
 
-    return (await db.execute(sql, binds, db.options)).rows;
-}
 
 
 
@@ -393,10 +368,5 @@ module.exports ={
     authorPageQuery2,
     readerPageQuery1,
     readerPageQuery2,
-    //Move to review
-    getBooknReviewByReaderID,
-    getWallpostByReaderID,
-    //Move to wallpost
-    
 
 }
