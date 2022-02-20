@@ -63,7 +63,6 @@ router.get('/books/:id', async (req,res)=>{
     }
     else{
         const id = req.params.id;
-        
         let books;
         //results = DB_getByID;
         books = await DB_getByID.getByBookID(id);
@@ -72,7 +71,8 @@ router.get('/books/:id', async (req,res)=>{
         ReadStatus = await DB_RelSearches.getReadStatusForBook(session.userid, id);
         
         //review stuff
-        let allReviews = await DB_review.geyReviewByBookID(id);
+        let userReview = await DB_review.getUserSpecificReviewByBookID(id, session.userid);
+        let otherReview = await DB_review.getOthersReviewByBookID(id, session.userid);
         let reviewSummary = await DB_review.getReviewSummary(id);
         //console.log(reviewSummary);
         //console.log(allReviews);
@@ -97,9 +97,9 @@ router.get('/books/:id', async (req,res)=>{
             publisher: publisher,
             rid : session.userid,
             ReadStatus : newReadStatus,
-            reviews : allReviews,
+            ownReview : userReview,
+            othersReview : otherReview,
             summary : reviewSummary
-            
             //books
             //errors : errors
         })
@@ -175,6 +175,24 @@ router.post('/books/readStatus/:id', async (req, res) => {
         res.redirect(str);
     }
 
+});
+
+router.delete('/review/:id',async (req, res) => {
+    session = req.session;
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        console.log(req.params.id);
+        const rid = req.params.id.split('-')[0];
+        const bid = req.params.id.split('-')[1];
+        let results = await DB_review.deleteReview(rid);
+        console.log(results);
+        res.json({
+            redirect : '/books/'+bid
+        });
+    }
 });
 
 router.post('/books/review/:id', async (req, res) => {

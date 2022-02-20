@@ -45,9 +45,22 @@ async function fetchWallPost(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function deleteWallpostByID(wid) {
+    const sql = `
+        DELETE FROM WALLPOST
+        WHERE WALLPOST_ID = :WID
+    `;
+    const binds = {
+        WID : wid
+    }
+
+    return await db.execute(sql, binds, db.options);
+}
+
 
 
 module.exports = {
     insertWallPost,
-    fetchWallPost
+    fetchWallPost,
+    deleteWallpost
 };

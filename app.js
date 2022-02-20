@@ -71,6 +71,7 @@ app.use(registerRoutes);
 //photoUpload
 app.use(photoUploadRoutes);
 app.use(wallPostRoutes);
+
 //profile and Dashboard
 app.use(otherRoutes);
 app.use(genreRoutes);
