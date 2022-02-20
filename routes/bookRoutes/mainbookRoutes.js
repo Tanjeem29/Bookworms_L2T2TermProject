@@ -40,7 +40,7 @@ router.get('/books', async (req,res)=>{
             console.log(temp);
             mainGenre.push(temp);
           }
-          console.log(mainGenre);
+          //console.log(mainGenre);
 
         res.render('layout.ejs', {
             title : 'Books',
@@ -144,7 +144,7 @@ router.post('/books/search', async (req, res) => {
             results = await DB_Searches.searchBookByAuthorName(req.body.search);
         }
         
-        console.log(results);
+        //console.log(results);
         res.render('layout.ejs', {
             title : 'Books',
             body : ['BookSearchTest','partials/navbar/navbar', req.body.search],
@@ -171,7 +171,7 @@ router.post('/books/readStatus/:id', async (req, res) => {
         let str = '/books/' + id;
        // console.log(str);
        let RS = req.body.ReadStatus;
-       console.log(RS);
+       //console.log(RS);
        ReadStatus = await DB_RelSearches.getReadStatusForBook(session.userid, id);
        let results;
        if(ReadStatus.length == 0){
@@ -232,7 +232,7 @@ router.post('/books/review/:id', async (req, res) => {
         }
 
         let result = await DB_review.insertReview(reviewInfo);
-        console.log(result);
+        //console.log(result);
         res.redirect('/books/'+id);
     }
 });
@@ -255,8 +255,8 @@ router.get('/publishers/:id', async (req,res)=>{
         publisher = await DB_getByID.getByPublisherID(id);
         books = await DB_RelSearches.getBooksByPublisherID(id);
  
-        console.log(publisher[0]);
-        console.log(books);
+        //console.log(publisher[0]);
+        //console.log(books);
 
         
 
@@ -293,7 +293,11 @@ router.get('/genres/:id', async (req,res)=>{
         genre = await DB_getByID.getByGenreID(id);
         books = await DB_RelSearches.getBooksByGenreID(id);
         authors = await DB_RelSearches.getAuthorsByGenreID(id);
- 
+        LikeStatus = await DB_RelSearches.getReaderGenreStatus(session.userid, id);
+        let LS = LikeStatus.length;
+        console.log(LS);
+
+
         // console.log(genre[0]);
         // console.log(books);
         //console.log(authors);
@@ -307,12 +311,54 @@ router.get('/genres/:id', async (req,res)=>{
             user : null,
             books: books,
             genre: genre[0],
-            authors : authors
+            authors : authors,
+            FollowStatus : LS
             
             //books
             //errors : errors
         })
 
+    }
+    
+});
+
+
+router.post('/genres/:id', async (req,res)=>{
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        const id = req.params.id;
+        //console.log(mainGenre);
+        //LikeStatus = await DB_RelSearches.getReaderGenreStatus(session.userid, id);
+        // let LS = LikeStatus.length;
+        // console.log(LS);
+
+        let LS = req.body.like;
+        let r;
+       
+        LikeStatusResult = await DB_RelSearches.getReaderGenreStatus(session.userid, id);
+        LikeStatus = LikeStatusResult.length;
+        console.log(LS);
+        console.log(LikeStatus);
+
+
+        let str = '/genres/' + id;
+
+        if(LS != LikeStatus){
+            if(LS == 0){
+                r = await DB_Deletes.resetReaderGenre(session.userid, id);
+            }
+            else{
+                //console.log('Inserting FOllowAuthor');
+                r = await DB_inserts.insertReaderGenre(session.userid, id);
+            }
+       }
+
+        res.redirect(str);
     }
     
 });

@@ -341,7 +341,19 @@ async function readerPageQuery2(FID, RID){ //gets books in my bookshelf, liked b
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
-//Move to review later
+async function getReaderGenreStatus(RID, GID){
+    const sql = `
+    SELECT * 
+    FROM READER_GENRE RG
+    WHERE RG.GENRE_ID = :GID AND RG.READER_ID = :RID
+    `;
+    const binds = {
+        GID : GID,
+        RID : RID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
 
 
 
@@ -368,5 +380,6 @@ module.exports ={
     authorPageQuery2,
     readerPageQuery1,
     readerPageQuery2,
+    getReaderGenreStatus
 
 }

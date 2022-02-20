@@ -39,15 +39,17 @@ router.get('/genres', async (req,res)=>{
             //console.log(temp);
             mainGenre.push(temp);
           }
-          console.log(mainGenre);
-
-
+          //console.log(mainGenre);
+          LikeStatus = await DB_RelSearches.getReaderGenreStatus(session.userid, id);
+          let LS = LikeStatus.length;
+          console.log(LS);
 
         res.render('layout.ejs', {
             title : 'Genres',
             body : ['GenreTest','partials/navbar/navbar'],
             user : null,
             genres : mainGenre,
+            FollowStatus : LS
             //errors : errors
         })
     }

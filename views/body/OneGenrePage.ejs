@@ -4,6 +4,30 @@
     </div>
 </div>
 
+
+<% if(FollowStatus == 0) { %>
+                
+    <h6>
+        <b>Not Added to Favorites </b>
+    </h6>
+    <form action="/genres/<%=genre.GENRE_ID%>" method="POST">
+        <button name="like" value="1">Add to Favorites</button>
+    </form>
+    
+<% } %>
+
+<% if(FollowStatus == 1) { %>
+                
+    <h6>
+        <b> Added to favorites </b>
+    </h6>
+    <form action="/genres/<%=genre.GENRE_ID%>" method="POST">
+        <button name="like" value="0">Remove from Favorites</button>
+    </form>
+    
+<% } %>
+</div>
+
 <div class="container">
     <div class="row">
         <p>
@@ -11,6 +35,8 @@
         </p>
     </div>
 </div>
+
+
 
 
 <div class="container">

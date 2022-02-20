@@ -47,9 +47,26 @@ async function insertFollowReader(FID, RID){
     return (await db.execute(sql, binds, {}));
 }
 
+async function insertReaderGenre(RID, GID){
+    const sql = `
+    INSERT INTO READER_GENRE 
+	(GENRE_ID, READER_ID) 
+	VALUES 
+	(:GID, :RID)
+    `;
+    const binds = {
+        RID : RID,
+        GID : GID
+    }
+
+    return (await db.execute(sql, binds, {}));
+}
+
+
 module.exports =
 { 
     insertReadStatus,
     insertFollowAuthor,
-    insertFollowReader
+    insertFollowReader,
+    insertReaderGenre
 }
