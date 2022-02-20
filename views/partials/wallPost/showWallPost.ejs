@@ -13,7 +13,7 @@
                     <h5 class="username-style" name="username">Posted By:  <%= wallposts[i].USERNAME %> </h5>
                     <h6 class="time-style" name="time">Posten on: <%- wallposts[i].TIMEDIF%> ago</h6>>
                     <p class="post-body-style" name="postBody"><%= wallposts[i].POST_BODY%></p>
-                    <p id="likeCount-<%= wallposts[i].WALLPOST_ID %>" class="reaction-style" name="likeCount"><%= wallposts[i].LIKE_COUNT%></p>
+                    <p id="likeCount-<%= wallposts[i].WALLPOST_ID %>" class="reaction-style" name="likeCount"> <%= wallposts[i].LIKE_COUNT%> People Reacted</p>
                     <% if(wallposts[i].REACTION_STATUS) { %>
                       <form action="/wallpost/unlike/<%= wallposts[i].WALLPOST_ID %>" method="POST">
                         <input type="submit" value="Remove Like">

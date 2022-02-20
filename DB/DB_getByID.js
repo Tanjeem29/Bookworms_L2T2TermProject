@@ -52,10 +52,23 @@ async function getByPublisherID(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function getByGenreID(strin){
+    const sql = `
+    select * from GENRE
+    where GENRE_ID = :GID
+    `;
+    const binds = {
+        GID : strin
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 module.exports =
 { 
     getByBookID,
     getByAuthorID,
     getByReaderID,
-    getByPublisherID
+    getByPublisherID,
+    getByGenreID
 }

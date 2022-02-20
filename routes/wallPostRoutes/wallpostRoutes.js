@@ -77,9 +77,9 @@ router.delete('/wallpost/:id', async (req, res) => {
     }
     else {
         const wallid = req.params.id;
-        await DB_wallpost.deleteWallpostByID(wid);
+        await DB_wallpost.deleteWallpostByID(wallid);
         res.json({
-            redirect = '/'
+            redirect : '/dashboard'
         });
     }
 })

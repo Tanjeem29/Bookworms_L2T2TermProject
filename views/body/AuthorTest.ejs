@@ -1,12 +1,48 @@
-<div class="input-group">
+
+  <div class="input-group">
+
     <form action="/authors/search" method="POST">
+        <label for="fl">Search Type:</label>
+        <select name="fl" id="fl">
+            <option value="1">All Authors</option>
+            <option value="2">Followed</option>
+            <option value="3">Not followed</option>
+        </select>
         <input
           type="text"
           name="search"
           id="search"
-          placeholder="Search Authors by Name"
+          placeholder="Search for Authors"
           class="search"
         />
-        <button class="search-btn" type="submit">Submit</button>
-    <div class="imae"></div>
-  </form>
+        <button class="search-btn" type="submit">Search</button>
+    </form>
+<div class="imae"></div>
+
+
+  <div class="container">
+    <h5>Unfollowed Authors with books in your Bookshelf:</h5>
+    
+      <ul>
+      <%  for (var i = 0; i< AfLen; i++) {  %>
+          
+        <li>
+                <a = class = "single" href = "/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME   %> </a>
+                <ul>Books liked (<%=authors[i].C %>):
+                  <%  for (var j = 0; j< Math.min(books[i].length, 3); j++) {  %>
+                      <li>
+                        <a = class = "single" href = "/books/<%=books[i][j].BOOK_ID%>" ><%=  books[i][j].TITLE  %> </a>
+                      </li>
+
+                    <%  }  %>
+                
+                  </ul>
+        </li>
+      
+        
+        
+    <%  }  %>
+      </ul>
+
+
+  </div>

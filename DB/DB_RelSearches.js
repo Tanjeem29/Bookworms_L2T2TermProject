@@ -14,6 +14,34 @@ async function getBooksByPublisherID(PubID){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function getBooksByGenreID(GenID){
+    const sql = `
+    SELECT * from (BOOKS NATURAL JOIN (
+        SELECT * FROM BOOK_GENRE 
+        WHERE GENRE_ID = :GID
+        ) ) ORDER BY ISMDB_RATINGS
+    `;
+    const binds = {
+        GID : GenID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function getAuthorsByGenreID(GenID){
+    const sql = `
+    SELECT * from (AUTHOR NATURAL JOIN (
+        SELECT * FROM AUTHOR_GENRE 
+        WHERE GENRE_ID = :GID
+        ) ) ORDER BY FIRST_NAME
+    `;
+    const binds = {
+        GID : GenID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 
 
 
@@ -224,9 +252,107 @@ async function getFollowersByReaderID(RID){
 }
 
 
+
+async function authorPageQuery1(RID){ //gets authors of most books in my bookshelf, that I've not followed
+    const sql = `
+    SELECT AUTHOR_ID, FIRST_NAME, LAST_NAME, C FROM AUTHOR NATURAL JOIN (
+        (SELECT AUTHOR_ID, COUNT(BOOK_ID) AS C
+						FROM 
+						WRITTEN_BY 
+						NATURAL JOIN
+						(SELECT BOOK_ID FROM READ_STATUS
+						WHERE READER_ID = :RID) 
+				GROUP BY AUTHOR_ID 
+				HAVING AUTHOR_ID NOT IN 
+									(Select AUTHOR_ID from FOLLOWER_AUTHOR
+									WHERE FOLLOWER_ID = :RID)
+				ORDER BY COUNT(BOOK_ID) DESC 
+				FETCH NEXT 5 ROWS ONLY) 
+		)
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function authorPageQuery2(RID, AID){ //gets books in my bookshelf, of an author that I've not followed
+    const sql = `
+    SELECT * FROM BOOKS
+    NATURAL JOIN (
+    SELECT BOOK_ID FROM WRITTEN_BY
+    WHERE AUTHOR_ID = :AID
+    INTERSECT
+    SELECT BOOK_ID FROM READ_STATUS
+    WHERE READER_ID = :RID
+)ORDER BY ISMDB_RATINGS DESC
+    `;
+    const binds = {
+        RID : RID,
+        AID : AID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+
+async function readerPageQuery1(RID){ //gets readers who like similar books, that I've not followed
+    const sql = `
+    SELECT READER_ID, FIRST_NAME, LAST_NAME, USERNAME, C FROM READER NATURAL JOIN (
+        (SELECT READER_ID, COUNT(BOOK_ID) AS C
+						FROM 
+						READ_STATUS 
+						NATURAL JOIN
+						(SELECT BOOK_ID FROM READ_STATUS
+						WHERE READER_ID = :RID) 
+				WHERE READER_ID <> :RID 
+				GROUP BY READER_ID 
+				HAVING READER_ID NOT IN 
+									(Select READER_ID from FOLLOWER_READER
+									WHERE FOLLOWER_ID = :RID)
+				ORDER BY COUNT(BOOK_ID) DESC 
+				FETCH NEXT 5 ROWS ONLY) 
+		)
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function readerPageQuery2(FID, RID){ //gets books in my bookshelf, liked by an unfollowed reader
+    const sql = `
+    SELECT * FROM BOOKS
+    NATURAL JOIN (
+    SELECT BOOK_ID FROM READ_STATUS
+    WHERE READER_ID = :RID
+    INTERSECT
+    SELECT BOOK_ID FROM READ_STATUS
+    WHERE READER_ID = :FID
+    ) ORDER BY ISMDB_RATINGS DESC
+    `;
+    const binds = {
+        RID : RID,
+        FID : FID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+//Move to review later
+
+
+
+
+
+
 module.exports ={
     getBooksByPublisherID,
+    getBooksByGenreID,
     getAuthorByBookID,
+    getAuthorsByGenreID,
     getReadStatusForBook,
     getFollowAuthor,
     getBooksByAuthorID,
@@ -237,7 +363,10 @@ module.exports ={
     getAllBooksByReaderID,
     getAuthorsFollowedByReaderID,
     getReadersFollowedByReaderID,
-    getFollowersByReaderID
-    
+    getFollowersByReaderID,
+    authorPageQuery1,
+    authorPageQuery2,
+    readerPageQuery1,
+    readerPageQuery2,
 
 }

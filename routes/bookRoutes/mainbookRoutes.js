@@ -21,8 +21,9 @@ const router = express.Router({mergeParams : true});
     const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
     const DB_review = require(process.env.ROOT + '\\DB\\DB_review');
 
+    const DB_Genre = require(process.env.ROOT + '\\DB\\DB_Genre');
 
-router.get('/books', (req,res)=>{
+router.get('/books', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -30,11 +31,22 @@ router.get('/books', (req,res)=>{
         res.redirect('/login');
     }
     else{
+        genre = await DB_Genre.getGenres();
+        console.log(genre);
+        let mainGenre = [];
+        let temp;
+        for (let i = 0; i < genre.length; i++) {
+            temp = await DB_Genre.getBooksByGenreID(genre[i].GENRE_ID);
+            console.log(temp);
+            mainGenre.push(temp);
+          }
+          console.log(mainGenre);
+
         res.render('layout.ejs', {
             title : 'Books',
             body : ['BookTest','partials/navbar/navbar'],
             user : null,
-            books
+            genres : mainGenre,
             //errors : errors
         })
     }
@@ -121,6 +133,7 @@ router.post('/books/search', async (req, res) => {
         //Check parameter for type of search
         let results;
         let fl = req.body.fl;
+        
         if(fl == 1){
             results = await DB_Searches.searchByBookname(req.body.search);
         }
@@ -137,7 +150,8 @@ router.post('/books/search', async (req, res) => {
             body : ['BookSearchTest','partials/navbar/navbar', req.body.search],
             user : null,
             SearchResults: results,
-            fl   : req.body.fl
+            fl   : req.body.fl,
+            
             //errors : errors
         })
         //DB.shutdown();
@@ -187,11 +201,18 @@ router.delete('/review/:id',async (req, res) => {
         console.log(req.params.id);
         const rid = req.params.id.split('-')[0];
         const bid = req.params.id.split('-')[1];
+        
         let results = await DB_review.deleteReview(rid);
-        console.log(results);
-        res.json({
-            redirect : '/books/'+bid
-        });
+        if(bid == 'dashboard') {
+            res.json({
+                redirect : '/dashboard'
+            });
+        }
+        else {
+            res.json({
+                redirect : '/books/'+bid
+            });
+        }
     }
 });
 
@@ -246,6 +267,47 @@ router.get('/publishers/:id', async (req,res)=>{
             user : null,
             books: books,
             publisher: publisher[0]
+            
+            //books
+            //errors : errors
+        })
+
+    }
+    
+});
+
+
+router.get('/genres/:id', async (req,res)=>{
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        const id = req.params.id;
+        
+        let books;
+        //results = DB_getByID;
+    
+        genre = await DB_getByID.getByGenreID(id);
+        books = await DB_RelSearches.getBooksByGenreID(id);
+        authors = await DB_RelSearches.getAuthorsByGenreID(id);
+ 
+        // console.log(genre[0]);
+        // console.log(books);
+        //console.log(authors);
+
+        
+
+
+        res.render('layout.ejs', {
+            title : 'Genre:',
+            body : ['OneGenrePage','partials/navbar/navbar'],
+            user : null,
+            books: books,
+            genre: genre[0],
+            authors : authors
             
             //books
             //errors : errors

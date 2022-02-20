@@ -12,6 +12,8 @@ const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
 const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
 const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
 const DB_queryPhoto = require(process.env.ROOT + '\\DB\\DB_update_profile_picture');
+const DB_wallpost = require(process.env.ROOT + '\\DB\\DB_wallpost');
+const DB_review = require(process.env.ROOT + '\\DB\\DB_review');
 
 router.get('/profile', async (req,res)=>{
     session = req.session;
@@ -53,7 +55,10 @@ router.get('/profile', async (req,res)=>{
         // console.log(bookswillread);
         //console.log(commonAuthorsFollowed);
         //console.log(otherAuthorsFollowed);
-
+        //let reviews = await DB_RelSearches.getBooknReviewByReaderID(id);
+        //console.log(reviews);
+        //let wallposts = await DB_RelSearches.getWallpostByReaderID(id);
+        //console.log(wallposts);
 
 
         res.render('layout.ejs', {
@@ -105,6 +110,12 @@ router.get('/dashboard', async (req, res) => {
         fbLen = Math.min(followers.length, 3)
         console.log(followers)
 
+        wallposts = await DB_wallpost.getWallpostByReaderID(id);
+
+        reviews = await DB_review.getBooknReviewByReaderID(id);
+        reviewLen = Math.min(reviews.length, 3);
+        
+
         res.render('layout.ejs', {
             title : 'Dashboard',
             body : ['Dashboard','partials/navbar/navbar'],
@@ -118,6 +129,9 @@ router.get('/dashboard', async (req, res) => {
             RfLen : RfLen,
             followers : followers,
             fbLen : fbLen,
+            wallpost : wallposts,
+            review : reviews,
+            reviewlen : reviewLen
             
             //Uncooment when Wallpost, reviews done
             // reviews : null,

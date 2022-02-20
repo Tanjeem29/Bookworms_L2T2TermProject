@@ -24,6 +24,38 @@ async function searchByAuthorname(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function searchByAuthorname_Followed(RID , strin){
+    const sql = `
+    select * from AUTHOR NATURAL JOIN (SELECT AUTHOR_ID FROM FOLLOWER_AUTHOR WHERE FOLLOWER_ID = :RID)
+    where UPPER(FIRST_NAME || ' ' || LAST_NAME) like '%' || UPPER(:aname) || '%' 
+    `;
+    const binds = {
+        aname : strin,
+        RID : RID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+
+async function searchByAuthorname_NotFollowed(RID , strin){
+    const sql = `
+    select * from AUTHOR 
+    where (
+        UPPER(FIRST_NAME || ' ' || LAST_NAME) like '%' || UPPER(:aname) || '%' 
+        AND
+        AUTHOR_ID NOT IN (SELECT AUTHOR_ID FROM FOLLOWER_AUTHOR WHERE FOLLOWER_ID = :RID)
+        )
+    `;
+    const binds = {
+        aname : strin,
+        RID : RID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+
 async function searchByReadername(strin){
     const sql = `
     select * from READER
@@ -33,6 +65,39 @@ async function searchByReadername(strin){
     `;
     const binds = {
         aname : strin
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function searchByReadername_Followed(RID , strin){
+    const sql = `
+    select * from READER NATURAL JOIN (SELECT READER_ID FROM FOLLOWER_READER WHERE FOLLOWER_ID = :RID)
+    where UPPER(FIRST_NAME || ' ' || LAST_NAME) like '%' || UPPER(:aname) || '%' 
+    OR
+    UPPER (USERNAME) like '%' || UPPER(:aname) || '%' 
+    `;
+    const binds = {
+        aname : strin,
+        RID : RID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function searchByReadername_NotFollowed(RID , strin){
+    const sql = `
+    select * from READER 
+    where (
+        UPPER(FIRST_NAME || ' ' || LAST_NAME) like '%' || UPPER(:aname) || '%' 
+        OR
+        UPPER (USERNAME) like '%' || UPPER(:aname) || '%')
+        AND
+        READER_ID NOT IN (SELECT READER_ID FROM FOLLOWER_READER WHERE FOLLOWER_ID = :RID)
+    `;
+    const binds = {
+        aname : strin,
+        RID : RID
     }
 
     return (await db.execute(sql, binds, db.options)).rows;
@@ -72,5 +137,9 @@ module.exports = {
     searchByAuthorname,
     searchBookByPublisherName,
     searchBookByAuthorName,
-    searchByReadername
+    searchByReadername,
+    searchByReadername_Followed,
+    searchByReadername_NotFollowed,
+    searchByAuthorname_Followed,
+    searchByAuthorname_NotFollowed
 }

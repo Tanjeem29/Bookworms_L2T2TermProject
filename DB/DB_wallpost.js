@@ -45,6 +45,20 @@ async function fetchWallPost(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function getWallpostByReaderID(usr) {
+    const sql = `
+        SELECT WALLPOST_ID, TIMEDIFF(DATED) TIMEDIF, POST_BODY, LIKE_COUNT 
+        FROM WALLPOST
+        WHERE POSTED_BY_ID = :RID
+        ORDER BY DATED DESC
+    `;
+    const binds = {
+        RID : usr
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 async function deleteWallpostByID(wid) {
     const sql = `
         DELETE FROM WALLPOST
@@ -62,5 +76,6 @@ async function deleteWallpostByID(wid) {
 module.exports = {
     insertWallPost,
     fetchWallPost,
-    deleteWallpost
+    deleteWallpostByID,
+    getWallpostByReaderID
 };

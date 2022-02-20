@@ -2,6 +2,7 @@
     <div class="leftcolumn">
         <h4 class="username-style" name="username">Your Shared Journey With the Book:  </h4>
         <% if(ownReview.length) { %>
+            <ul>
             <% for(var i=0; i < ownReview.length; i++) { %>
                 <li>
                     <p class="time-style" name="time"><b>Shared: <%= ownReview[i].TIMEDIF%> ago</b></p>
@@ -10,6 +11,7 @@
                     <a class="delete" data-doc="<%= ownReview[i].REVIEW_ID %>-<%= ownReview[i].BOOK_ID %>">Delete Review</a>
                 </li>
             <% } %>
+            </ul>
         <% } else { %>
             <div class="review-post">
                 <h4>
@@ -48,7 +50,7 @@
         <div class="review-show-pane">
                 <% if(!othersReview.length) { %>
 
-                <h6><b>Seems Nobody Has Share Their Journey Yet!</b></h6>
+                <h6><b>Seems Nobody Has Shared Their Journey Yet!</b></h6>
 
                 <% } else {%>
                     
@@ -69,22 +71,21 @@
 </div>
 
 <script>
-    const trashcan = document.querySelector('a.delete'); 
-    trashcan.addEventListener('click', (e) => {
-        const requestPath = `/review/${trashcan.dataset.doc}`;
+    function deleteReview() {
+        const trashReview = document.querySelector('a.deleteReview');
+        const requestPath = `/review/${trashReview.dataset.doc}`;
         if(confirm("You sure want to delete this review?")) {
             fetch(requestPath, {
                 method: 'DELETE'
             })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 window.location.href = data.redirect;
             })
             .catch((err) => {
                 console.log(err);
             });
         }
-    });
+    }
 </script>
   

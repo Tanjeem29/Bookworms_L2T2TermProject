@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+        <h4> <i><%=genre.GENRE_NAME%><br></i></h4>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <p>
+        Preview: <%=genre.SUMMARY%> <br>
+        </p>
+    </div>
+</div>
+
+
+<div class="container">
+<div class="row">
+
+    <% if(books.length > 0) { %>
+        
+        <ul><p>We have <b><i><%=books.length%></i></b> Books  In this Genre</p>
+        <%  for (var i = 0; i< books.length; i++) {  %>
+            
+            <li>
+                
+                    <a = class = "single" href = "/books/<%=books[i].BOOK_ID%>" ><%=  books[i].TITLE  %> </a>
+                
+            </li>
+            
+        <%  }  %>
+        </ul>
+    <% } %>
+</div>
+</div>
+
+<div class="container">
+<div class="row">
+    <% if(authors.length > 0) { %>
+        
+        <ul><p>We have <b><i><%=authors.length%></i></b> Authors specializing in this Genre</p>
+        <%  for (var i = 0; i< authors.length; i++) {  %>
+            
+            <li>
+                
+                    <a = class = "single" href = "/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME  %> </a>
+                
+            </li>
+            
+        <%  }  %>
+        </ul>
+    <% } %>
+</div>
+</div>

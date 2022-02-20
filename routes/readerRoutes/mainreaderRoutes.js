@@ -11,7 +11,7 @@ const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
 const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
 const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
 
-router.get('/readers', (req,res)=>{
+router.get('/readers', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -19,10 +19,26 @@ router.get('/readers', (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let id = req.session.userid;
+        let readers = await DB_RelSearches.readerPageQuery1(id);
+        console.log(readers); 
+        let RLen = Math.min(readers.length, 5);
+        let books = [];
+        for(var i = 0; i< RLen; i++){
+            let temp = await DB_RelSearches.readerPageQuery2(id, readers[i].READER_ID);
+            books.push(temp);
+        }
+        console.log(books);
+
+
+
         res.render('layout.ejs', {
             title : 'Readers',
             body : ['ReaderTest','partials/navbar/navbar'],
             user : null,
+            readers : readers,
+            RLen : RLen,
+            books : books,
             //books
             //errors : errors
         })
@@ -37,17 +53,36 @@ router.post('/readers/search', async (req, res) => {
         res.redirect('/login');
     }
     else{
-        console.log(req.body.search);
+        //console.log(req.body.search);
         //console.log(res.query);
-        
-        let results = await DB_Searches.searchByReadername(req.body.search);
-        console.log(results);
+        let id = req.session.userid;
+        let results;
+        let fl = req.body.fl;
+        let type;
+        console.log(fl)
+        if(fl == 1){
+            results = await DB_Searches.searchByReadername(req.body.search);
+            type = 'All';
+        }
+        else if(fl == 2){
+            results = await DB_Searches.searchByReadername_Followed(id,req.body.search);
+            type = 'Followed';
+        }
+        else if(fl == 3){
+            results = await DB_Searches.searchByReadername_NotFollowed(id,req.body.search);
+            type = 'Not Followed';
+        }
+        //let results = await DB_Searches.searchByReadername(req.body.search);
+        //let results = await DB_Searches.searchByReadername_Followed(id, req.body.search);
+        //let results = await DB_Searches.searchByReadername_NotFollowed(id, req.body.search);
+        //console.log(results);
         res.render('layout.ejs', {
             title : 'Readers',
             body : ['ReaderSearchTest','partials/navbar/navbar', req.body.search],
             user : null,
             SearchResults: results,
-            uid : req.session.userid
+            uid : req.session.userid,
+            type : type
             //books
             //errors : errors
         })

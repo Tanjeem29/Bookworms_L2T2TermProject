@@ -29,17 +29,6 @@ async function deleteReview(rid) {
     return await db.execute(sql, binds, db.options);
 }
 
-async function deleteWallpost(wid) {
-    const sql = `
-        DELETE FROM WALLPOST
-        WHERE WALLPOST_ID = :WID
-    `;
-    const binds = {
-        WID : wid
-    }
-
-    return await db.execute(sql, binds, db.options);
-}
 
 async function getOthersReviewByBookID(bid, uid) {
     const sql = `
@@ -58,7 +47,7 @@ async function getOthersReviewByBookID(bid, uid) {
 
 async function getUserSpecificReviewByBookID(bid, usr) {
     const sql = `
-        SELECT * 
+        SELECT REVIEW_ID, TEXT_BODY, TIMEDIFF(DATED) TIMEDIF, RATING, READER_ID, BOOK_ID 
         FROM REVIEW
         WHERE BOOK_ID = :BID AND READER_ID = :RID
         ORDER BY DATED DESC
@@ -132,10 +121,26 @@ async function getReviewSummary(bid) {
     return summary;
 }
 
+async function getBooknReviewByReaderID(usr) {
+    const sql = `
+        SELECT REVIEW_ID, TEXT_BODY, TIMEDIFF(DATED) TIMEDIF, RATING, TITLE, COVER, BOOK_ID
+        FROM (SELECT * FROM REVIEW
+        WHERE READER_ID = :RID)
+        NATURAL JOIN BOOKS
+        ORDER BY DATED DESC
+    `;
+    const binds = {
+        RID : usr
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 module.exports = {
     insertReview,
     getOthersReviewByBookID,
     getUserSpecificReviewByBookID,
     getReviewSummary,
-    deleteReview
+    deleteReview,
+    getBooknReviewByReaderID
 }

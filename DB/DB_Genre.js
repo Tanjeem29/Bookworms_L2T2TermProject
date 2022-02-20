@@ -16,7 +16,7 @@ async function getBooksByGenreID(GenID){
     SELECT * FROM 
     (SELECT * FROM GENRE WHERE GENRE_ID = :GenID)
     NATURAL JOIN BOOK_GENRE NATURAL JOIN BOOKS 
-    ORDER BY ISMDB_RATINGS
+    ORDER BY ISMDB_RATINGS DESC
     `;
     const binds = {
         GenID : GenID
@@ -30,7 +30,7 @@ async function getAuthorsByGenreID(GenID){
     SELECT * FROM 
     (SELECT * FROM GENRE WHERE GENRE_ID = :GenID)
     NATURAL JOIN BOOK_GENRE NATURAL JOIN BOOKS 
-    ORDER BY ISMDB_RATINGS
+    ORDER BY ISMDB_RATINGS DESC
     `;
     const binds = {
         GenID : GenID
