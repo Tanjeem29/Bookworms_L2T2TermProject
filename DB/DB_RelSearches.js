@@ -14,6 +14,34 @@ async function getBooksByPublisherID(PubID){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function getBooksByGenreID(GenID){
+    const sql = `
+    SELECT * from (BOOKS NATURAL JOIN (
+        SELECT * FROM BOOK_GENRE 
+        WHERE GENRE_ID = :GID
+        ) ) ORDER BY ISMDB_RATINGS
+    `;
+    const binds = {
+        GID : GenID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function getAuthorsByGenreID(GenID){
+    const sql = `
+    SELECT * from (AUTHOR NATURAL JOIN (
+        SELECT * FROM AUTHOR_GENRE 
+        WHERE GENRE_ID = :GID
+        ) ) ORDER BY FIRST_NAME
+    `;
+    const binds = {
+        GID : GenID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 
 
 
@@ -313,10 +341,43 @@ async function readerPageQuery2(FID, RID){ //gets books in my bookshelf, liked b
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+//Move to review later
+async function getBooknReviewByReaderID(usr) {
+    const sql = `
+    SELECT * 
+    FROM (SELECT * FROM REVIEW
+    WHERE READER_ID = :RID)
+    NATURAL JOIN BOOKS
+    ORDER BY DATED DESC
+    `;
+    const binds = {
+        RID : usr
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function getWallpostByReaderID(usr) {
+    const sql = `
+    SELECT * 
+    FROM WALLPOST
+    WHERE POSTED_BY_ID = :RID
+    ORDER BY DATED DESC
+    `;
+    const binds = {
+        RID : usr
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+
 
 module.exports ={
     getBooksByPublisherID,
+    getBooksByGenreID,
     getAuthorByBookID,
+    getAuthorsByGenreID,
     getReadStatusForBook,
     getFollowAuthor,
     getBooksByAuthorID,
@@ -331,7 +392,11 @@ module.exports ={
     authorPageQuery1,
     authorPageQuery2,
     readerPageQuery1,
-    readerPageQuery2
+    readerPageQuery2,
+    //Move to review
+    getBooknReviewByReaderID,
+    getWallpostByReaderID,
+    //Move to wallpost
     
 
 }

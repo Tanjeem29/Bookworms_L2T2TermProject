@@ -39,6 +39,7 @@ router.get('/authors', async (req,res)=>{
             authors : authors,
             AfLen : ALen,
             books : books,
+            
             //books
             //errors : errors
         })
@@ -58,14 +59,32 @@ router.post('/authors/search', async (req, res) => {
     else{
         console.log(req.body.search);
         //console.log(res.query);
+        let id = req.session.userid;
+        let results;
+        let fl = req.body.fl;
+        let type;
+        console.log(fl)
+        if(fl == 1){
+            results = await DB_Searches.searchByAuthorname(req.body.search);
+            type = 'All';
+        }
+        else if(fl == 2){
+            results = await DB_Searches.searchByAuthorname_Followed(id,req.body.search);
+            type = 'Followed';
+        }
+        else if(fl == 3){
+            results = await DB_Searches.searchByAuthorname_NotFollowed(id,req.body.search);
+            type = 'Not Followed';
+        }
         
-        let results = await DB_Searches.searchByAuthorname(req.body.search);
+        //let results = await DB_Searches.searchByAuthorname(req.body.search);
         console.log(results);
         res.render('layout.ejs', {
             title : 'Authors',
             body : ['AuthorSearchTest','partials/navbar/navbar', req.body.search],
             user : null,
             SearchResults: results,
+            type : type
             //books
             //errors : errors
         })

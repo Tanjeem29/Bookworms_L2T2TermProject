@@ -133,6 +133,7 @@ router.post('/books/search', async (req, res) => {
         //Check parameter for type of search
         let results;
         let fl = req.body.fl;
+        
         if(fl == 1){
             results = await DB_Searches.searchByBookname(req.body.search);
         }
@@ -149,7 +150,8 @@ router.post('/books/search', async (req, res) => {
             body : ['BookSearchTest','partials/navbar/navbar', req.body.search],
             user : null,
             SearchResults: results,
-            fl   : req.body.fl
+            fl   : req.body.fl,
+            
             //errors : errors
         })
         //DB.shutdown();
@@ -240,6 +242,47 @@ router.get('/publishers/:id', async (req,res)=>{
             user : null,
             books: books,
             publisher: publisher[0]
+            
+            //books
+            //errors : errors
+        })
+
+    }
+    
+});
+
+
+router.get('/genres/:id', async (req,res)=>{
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        const id = req.params.id;
+        
+        let books;
+        //results = DB_getByID;
+    
+        genre = await DB_getByID.getByGenreID(id);
+        books = await DB_RelSearches.getBooksByGenreID(id);
+        authors = await DB_RelSearches.getAuthorsByGenreID(id);
+ 
+        // console.log(genre[0]);
+        // console.log(books);
+        //console.log(authors);
+
+        
+
+
+        res.render('layout.ejs', {
+            title : 'Genre:',
+            body : ['OneGenrePage','partials/navbar/navbar'],
+            user : null,
+            books: books,
+            genre: genre[0],
+            authors : authors
             
             //books
             //errors : errors

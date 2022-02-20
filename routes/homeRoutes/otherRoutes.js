@@ -53,7 +53,10 @@ router.get('/profile', async (req,res)=>{
         // console.log(bookswillread);
         //console.log(commonAuthorsFollowed);
         //console.log(otherAuthorsFollowed);
-
+        let reviews = await DB_RelSearches.getBooknReviewByReaderID(id);
+        //console.log(reviews);
+        let wallposts = await DB_RelSearches.getWallpostByReaderID(id);
+        //console.log(wallposts);
 
 
         res.render('layout.ejs', {
