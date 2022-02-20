@@ -1,49 +1,63 @@
-
-<div class="review-post">
-    <h4>
-        <b>Share Your Journey With the book: </b>
-    </h4>
-    <form action="/books/review/<%= bookID %>" method="POST" class="review-form">
-        <input type="text" name="reviewBody" placeholder="The journey starts.." required>
-        <h5>
-            <b>Share Your Rating: </b>
-        </h5>
-        <div class="rate">
-            <input type="radio" id="star1" name="rating" value="1" />
-            <label for="star1" title="text">1 star</label>
-            <input type="radio" id="star2" name="rating" value="2" />
-            <label for="star2" title="text">2 star</label>
-            <input type="radio" id="star3" name="rating" value="3" />
-            <label for="star3" title="text">3 star</label>
-            <input type="radio" id="star4" name="rating" value="4" />
-            <label for="star2" title="text">4 star</label>
-            <input type="radio" id="star5" name="rating" value="5" checked/>
-            <label for="star1" title="text">5 star</label>
-        </div>
-        <button class="btn btn-outline-dark btn-lg px-3" type="submit">Post Review</button>
-    </form>
-</div>
-
-<div class="review-header">
-    <h4>Shared Reviews: </h4>
+<div class="row">
+    <div class="leftcolumn">
+        <h4 class="username-style" name="username">Your Shared Journey With the Book:  </h4>
+        <% if(ownReview.length) { %>
+            <% for(var i=0; i < ownReview.length; i++) { %>
+                <li>
+                    <p class="time-style" name="time"><b>Shared: <%= ownReview[i].TIMEDIF%> ago</b></p>
+                    <p class="rating-style" name="rating"><b>Your Rating: <%= ownReview[i].RATING%> star</b></p>
+                    <p class="post-body-style" name="postBody"><%= ownReview[i].TEXT_BODY%></p>
+                    <a class="delete" data-doc="<%= ownReview[i].REVIEW_ID %>-<%= ownReview[i].BOOK_ID %>">Delete Review</a>
+                </li>
+            <% } %>
+        <% } else { %>
+            <div class="review-post">
+                <h4>
+                    <b>Share Your Journey With the book: </b>
+                </h4>
+                <form action="/books/review/<%= bookID %>" method="POST" class="review-form">
+                    <input type="text" name="reviewBody" placeholder="The journey starts.." required>
+                    <h5>
+                        <b>Share Your Rating: </b>
+                    </h5>
+                    <div class="rate">
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label for="star1" title="text">1 star</label>
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label for="star2" title="text">2 star</label>
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label for="star3" title="text">3 star</label>
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label for="star2" title="text">4 star</label>
+                        <input type="radio" id="star5" name="rating" value="5" checked/>
+                        <label for="star1" title="text">5 star</label>
+                    </div>
+                    <button class="btn btn-outline-dark btn-lg px-3" type="submit">Post Review</button>
+                </form>
+            </div>
+        <% } %>
+    </div>
 </div>
 
 <div class="row">
     <div class="leftcolumn">
+        <h4>
+            <b>People's Journey The Book: </b>
+        </h4>
         <ul>
         <div class="review-show-pane">
-                <% if(!reviews.length) { %>
+                <% if(!othersReview.length) { %>
 
-                <h6><b>Be the First One to Review this Book!</b></h6>
+                <h6><b>Seems Nobody Has Share Their Journey Yet!</b></h6>
 
                 <% } else {%>
                     
-                    <% for(var i = 0; i < reviews.length; i++) { %>
+                    <% for(var i = 0; i < othersReview.length; i++) { %>
                         <li>
-                            <h6 class="username-style" name="username">Reviewed By: <%= reviews[i].USERNAME %> </h6>
-                            <p class="time-style" name="time"><b>Posten on: <%= reviews[i].TIMEDIF%> ago</b></p>
-                            <p class="rating-style" name="rating"><b>User Rating: <%= reviews[i].RATING%> star</b></p>
-                            <p class="post-body-style" name="postBody"><%= reviews[i].TEXT_BODY%></p>
+                            <h6 class="username-style" name="username">Reviewed By: <%= othersReview[i].USERNAME %> </h6>
+                            <p class="time-style" name="time"><b>Posted on: <%= othersReview[i].TIMEDIF%> ago</b></p>
+                            <p class="rating-style" name="rating"><b>User Rating: <%= othersReview[i].RATING%> star</b></p>
+                            <p class="post-body-style" name="postBody"><%= othersReview[i].TEXT_BODY%></p>
                         </li>
                     <% } %>
 
@@ -54,4 +68,23 @@
     </div>
 </div>
 
+<script>
+    const trashcan = document.querySelector('a.delete'); 
+    trashcan.addEventListener('click', (e) => {
+        const requestPath = `/review/${trashcan.dataset.doc}`;
+        if(confirm("You sure want to delete this review?")) {
+            fetch(requestPath, {
+                method: 'DELETE'
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                window.location.href = data.redirect;
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        }
+    });
+</script>
   

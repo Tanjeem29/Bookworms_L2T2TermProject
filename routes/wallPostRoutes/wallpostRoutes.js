@@ -69,5 +69,20 @@ router.post('/wallpost/unlike/:id', async (req,res) => {
     }
 });
 
+router.delete('/wallpost/:id', async (req, res) => {
+    session = req.session;
+    if(!session.userid) {
+        console.log("No Session!!!!");
+        res.redirect('/login');
+    }
+    // else {
+    //     const wallid = req.params.id;
+    //     await DB_wallpost.deleteWallpostByID(wid);
+    //     res.json({
+    //         redirect = '/'
+    //     });
+    // }
+})
+
 
 module.exports = router;

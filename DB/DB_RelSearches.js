@@ -179,7 +179,7 @@ async function otherAuthorsFollowed(MeID, RID){
 async function getAllBooksByReaderID(RID){
     const sql = `
     SELECT * from BOOKS B, (
-		SELECT BOOK_ID, RS.STATUS, ROUND(SYSDATE - RS.DATED, 1) TD from READ_STATUS RS
+		SELECT BOOK_ID, RS.STATUS, TIMEDIFF(RS.DATED) TD from READ_STATUS RS
 		WHERE READER_ID = :RID) T1
 	WHERE (B.BOOK_ID = T1.BOOK_ID)
     ORDER BY TD
