@@ -1,0 +1,13 @@
+<div class="show-book">
+    <h6>
+        <b>Suggested Books Based on The Readers you Follow but Not In your Bookshelf</b>
+    </h6>
+    <ul>
+        <% for(var i=0; i < suggestedBook.length ; i++) { %>
+            <li>
+                <a = class = "single" href = "/books/<%=suggestedBook[i].BOOK_ID%>" ><%=  suggestedBook[i].TITLE  %> </a>
+            </li>
+        <% } %>
+    </ul>
+
+</div>

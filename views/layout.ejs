@@ -50,6 +50,12 @@
             </div>
         <% } %>
 
+        <% if(typeof suggestedBook != 'undefined') { %>
+            <div class="my-container container mx-auto my-1 px-0 row">
+                <%- include('./partials/booksuggestion/booksuggest.ejs') %>
+            </div>
+        <% } %>
+
         <!-- footer -->
         <%- include('./partials/footer/footer.ejs') %>
     </div>

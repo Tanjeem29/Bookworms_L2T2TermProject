@@ -18,6 +18,7 @@ const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
 const DB_updates = require(process.env.ROOT + '\\DB\\DB_Updates');
 const DB_wallpost = require(process.env.ROOT + '\\DB\\DB_wallpost');
 const DB_reaction = require(process.env.ROOT + '\\DB\\DB_reaction');
+const DB_suggestBook = require(process.env.ROOT + '\\DB\\DB_bookSuggestion');
 
 /*router.get('/test',async (req,res) => {
     session = req.session;
@@ -56,6 +57,10 @@ router.get('/home',async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        //fetching book suggestion here: 
+        let books = await DB_suggestBook.bookSuggestionByFollowedReader(session.userid);
+        console.log(books);
+
         //fetching wallpost here: 
         let results = await DB_wallpost.fetchWallPost(session.userid);
         for(var i = 0; i < results.length ; i++) {
@@ -71,6 +76,7 @@ router.get('/home',async (req,res)=>{
             createWallPost : true,
             showWallPost : true,
             wallposts : results,
+            suggestedBook : books
             //books
             //errors : errors
         });
