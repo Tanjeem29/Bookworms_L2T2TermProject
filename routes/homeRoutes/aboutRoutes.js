@@ -10,10 +10,10 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router({mergeParams : true});
 
+const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
 
 
-
-router.get('/about', (req,res)=>{
+router.get('/about', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -21,12 +21,13 @@ router.get('/about', (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
 
         res.render('layout.ejs', {
             title : 'About',
             body : ['AboutTest','partials/navbar/navbar'],
             user : null,
-            books
+            Quotes : quotes[0],
             //errors : errors
         })
     }

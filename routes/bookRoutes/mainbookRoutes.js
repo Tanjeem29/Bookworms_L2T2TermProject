@@ -23,6 +23,9 @@ const router = express.Router({mergeParams : true});
 
     const DB_Genre = require(process.env.ROOT + '\\DB\\DB_Genre');
 
+    const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
+
+
 router.get('/books', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
@@ -32,7 +35,11 @@ router.get('/books', async (req,res)=>{
     }
     else{
         genre = await DB_Genre.getGenres();
-        console.log(genre);
+        //console.log(genre);
+        
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         let mainGenre = [];
         let temp;
         for (let i = 0; i < genre.length; i++) {
@@ -47,12 +54,13 @@ router.get('/books', async (req,res)=>{
             body : ['BookTest','partials/navbar/navbar'],
             user : null,
             genres : mainGenre,
+            Quotes : quotes[0],
             //errors : errors
         })
     }
     
 });
-router.get('/books/search', (req,res)=>{
+router.get('/books/search', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -74,6 +82,9 @@ router.get('/books/:id', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+        
         const id = req.params.id;
         let books;
         //results = DB_getByID;
@@ -82,6 +93,8 @@ router.get('/books/:id', async (req,res)=>{
         authors = await DB_RelSearches.getAuthorByBookID(id);
         ReadStatus = await DB_RelSearches.getReadStatusForBook(session.userid, id);
         
+        
+
         //review stuff
         let userReview = await DB_review.getUserSpecificReviewByBookID(id, session.userid);
         let otherReview = await DB_review.getOthersReviewByBookID(id, session.userid);
@@ -111,7 +124,9 @@ router.get('/books/:id', async (req,res)=>{
             ReadStatus : newReadStatus,
             ownReview : userReview,
             othersReview : otherReview,
-            summary : reviewSummary
+            summary : reviewSummary,
+            Quotes : quotes[0]
+            
             //books
             //errors : errors
         })
@@ -128,6 +143,10 @@ router.post('/books/search', async (req, res) => {
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
+
         console.log(req.body.search);
         //console.log(res.query);
         //Check parameter for type of search
@@ -151,6 +170,7 @@ router.post('/books/search', async (req, res) => {
             user : null,
             SearchResults: results,
             fl   : req.body.fl,
+            Quotes : quotes[0],
             
             //errors : errors
         })
@@ -166,6 +186,8 @@ router.post('/books/readStatus/:id', async (req, res) => {
         res.redirect('/login');
     }
     else{
+        
+
         //console.log(str);
         const id = req.params.id;
         let str = '/books/' + id;
@@ -240,6 +262,10 @@ router.post('/books/review/:id', async (req, res) => {
 
 
 router.get('/publishers/:id', async (req,res)=>{
+    let quotes = await DB_quotes.getRandomQuote();
+
+
+
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -266,7 +292,8 @@ router.get('/publishers/:id', async (req,res)=>{
             body : ['OnePublisherPage','partials/navbar/navbar'],
             user : null,
             books: books,
-            publisher: publisher[0]
+            publisher: publisher[0],
+            Quotes : quotes[0]
             
             //books
             //errors : errors
@@ -285,6 +312,9 @@ router.get('/genres/:id', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         const id = req.params.id;
         
         let books;
@@ -295,7 +325,7 @@ router.get('/genres/:id', async (req,res)=>{
         authors = await DB_RelSearches.getAuthorsByGenreID(id);
         LikeStatus = await DB_RelSearches.getReaderGenreStatus(session.userid, id);
         let LS = LikeStatus.length;
-        console.log(LS);
+        //console.log(LS);
 
 
         // console.log(genre[0]);
@@ -312,7 +342,8 @@ router.get('/genres/:id', async (req,res)=>{
             books: books,
             genre: genre[0],
             authors : authors,
-            FollowStatus : LS
+            FollowStatus : LS,
+            Quotes : quotes[0]
             
             //books
             //errors : errors

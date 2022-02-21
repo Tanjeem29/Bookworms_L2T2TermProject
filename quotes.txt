@@ -1,0 +1,8 @@
+in main route body:
+const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
+
+in a block of load/redirect:
+let quotes = await DB_quotes.getRandomQuote();
+
+in a block of render:
+Quotes : quotes[0]

@@ -19,6 +19,7 @@ const DB_updates = require(process.env.ROOT + '\\DB\\DB_Updates');
 const DB_wallpost = require(process.env.ROOT + '\\DB\\DB_wallpost');
 const DB_reaction = require(process.env.ROOT + '\\DB\\DB_reaction');
 const DB_suggestBook = require(process.env.ROOT + '\\DB\\DB_bookSuggestion');
+const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
 
 /*router.get('/test',async (req,res) => {
     session = req.session;
@@ -61,13 +62,19 @@ router.get('/home',async (req,res)=>{
         let books = await DB_suggestBook.bookSuggestionByFollowedReader(session.userid);
         console.log(books);
 
+        let quotes = await DB_quotes.getRandomQuote();
+
+        
+
+
+
         //fetching wallpost here: 
         let results = await DB_wallpost.fetchWallPost(session.userid);
         for(var i = 0; i < results.length ; i++) {
             let reaction = await DB_reaction.getReactionStatus(results[i].WALLPOST_ID, session.userid);
             results[i].REACTION_STATUS = reaction[0].STATUS;
         }
-        //console.log(results);
+        console.log(quotes);
 
         res.render('layout.ejs', {
             title : 'Home',
@@ -76,7 +83,8 @@ router.get('/home',async (req,res)=>{
             createWallPost : true,
             showWallPost : true,
             wallposts : results,
-            suggestedBook : books
+            suggestedBook : books,
+            Quotes : quotes[0]
             //books
             //errors : errors
         });
