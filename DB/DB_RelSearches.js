@@ -322,6 +322,32 @@ async function readerPageQuery1(RID){ //gets readers who like similar books, tha
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+
+async function readerPageQuery3(RID){ //gets readers who follow common authors, that I've not followed
+    const sql = `
+    SELECT READER_ID, FIRST_NAME, LAST_NAME, USERNAME, C FROM READER NATURAL JOIN (
+        (SELECT FOLLOWER_ID READER_ID, COUNT(AUTHOR_ID) AS C
+						FROM 
+						FOLLOWER_AUTHOR
+						NATURAL JOIN
+						(SELECT AUTHOR_ID FROM FOLLOWER_AUTHOR
+						WHERE FOLLOWER_ID = :RID) 
+				WHERE FOLLOWER_ID <> :RID 
+				GROUP BY FOLLOWER_ID 
+				HAVING FOLLOWER_ID NOT IN 
+									(Select READER_ID from FOLLOWER_READER
+									WHERE FOLLOWER_ID = :RID)
+				ORDER BY COUNT(AUTHOR_ID) DESC 
+				FETCH NEXT 5 ROWS ONLY) 
+		)
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 async function readerPageQuery2(FID, RID){ //gets books in my bookshelf, liked by an unfollowed reader
     const sql = `
     SELECT * FROM BOOKS
@@ -380,6 +406,7 @@ module.exports ={
     authorPageQuery2,
     readerPageQuery1,
     readerPageQuery2,
-    getReaderGenreStatus
+    getReaderGenreStatus,
+    readerPageQuery3
 
 }

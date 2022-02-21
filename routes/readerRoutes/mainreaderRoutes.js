@@ -34,7 +34,8 @@ router.get('/readers', async (req,res)=>{
             books.push(temp);
         }
         //console.log(books);
-
+        let readers1 = await DB_RelSearches.readerPageQuery3(id);
+        console.log(readers1);
 
 
         res.render('layout.ejs', {
@@ -44,7 +45,8 @@ router.get('/readers', async (req,res)=>{
             readers : readers,
             RLen : RLen,
             books : books,
-            Quotes : quotes[0]
+            Quotes : quotes[0],
+            readers1 : readers1
             //books
             //errors : errors
         })
