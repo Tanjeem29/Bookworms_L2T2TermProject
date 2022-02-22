@@ -22,7 +22,7 @@ router.get('/wallpost/:id', async (req, res) => {
         res.redirect('./home');
     }
 
-})
+});
 
 router.post('/createWallPost',async (req, res) => {
     session = req.session;
@@ -55,7 +55,9 @@ router.post('/wallpost/like/:id',async (req,res) => {
     else {
         const wallid = req.params.id;
         await DB_reaction.insertReactionStatus(wallid, session.userid);
-        res.redirect('/home');
+        res.json({
+            redirect : '/home'
+        });
     }
 });
 
@@ -68,7 +70,10 @@ router.post('/wallpost/unlike/:id', async (req,res) => {
     else {
         const wallid = req.params.id;
         await DB_reaction.deleteReactionStatus(wallid, session.userid);
-        res.redirect('/home');
+        
+        res.json({
+            redirect : '/home'
+        });
     }
 });
 

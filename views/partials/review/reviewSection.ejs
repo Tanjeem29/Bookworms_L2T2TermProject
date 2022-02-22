@@ -1,53 +1,52 @@
-<div class="row">
-    <div class="leftcolumn">
-        <h4 class="username-style" name="username">Your Shared Journey With the Book:  </h4>
+    
+    <h3><small class="text-muted">Share Your Journey: </small></h3>
         <% if(ownReview.length) { %>
-            <ul>
+            <ul id="ownReviewSection">
             <% for(var i=0; i < ownReview.length; i++) { %>
                 <li>
-                    <p class="time-style" name="time"><b>Shared: <%= ownReview[i].TIMEDIF%> ago</b></p>
-                    <p class="rating-style" name="rating"><b>Your Rating: <%= ownReview[i].RATING%> star</b></p>
-                    <p class="post-body-style" name="postBody"><%= ownReview[i].TEXT_BODY%></p>
-                    <a class="delete" data-doc="<%= ownReview[i].REVIEW_ID %>-<%= ownReview[i].BOOK_ID %>">Delete Review</a>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                          <h6 class="card-subtitle mb-2 text-muted">Shared: <%= ownReview[i].TIMEDIF%> ago</h6>
+                            <% for(var j = 0;j < ownReview[i].RATING ; j++) { %>
+                                <span class="fa fa-star checked"></span>
+                            <% } %>
+                            <% for(var k = ownReview[i].RATING; k < 5; k++) { %>
+                                <span class="fa fa-star"></span>
+                            <% } %>
+                          <p class="card-text"><%= ownReview[i].TEXT_BODY%></p>
+                          <button class="btn btn-outline-dark btn-sm px-3" id="<%= ownReview[i].REVIEW_ID %> - <%= ownReview[i].BOOK_ID %>">Post Review</button>
+                        </div>
+                      </div>
                 </li>
             <% } %>
             </ul>
         <% } else { %>
-            <div class="review-post">
-                <h4>
-                    <b>Share Your Journey With the book: </b>
-                </h4>
+            <div class="wallpost-create">
                 <form action="/books/review/<%= bookID %>" method="POST" class="review-form">
                     <input type="text" name="reviewBody" placeholder="The journey starts.." required>
-                    <h5>
-                        <b>Share Your Rating: </b>
-                    </h5>
                     <div class="rate">
-                        <input type="radio" id="star1" name="rating" value="1" />
+                        <input type="radio" id="star5" name="rating" value="5" />
                         <label for="star1" title="text">1 star</label>
-                        <input type="radio" id="star2" name="rating" value="2" />
+                        <input type="radio" id="star4" name="rating" value="4" />
                         <label for="star2" title="text">2 star</label>
                         <input type="radio" id="star3" name="rating" value="3" />
                         <label for="star3" title="text">3 star</label>
-                        <input type="radio" id="star4" name="rating" value="4" />
+                        <input type="radio" id="star2" name="rating" value="2" />
                         <label for="star2" title="text">4 star</label>
-                        <input type="radio" id="star5" name="rating" value="5" checked/>
+                        <input type="radio" id="star1" name="rating" value="1"/>
                         <label for="star1" title="text">5 star</label>
                     </div>
-                    <button class="btn btn-outline-dark btn-lg px-3" type="submit">Post Review</button>
+                    <button class="btn btn-outline-dark btn-sm px-3" type="submit">Post Review</button>
                 </form>
             </div>
         <% } %>
-    </div>
-</div>
+    
 
-<div class="row">
-    <div class="leftcolumn">
         <h4>
             <b>People's Journey The Book: </b>
         </h4>
         <ul>
-        <div class="review-show-pane">
+        <div class="review-show-pane" id="otherReviewSection">
                 <% if(!othersReview.length) { %>
 
                 <h6><b>Seems Nobody Has Shared Their Journey Yet!</b></h6>
@@ -68,24 +67,31 @@
             </ul>
         </div>
     </div>
-</div>
+    </div>
 
 <script>
-    function deleteReview() {
-        const trashReview = document.querySelector('a.deleteReview');
-        const requestPath = `/review/${trashReview.dataset.doc}`;
-        if(confirm("You sure want to delete this review?")) {
-            fetch(requestPath, {
-                method: 'DELETE'
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                window.location.href = data.redirect;
-            })
-            .catch((err) => {
-                console.log(err);
+    const ownReview = document.getElementById('ownReviewSection');
+    if(ownReview) {
+        ownReview.querySelectorAll(['button']).forEach( (button) => {
+            const requestPath = `/review/${button.getAttribute('id')}`; 
+            console.log(requestPath);
+            button.onclick = (() => { 
+                console.log(requestPath);
+                if(confirm("You sure want to delete this review?")) {
+                    fetch(requestPath, {
+                        method: 'DELETE'
+                    })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        window.location.href = data.redirect;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+                }
             });
-        }
+        });
     }
+
 </script>
   

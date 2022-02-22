@@ -1,9 +1,87 @@
-<div class="container">
-    <p><b>Overal Rating: </b></p>
-    <h6><%= summary.avgRating%> average rating based on <%= summary.reviewCount%> reviews</h6>
-    <p>5 star: <%= summary.fiveRate%> users</p>
-    <p>4 star: <%= summary.fourRate%> users</p>
-    <p>3 star: <%= summary.threeRate%> users</p>
-    <p>2 star: <%= summary.twoRate%> users</p>
-    <p>1 star: <%= summary.oneRate%> users</p>
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<hr style="border:1px solid #f1f1f1">
+<div class="reviewSummary">
+<span class="heading">User Rating</span>
+<% for(var i = 0;i < summary.avgRating ; i++) { %>
+    <span class="fa fa-star checked"></span>
+<% } %>
+<% for(var i = summary.avgRating; i < 5; i++) { %>
+    <span class="fa fa-star"></span>
+<% } %>
+
+<p><%= summary.avgRating %> average based on <%= summary.reviewCount %> reviews.</p>
+<hr style="border:1px solid #f1f1f1">
+
+<div class="row">
+  <div class="side">
+    <div>5 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-5" data-five="<%= summary.fiveRate %>" data-tot="<%= summary.reviewCount %>" id ="mybar-5"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div><%= summary.fiveRate%></div>
+  </div>
+  <div class="side">
+    <div>4 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-4" data-four="<%= summary.fourRate %>" id ="mybar-4"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div><%= summary.fourRate %></div>
+  </div>
+  <div class="side">
+    <div>3 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-3" data-three="<%= summary.fiveRate %>" id ="mybar-3"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div><%= summary.threeRate %></div>
+  </div>
+  <div class="side">
+    <div>2 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-2" data-two="<%= summary.twoRate %>" id ="mybar-2"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div><%= summary.twoRate %></div>
+  </div>
+  <div class="side">
+    <div>1 star</div>
+  </div>
+  <div class="middle">
+    <div class="bar-container">
+      <div class="bar-1" data-one="<%= summary.oneRate %>" id ="mybar-1"></div>
+    </div>
+  </div>
+  <div class="side right">
+    <div><%= summary.oneRate %></div>
+  </div>
 </div>
+<hr style="border:1px solid #f1f1f1">
+</div>
+
+<script>
+    const tot = document.getElementById("mybar-5").dataset.tot;
+    //console.log(document.getElementById("mybar-4").dataset.four);
+    //console.log(document.getElementById("mybar-3").dataset.three);
+    //console.log(document.getElementById("mybar-2").dataset.two);
+    //console.log(document.getElementById("mybar-1").dataset.one);
+    document.getElementById("mybar-5").style.width = ((document.getElementById("mybar-5").dataset.five/tot)*100) + "%";
+    document.getElementById("mybar-4").style.width = ((document.getElementById("mybar-4").dataset.four/tot)*100) + "%";
+    document.getElementById("mybar-3").style.width = ((document.getElementById("mybar-3").dataset.three/tot)*100) + "%";
+    document.getElementById("mybar-2").style.width = ((document.getElementById("mybar-2").dataset.two/tot)*100) + "%";
+    document.getElementById("mybar-1").style.width = ((document.getElementById("mybar-1").dataset.one/tot)*100) + "%";
+</script>

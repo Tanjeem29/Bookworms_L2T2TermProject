@@ -105,7 +105,7 @@
             
             </div>
 
-            <div class="column">
+            <div class="column" id="ownReviewSection">
                 <h6>
                     <b> Recent Reviews: </b> 
                 </h6>
@@ -117,7 +117,7 @@
                             <p class="time-style" name="time"><b>Shared: <%= review[i].TIMEDIF%> ago</b></p>
                             <p class="rating-style" name="rating"><b>Your Rating: <%= review[i].RATING%> star</b></p>
                             <p class="post-body-style" name="postBody"><%= review[i].TEXT_BODY%></p>
-                            <a class="deleteReview" data-doc="<%= review[i].REVIEW_ID %>-dashboard" onclick="deleteReview()">Delete Review</a>
+                            <button class="deleteReview" id="<%= review[i].REVIEW_ID %>-dashboard">Delete Review</a>
                         </li>
                     <% } %>
                 </ul>
@@ -127,7 +127,7 @@
                 
             </div>
 
-            <div class="column">
+            <div class="column" id="wallpostSection">
                 <h6>
                     <b> Recent Wallposts: </b> 
                 </h6>
@@ -138,7 +138,7 @@
                             <p class="post-body-style" name="postBody"><%= wallpost[i].POST_BODY%></p>
                             <p class="reaction-body" name="react"><b><%= wallpost[i].LIKE_COUNT%> People Reacted</b></p>
                             <p class="time-style" name="time"><b>Posted <%= wallpost[i].TIMEDIF%> ago</b></p>
-                            <a class="deleteWallpost" data-doc="<%= wallpost[i].WALLPOST_ID %>" onclick="deleteWallpost()">Delete Wallpost</a>
+                            <button class="deleteWallpost" id="<%= wallpost[i].WALLPOST_ID %>">Delete Wallpost</a>
                         </li>
                     <% } %>
                 </ul>
@@ -150,54 +150,45 @@
 </div>
 
 <script>
-    function deleteReview() {
-        const trashReview = document.querySelector('a.deleteReview');
-        const requestPath = `/review/${trashReview.dataset.doc}`;
-        if(confirm("You sure want to delete this review?")) {
-            fetch(requestPath, {
-                method: 'DELETE'
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                window.location.href = data.redirect;
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        }
-    }
+    const ownReview = document.getElementById('ownReviewSection');
+    ownReview.querySelectorAll(['button']).forEach( (button) => {
+        const requestPath = `/review/${button.getAttribute('id')}`; 
+        console.log(requestPath);
+        button.onclick = (() => { 
+            //console.log(requestPath);
+            if(confirm("You sure want to delete this review?")) {
+                fetch(requestPath, {
+                    method: 'DELETE'
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    window.location.href = data.redirect;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            }
+        });
+    });
 
-    function deleteWallpost() {
-        const trashWallpost = document.querySelector('a.deleteWallpost');
-        const requestPath = `/wallpost/${trashWallpost.dataset.doc}`;
-        if(confirm("You sure want to delete this Wallpost?")) {
-            fetch(requestPath, {
-                method: 'DELETE'
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                window.location.href = data.redirect;
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        }
-    }
-    /*const trashwallpost = document.querySelector('a.deleteWallpost'); 
-    trashwallpost.addEventListener('click', (e) => {
-        const requestPath = `/wallpost/${trashwallpost.dataset.doc}`;
-        console.log("hey");
-        if(confirm("You sure want to delete this review?")) {
-            fetch(requestPath, {
-                method: 'DELETE'
-            })
-            .then((res) => res.json())
-            .then((data) => {
-                window.location.href = data.redirect;
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        }
-    });*/
+    const wallpost = document.getElementById('wallpostSection');
+    wallpost.querySelectorAll(['button']).forEach((button) => {
+        const requestPath = `/wallpost/${button.getAttribute('id')}`;
+        button.onclick = () => {
+            //console.log(requestPath);
+            if(confirm("You sure want to delete this wallpost?")) {
+                fetch(requestPath, {
+                    method: 'DELETE'
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    window.location.href = data.redirect;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            }
+        };
+    });
+
 </script>

@@ -1,68 +1,62 @@
-
-<div class="header">
-    <h4>Your Timeline: </h4>
-  </div>
-  
+<div class="container">
   <div class="row">
-    <div class="leftcolumn">
-        <div class="post-show-pane">
-          <ul>
-             <% for(var i = 0; i < wallposts.length; i++) { %>
-              <li>
-                <form action="/wallpost/<%= wallposts[i].wallpostID %>" method="POST" class="card-body"></form>
-                    <h5 class="username-style" name="username">Posted By:  <%= wallposts[i].USERNAME %> </h5>
-                    <h6 class="time-style" name="time">Posten on: <%- wallposts[i].TIMEDIF%> ago</h6>>
-                    <p class="post-body-style" name="postBody"><%= wallposts[i].POST_BODY%></p>
-                    <p id="likeCount-<%= wallposts[i].WALLPOST_ID %>" class="reaction-style" name="likeCount"> <%= wallposts[i].LIKE_COUNT%> People Reacted</p>
-                    <% if(wallposts[i].REACTION_STATUS) { %>
-                      <form action="/wallpost/unlike/<%= wallposts[i].WALLPOST_ID %>" method="POST">
-                        <input type="submit" value="Remove Like">
-                      </form>
-                    <% } else { %>
-                      <form action="/wallpost/like/<%= wallposts[i].WALLPOST_ID %>" method="POST">
-                        <input type="submit" value="Like">
-                      </form>
-                    <% } %>
-                    <form action="wallpost/<%= wallposts[i].WALLPOST_ID %>">
-                      <input type="submit" value="View Comments" method="GET">
-                    </form>
-                </form>  
-                </li> 
-            <% } %>
-            </ul>
-        </div>
+    <div class="col-8">
+      <h3><small class="text-muted">Timeline: </small></h3>
+      <div class="col-sm-11 bg-light p-3 border" id="wallpostSection">
+        <ul class="list-group list-group-flush">
+          <% for(var i = 0; i < wallposts.length; i++) { %>
+            <li class="list-group-item">
+              <div class="card" style="width: 37rem;">
+                <h5 class="card-header"><%= wallposts[i].USERNAME %><small class="text-muted"> <i>posted <%= wallposts[i].TIMEDIF%> ago</i></small></h5>
+                <div class="card-body">
+                  <p class="card-text"><%= wallposts[i].POST_BODY%></p>
+                <% if(wallposts[i].REACTION_STATUS) { %>
+                    <button class="btn btn-primary btn-sm" id="unlike/<%= wallposts[i].WALLPOST_ID %>"><span class="material-icons">thumb_up</span></button>
+                  <% } else { %>
+                    <button class="btn btn-secondary btn-sm" id="like/<%= wallposts[i].WALLPOST_ID %>"><span class="material-icons">thumb_up</span></button>
+                  <% } %>
+                  <i><%= wallposts[i].LIKE_COUNT %> people liked</i>
+                </div>
+              </div>
+            </li>
+          <% } %>
+        </ul>
       </div>
     </div>
+    <div class="col-4">
+      <h3><small class="text-muted">Suggested Books: </small></h3>
+      <ul >
+          <% for(var i=0; i < suggestedBook.length ; i++) { %>
+              <li class="bookSuggestion">
+                  <a = class = "single" href = "/books/<%=suggestedBook[i].BOOK_ID%>" ><%=  suggestedBook[i].TITLE  %> </a>
+                  <br>
+                  <small class="text-muted"> <%= suggestedBook[i].AUTHOR_NAME %> </small>
+              </li>
+          <% } %>
+      </ul>
+    </div>
+  </div>
+</div>
+
 
     <script>
-        function removeReaction(tagid) {
-        const reqBody = {
-          current : 1
-        }
-        console.log("In remove");
-        const wallid = tagid.split('-')[1];
-        fetch("/wallpost/toggleReaction/"+wallid, {
-          method : 'POST',
-          headers: {
-                "Content-Type": "application/json"
-            },
-          body : JSON.stringify(reqBody)
-        });
-      }
 
-      function insertReaction(tagid) {
-        const reqBody = {
-          current : 0
-        }
-        console.log("In insert");
-        const wallid = tagid.split('-')[1];
-        fetch("/wallpost/toggleReaction/"+wallid, {
-          method: 'POST',
-          headers: {
-                "Content-Type": "application/json"
-            },
-          body : JSON.stringify(reqBody)
+        const likeDiv = document.getElementById('wallpostSection');
+        likeDiv.querySelectorAll(['button']).forEach((button) => {
+          const requestPath = `/wallpost/${button.getAttribute('id')}`;
+          button.onclick = (() => { 
+            console.log(requestPath);
+                fetch(requestPath, {
+                    method: 'POST'
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    window.location.href = data.redirect;
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            });
         });
-      }
 
     </script>
