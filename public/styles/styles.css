@@ -1,159 +1,115 @@
-/* *{
-    font-family: verdana, arial, sans-serif;
-    font-size: 0.8em;
-    -webkit-text-size-adjust: none;
-}
+.heading {
+    font-size: 25px;
+    margin-right: 25px;
+  }
+  
+  .fa {
+    font-size: 25px;
+  }
+  
+  .checked {
+    color: orange;
+  }
+  
+  /* Three column layout */
+  .side {
+    float: left;
+    width: 15%;
+    margin-top: 10px;
+  }
+  
+  .middle {
+    float: left;
+    width: 70%;
+    margin-top: 10px;
+  }
+  
+  /* Place text to the right */
+  .right {
+    text-align: right;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* The bar container */
+  .bar-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    color: white;
+  }
+  
+  /* Individual bars */
+  .bar-5 {height: 18px; background-color: #04AA6D;}
+  .bar-4 {height: 18px; background-color: #2196F3;}
+  .bar-3 {height: 18px; background-color: #00bcd4;}
+  .bar-2 {height: 18px; background-color: #ff9800;}
+  .bar-1 {height: 18px; background-color: #f44336;}
 
-.my-main-body{
-    min-height: 100vh !important;
-}
+  .wallpost-create form input{
+    color: #4b4b4b;
+    margin: 15px 0;
+    padding: 2px 10px;
+    font-size: 18px;
+    border: 2px solid rgb(5, 5, 5);
+    border-radius: 5px;
+  }
 
-.my-logo{
-    height: 8vh;
-    width: 16vw
-}
+  .wallpost-create form button {
+      margin: 15px 0;
+      padding: 5px 12px;
+  }
 
-.my-card-no-bottom{
-    margin-bottom: 0 !important;
-}
+  .bookSuggestion {
+      display: block;
+      margin: 30px 0;
+      padding-left: 20px;
+      border-left: 6px solid crimson;
+  }
 
-.my-container{
-    width: 80vw !important;
-    max-width : 100vw !important;
-}
+  .bookSuggestion :hover {
+      color: palevioletred;
+      text-decoration: none;
+  }
 
-.my-nav-link{
-    color: black !important;
-}
+  .readerSuggestion {
+    display: block;
+    margin: 40px 0;
+    padding-left: 30px;
+    border-left: 6px solid crimson;
+  }
 
-.my-body-nav-link{
-    color: black !important;
-    font-weight: bold !important;    
-    padding: 1px 2px !important;
-    font-size: 12px !important;
-}
-
-.current-link{
-    background-color: #b9b9b9;
-    border-radius: 0.3rem;
-}
-
-.my-message-notification{
-    font-weight: bold;
-}
-
-.my-non-btn{
-    padding: 0px 0px !important;
-    border: none !important;
-    margin-bottom: 3px !important;
-}
-
-.my-non-btn:active,.my-non-btn:focus{
-    box-shadow: none !important;
-    outline: none !important;
-}
-
-.my-logout-form{
-    display: inline !important;
-}
-
-.my-row-alter{
-    background-color: #f8f8f8 !important;
-}
-
-.my-row-selected{
-    background-color: #ddeeff !important;
-}
-
-.my-link, .my-link:hover{
+.readerSuggestion li :hover {
+    color:palevioletred;
     text-decoration: none;
 }
 
-.my-link:hover{
-    cursor: pointer;
+.userSuggestion i:hover {
+    color: palevioletred;
+    text-decoration: none;
 }
 
-.my-handle{
-    font-weight: bold;
-}
+  .single {
+      color : black;
 
-.my-card-header{
-    background-color: #e1e1e1 !important;
-}
+  }
 
-.my-handle-header{
-    font-size: large !important;
-}
-
-.my-bold {
-    font-weight: bold;
-}
-
-.my-dropdown {
-    overflow: scroll !important;
-    max-height: 50px !important;
-}
-
-.my-blog-post::before{
-    content: " " !important;
-    width: 4px !important;
-    height: 100% !important;
-    background: #b9b9b9 !important;
-    float: left !important;
-    position: absolute !important;
-    margin-left: 1px;
-}
-
-.my-blog-post{
-    position: relative !important;
-    text-align: justify !important;
-}
-
-.my-small-text{
-    font-size: 14px !important;
-}
-
-.my-autocomplete{
-    position: relative !important;
-}
-
-.my-autocomplete-items {
-    position: absolute;
-    border: 1px solid #101010;
-    z-index: 99; 
-    top: 100%;
-    left: 0;
-    right: 0;
-    padding: 2px 10px;
-    cursor: pointer;
-    background-color: #fff; 
-    width: 30%;
-}
-
-.my-button{
-    border-radius: 5px;
-}
-
-.my-image{
-    height: auto !important;
-    max-width: 95% !important;
-}
-
-.my-vote-cnt{
-    position: relative !important;
-    bottom: -0.15rem !important;
-}
-
-.my-commenter{
-    width: 90px !important;
-    text-align: center !important; 
-}
-
-.my-clickable:hover{
-    cursor: pointer !important;
-}
-
-.my-td-center{
-    text-align: center !important;
-    vertical-align: middle !important;
-}  */
+  .reviewSummary {
+      padding : 20px 20px;
+  }
+  
+  /* Responsive layout - make the columns stack on top of each other instead of next to each other */
+  @media (max-width: 400px) {
+    .side, .middle {
+      width: 100%;
+    }
+    /* Hide the right column on small screens */
+    .right {
+      display: none;
+    }
+  }

@@ -1,3 +1,4 @@
+const { result } = require('lodash');
 const db = require('./DB_Basics');
 
 //Suggested books: The books that is highest read by my followers but not in my bookshelf.
@@ -14,14 +15,29 @@ async function bookSuggestionByFollowedReader(rid) {
                                 WHERE RE.READER_ID = :RID) 
         ) T
         JOIN BOOKS B ON B.BOOK_ID = T.BOOK_ID 
+        
         ORDER BY READ_COUNT DESC
-        FETCH NEXT 4 ROWS ONLY
+        FETCH NEXT 3 ROWS ONLY
     `;
     const binds = {
         RID : rid
     }
 
-    return (await db.execute(sql, binds, db.options)).rows;
+    const sql1 = `
+        SELECT A.FIRST_NAME || ' ' || A.LAST_NAME NAME, W.BOOK_ID
+        FROM AUTHOR A NATURAL JOIN WRITTEN_BY W
+        WHERE BOOK_ID = :BID
+    `;
+
+    results = (await db.execute(sql, binds, db.options)).rows;
+    for(var i = 0; i < results.length; i++) {
+        const binds1 = {
+            BID : results[i].BOOK_ID
+        } 
+        authorName = (await db.execute(sql1, binds1, db.options)).rows;
+        results[i].AUTHOR_NAME = authorName[0].NAME
+    }
+    return results;
 }
 
 module.exports = {

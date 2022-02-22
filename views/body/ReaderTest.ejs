@@ -25,8 +25,8 @@
       <ul>
       <%  for (var i = 0; i< RLen; i++) {  %>
           
-        <li>
-                <%=readers[i].FIRST_NAME + ' ' + readers[i].LAST_NAME%> <a = class = "single" href = "/readers/<%=readers[i].READER_ID%>" > <i> <%=" (" + readers[i].USERNAME + ") "   %> </i></a>
+        <li class="readerSuggestion">
+                <%=readers[i].FIRST_NAME + ' ' + readers[i].LAST_NAME%> <a = class="userSuggestion" href = "/readers/<%=readers[i].READER_ID%>"> <i> <%=" (" + readers[i].USERNAME + ") "   %> </i></a>
                 <ul>Common books liked (<%=readers[i].C %>):
                   <%  for (var j = 0; j< books[i].length; j++) {  %>
                     <li>
@@ -55,7 +55,7 @@
       <ul>
       <%  for (var i = 0; i< Math.min(5,readers1.length); i++) {  %>
           
-        <li>
+        <li class="readerSuggestion">
                 <%=readers1[i].FIRST_NAME + ' ' + readers1[i].LAST_NAME%> <a = class = "single" href = "/readers/<%=readers1[i].READER_ID%>" > <i> <%=" (" + readers1[i].USERNAME + ") "   %> </i></a>
         </li>
       
