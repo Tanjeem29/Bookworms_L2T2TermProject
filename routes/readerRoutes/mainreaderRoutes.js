@@ -11,6 +11,8 @@ const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
 const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
 const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
 
+const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
+
 router.get('/readers', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
@@ -19,6 +21,9 @@ router.get('/readers', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         let id = req.session.userid;
         let readers = await DB_RelSearches.readerPageQuery1(id);
         console.log(readers); 
@@ -28,8 +33,9 @@ router.get('/readers', async (req,res)=>{
             let temp = await DB_RelSearches.readerPageQuery2(id, readers[i].READER_ID);
             books.push(temp);
         }
-        console.log(books);
-
+        //console.log(books);
+        let readers1 = await DB_RelSearches.readerPageQuery3(id);
+        console.log(readers1);
 
 
         res.render('layout.ejs', {
@@ -39,6 +45,8 @@ router.get('/readers', async (req,res)=>{
             readers : readers,
             RLen : RLen,
             books : books,
+            Quotes : quotes[0],
+            readers1 : readers1
             //books
             //errors : errors
         })
@@ -59,33 +67,46 @@ router.post('/readers/search', async (req, res) => {
         let results;
         let fl = req.body.fl;
         let type;
-        console.log(fl)
-        if(fl == 1){
-            results = await DB_Searches.searchByReadername(req.body.search);
-            type = 'All';
+        console.log(fl);
+
+
+        if(typeof fl == 'undefined'){
+            res.redirect('/readers');
         }
-        else if(fl == 2){
-            results = await DB_Searches.searchByReadername_Followed(id,req.body.search);
-            type = 'Followed';
+        else{
+
+            let quotes = await DB_quotes.getRandomQuote();
+            if(fl == 1){
+                results = await DB_Searches.searchByReadername(req.body.search);
+                type = 'All';
+            }
+            else if(fl == 2){
+                results = await DB_Searches.searchByReadername_Followed(id,req.body.search);
+                type = 'Followed';
+            }
+            else if(fl == 3){
+                results = await DB_Searches.searchByReadername_NotFollowed(id,req.body.search);
+                type = 'Not Followed';
+            }
+            //let results = await DB_Searches.searchByReadername(req.body.search);
+            //let results = await DB_Searches.searchByReadername_Followed(id, req.body.search);
+            //let results = await DB_Searches.searchByReadername_NotFollowed(id, req.body.search);
+            //console.log(results);
+            res.render('layout.ejs', {
+                title : 'Readers',
+                body : ['ReaderSearchTest','partials/navbar/navbar', req.body.search],
+                user : null,
+                SearchResults: results,
+                uid : req.session.userid,
+                type : type,
+                Quotes : quotes[0]
+                //books
+                //errors : errors
+            })
         }
-        else if(fl == 3){
-            results = await DB_Searches.searchByReadername_NotFollowed(id,req.body.search);
-            type = 'Not Followed';
-        }
-        //let results = await DB_Searches.searchByReadername(req.body.search);
-        //let results = await DB_Searches.searchByReadername_Followed(id, req.body.search);
-        //let results = await DB_Searches.searchByReadername_NotFollowed(id, req.body.search);
-        //console.log(results);
-        res.render('layout.ejs', {
-            title : 'Readers',
-            body : ['ReaderSearchTest','partials/navbar/navbar', req.body.search],
-            user : null,
-            SearchResults: results,
-            uid : req.session.userid,
-            type : type
-            //books
-            //errors : errors
-        })
+
+
+        
     }
 
 
@@ -99,6 +120,9 @@ router.get('/readers/:id', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         const id = req.params.id;
         let uid = req.session.userid;
         if(id == uid){
@@ -156,7 +180,8 @@ router.get('/readers/:id', async (req,res)=>{
                 bookswillread : bookswillread,
                 otherAuthors : otherAuthorsFollowed,
                 commonAuthors : commonAuthorsFollowed,
-                photo : path 
+                photo : path,
+                Quotes : quotes[0]
             })
 
         }

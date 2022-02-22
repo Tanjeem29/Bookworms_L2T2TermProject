@@ -10,6 +10,7 @@ const DB_getByID = require(process.env.ROOT + '\\DB\\DB_getByID');
 const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
 const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
 const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
+const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
 
 router.get('/authors', async (req,res)=>{
     session = req.session;
@@ -19,6 +20,9 @@ router.get('/authors', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         let id = req.session.userid;
         let authors = await DB_RelSearches.authorPageQuery1(id);
         //console.log(authors); 
@@ -39,6 +43,7 @@ router.get('/authors', async (req,res)=>{
             authors : authors,
             AfLen : ALen,
             books : books,
+            Quotes : quotes[0],
             
             //books
             //errors : errors
@@ -57,13 +62,23 @@ router.post('/authors/search', async (req, res) => {
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         console.log(req.body.search);
         //console.log(res.query);
         let id = req.session.userid;
         let results;
         let fl = req.body.fl;
+    
         let type;
         console.log(fl)
+        if(typeof fl == 'undefined'){
+            res.redirect('/authors');
+        }
+        else
+        {
+            
         if(fl == 1){
             results = await DB_Searches.searchByAuthorname(req.body.search);
             type = 'All';
@@ -84,10 +99,13 @@ router.post('/authors/search', async (req, res) => {
             body : ['AuthorSearchTest','partials/navbar/navbar', req.body.search],
             user : null,
             SearchResults: results,
-            type : type
+            type : type,
+            Quotes : quotes[0]
             //books
             //errors : errors
         })
+
+        }
     }
 
 
@@ -101,6 +119,9 @@ router.get('/authors/:id', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         const id = req.params.id;
         //console.log(id);
         let results;
@@ -124,7 +145,8 @@ router.get('/authors/:id', async (req,res)=>{
             //user : null,
             author: author[0],
             FollowStatus : FS,
-            books : books
+            books : books,
+            Quotes : quotes[0]
             //books
             //errors : errors
         })

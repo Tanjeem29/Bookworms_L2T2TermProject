@@ -20,7 +20,7 @@ const router = express.Router({mergeParams : true});
     const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
     const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
     const DB_Genre = require(process.env.ROOT + '\\DB\\DB_Genre');
-
+    const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
 
 router.get('/genres', async (req,res)=>{
     session = req.session;
@@ -30,6 +30,10 @@ router.get('/genres', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
+
         genre = await DB_Genre.getGenres();
         //console.log(genre);
         let mainGenre = [];
@@ -39,15 +43,18 @@ router.get('/genres', async (req,res)=>{
             //console.log(temp);
             mainGenre.push(temp);
           }
-          console.log(mainGenre);
-
-
+          //console.log(mainGenre);
+          LikeStatus = await DB_RelSearches.getReaderGenreStatus(session.userid, id);
+          let LS = LikeStatus.length;
+          console.log(LS);
 
         res.render('layout.ejs', {
             title : 'Genres',
             body : ['GenreTest','partials/navbar/navbar'],
             user : null,
             genres : mainGenre,
+            FollowStatus : LS,
+            Quotes : quotes[0]
             //errors : errors
         })
     }

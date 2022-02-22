@@ -10,6 +10,7 @@ const DB_queryPhoto = require(process.env.ROOT + '\\DB\\DB_update_profile_pictur
 
 //const session = require('express-session');
 
+const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
 
 
 require('dotenv').config();
@@ -29,6 +30,8 @@ router.get('/upload', async (req, res) => {
     }
 
     else {
+        let quotes = await DB_quotes.getRandomQuote();
+
         let results = await DB_getByID.getByReaderID(session.userid);
         //edit to absolute path /reader
         let path = '/reader/';
@@ -56,8 +59,10 @@ router.get('/upload', async (req, res) => {
                 fname: results[0].FIRST_NAME,
                 lname: results[0].LAST_NAME,
                 photo: path,
-                bio: results[0].BIO
-            }
+                bio: results[0].BIO,
+                
+            },
+            Quotes : quotes[0],
         });
         //errors : errors
     }
@@ -136,6 +141,9 @@ router.post('/upload', async(req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         let results = await DB_getByID.getByReaderID(session.userid);
         let path = "/reader/";
         let errors = [];
@@ -174,7 +182,8 @@ router.post('/upload', async(req,res)=>{
                     fname: req.body.fname,
                     lname: req.body.lname,
                     photo: path,
-                    bio: req.body.bio
+                    bio: req.body.bio,
+                    Quotes : quotes[0],
                 }
 
                 //errors : errors

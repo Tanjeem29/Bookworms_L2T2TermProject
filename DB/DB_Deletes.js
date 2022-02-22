@@ -27,6 +27,20 @@ async function resetFollowAuthor(RID, AID){
     return (await db.execute(sql, binds, db.options));
 }
 
+async function resetReaderGenre(RID, GID){
+    const sql = `
+    DELETE FROM READER_GENRE RG
+    WHERE RG.READER_ID = :RID AND RG.GENRE_ID = :GID
+    `;
+    const binds = {
+        RID : RID,
+        GID : GID
+    }
+
+    return (await db.execute(sql, binds, db.options));
+}
+
+
 async function resetFollowReader(FID, RID){
     const sql = `
     DELETE FROM FOLLOWER_READER FR
@@ -43,5 +57,6 @@ async function resetFollowReader(FID, RID){
 module.exports = {
     resetReadStatus,
     resetFollowAuthor,
-    resetFollowReader
+    resetFollowReader,
+    resetReaderGenre
 }

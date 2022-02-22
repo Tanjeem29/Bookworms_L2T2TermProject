@@ -179,7 +179,7 @@ async function otherAuthorsFollowed(MeID, RID){
 async function getAllBooksByReaderID(RID){
     const sql = `
     SELECT * from BOOKS B, (
-		SELECT BOOK_ID, RS.STATUS, ROUND(SYSDATE - RS.DATED, 1) TD from READ_STATUS RS
+		SELECT BOOK_ID, RS.STATUS, TIMEDIFF(RS.DATED) TD from READ_STATUS RS
 		WHERE READER_ID = :RID) T1
 	WHERE (B.BOOK_ID = T1.BOOK_ID)
     ORDER BY TD
@@ -322,6 +322,32 @@ async function readerPageQuery1(RID){ //gets readers who like similar books, tha
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+
+async function readerPageQuery3(RID){ //gets readers who follow common authors, that I've not followed
+    const sql = `
+    SELECT READER_ID, FIRST_NAME, LAST_NAME, USERNAME, C FROM READER NATURAL JOIN (
+        (SELECT FOLLOWER_ID READER_ID, COUNT(AUTHOR_ID) AS C
+						FROM 
+						FOLLOWER_AUTHOR
+						NATURAL JOIN
+						(SELECT AUTHOR_ID FROM FOLLOWER_AUTHOR
+						WHERE FOLLOWER_ID = :RID) 
+				WHERE FOLLOWER_ID <> :RID 
+				GROUP BY FOLLOWER_ID 
+				HAVING FOLLOWER_ID NOT IN 
+									(Select READER_ID from FOLLOWER_READER
+									WHERE FOLLOWER_ID = :RID)
+				ORDER BY COUNT(AUTHOR_ID) DESC 
+				FETCH NEXT 5 ROWS ONLY) 
+		)
+    `;
+    const binds = {
+        RID : RID,
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 async function readerPageQuery2(FID, RID){ //gets books in my bookshelf, liked by an unfollowed reader
     const sql = `
     SELECT * FROM BOOKS
@@ -341,7 +367,19 @@ async function readerPageQuery2(FID, RID){ //gets books in my bookshelf, liked b
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
-//Move to review later
+async function getReaderGenreStatus(RID, GID){
+    const sql = `
+    SELECT * 
+    FROM READER_GENRE RG
+    WHERE RG.GENRE_ID = :GID AND RG.READER_ID = :RID
+    `;
+    const binds = {
+        GID : GID,
+        RID : RID
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
 
 
 
@@ -368,5 +406,7 @@ module.exports ={
     authorPageQuery2,
     readerPageQuery1,
     readerPageQuery2,
+    getReaderGenreStatus,
+    readerPageQuery3
 
 }

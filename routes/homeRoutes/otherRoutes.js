@@ -15,6 +15,8 @@ const DB_queryPhoto = require(process.env.ROOT + '\\DB\\DB_update_profile_pictur
 const DB_wallpost = require(process.env.ROOT + '\\DB\\DB_wallpost');
 const DB_review = require(process.env.ROOT + '\\DB\\DB_review');
 
+const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
+
 router.get('/profile', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
@@ -23,6 +25,10 @@ router.get('/profile', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
+
         const id = session.userid;
         //console.log(id);
         let results;
@@ -72,7 +78,8 @@ router.get('/profile', async (req,res)=>{
             bookswillread : bookswillread,
             //otherAuthors : otherAuthorsFollowed,
             commonAuthors : commonAuthorsFollowed,
-            photo : path
+            photo : path,
+            Quotes : quotes[0]
             //books : books
             //books
             //errors : errors
@@ -92,6 +99,9 @@ router.get('/dashboard', async (req, res) => {
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         const id = session.userid;
         reader = await DB_getByID.getByReaderID(id);
         books = await DB_RelSearches.getAllBooksByReaderID(id);
@@ -131,7 +141,8 @@ router.get('/dashboard', async (req, res) => {
             fbLen : fbLen,
             wallpost : wallposts,
             review : reviews,
-            reviewlen : reviewLen
+            reviewlen : reviewLen,
+            Quotes : quotes[0],
             
             //Uncooment when Wallpost, reviews done
             // reviews : null,

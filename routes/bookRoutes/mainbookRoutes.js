@@ -23,6 +23,9 @@ const router = express.Router({mergeParams : true});
 
     const DB_Genre = require(process.env.ROOT + '\\DB\\DB_Genre');
 
+    const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
+
+
 router.get('/books', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
@@ -32,7 +35,11 @@ router.get('/books', async (req,res)=>{
     }
     else{
         genre = await DB_Genre.getGenres();
-        console.log(genre);
+        //console.log(genre);
+        
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         let mainGenre = [];
         let temp;
         for (let i = 0; i < genre.length; i++) {
@@ -40,19 +47,20 @@ router.get('/books', async (req,res)=>{
             console.log(temp);
             mainGenre.push(temp);
           }
-          console.log(mainGenre);
+          //console.log(mainGenre);
 
         res.render('layout.ejs', {
             title : 'Books',
             body : ['BookTest','partials/navbar/navbar'],
             user : null,
             genres : mainGenre,
+            Quotes : quotes[0],
             //errors : errors
         })
     }
     
 });
-router.get('/books/search', (req,res)=>{
+router.get('/books/search', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -74,6 +82,9 @@ router.get('/books/:id', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+        
         const id = req.params.id;
         let books;
         //results = DB_getByID;
@@ -82,6 +93,8 @@ router.get('/books/:id', async (req,res)=>{
         authors = await DB_RelSearches.getAuthorByBookID(id);
         ReadStatus = await DB_RelSearches.getReadStatusForBook(session.userid, id);
         
+        
+
         //review stuff
         let userReview = await DB_review.getUserSpecificReviewByBookID(id, session.userid);
         let otherReview = await DB_review.getOthersReviewByBookID(id, session.userid);
@@ -111,7 +124,9 @@ router.get('/books/:id', async (req,res)=>{
             ReadStatus : newReadStatus,
             ownReview : userReview,
             othersReview : otherReview,
-            summary : reviewSummary
+            summary : reviewSummary,
+            Quotes : quotes[0]
+            
             //books
             //errors : errors
         })
@@ -128,6 +143,10 @@ router.post('/books/search', async (req, res) => {
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
+
         console.log(req.body.search);
         //console.log(res.query);
         //Check parameter for type of search
@@ -144,13 +163,14 @@ router.post('/books/search', async (req, res) => {
             results = await DB_Searches.searchBookByAuthorName(req.body.search);
         }
         
-        console.log(results);
+        //console.log(results);
         res.render('layout.ejs', {
             title : 'Books',
             body : ['BookSearchTest','partials/navbar/navbar', req.body.search],
             user : null,
             SearchResults: results,
             fl   : req.body.fl,
+            Quotes : quotes[0],
             
             //errors : errors
         })
@@ -166,12 +186,14 @@ router.post('/books/readStatus/:id', async (req, res) => {
         res.redirect('/login');
     }
     else{
+        
+
         //console.log(str);
         const id = req.params.id;
         let str = '/books/' + id;
        // console.log(str);
        let RS = req.body.ReadStatus;
-       console.log(RS);
+       //console.log(RS);
        ReadStatus = await DB_RelSearches.getReadStatusForBook(session.userid, id);
        let results;
        if(ReadStatus.length == 0){
@@ -232,7 +254,7 @@ router.post('/books/review/:id', async (req, res) => {
         }
 
         let result = await DB_review.insertReview(reviewInfo);
-        console.log(result);
+        //console.log(result);
         res.redirect('/books/'+id);
     }
 });
@@ -240,6 +262,10 @@ router.post('/books/review/:id', async (req, res) => {
 
 
 router.get('/publishers/:id', async (req,res)=>{
+    let quotes = await DB_quotes.getRandomQuote();
+
+
+
     session = req.session;
     //No Login access tried, so redirect to login
     if(!session.userid){
@@ -255,8 +281,8 @@ router.get('/publishers/:id', async (req,res)=>{
         publisher = await DB_getByID.getByPublisherID(id);
         books = await DB_RelSearches.getBooksByPublisherID(id);
  
-        console.log(publisher[0]);
-        console.log(books);
+        //console.log(publisher[0]);
+        //console.log(books);
 
         
 
@@ -266,7 +292,8 @@ router.get('/publishers/:id', async (req,res)=>{
             body : ['OnePublisherPage','partials/navbar/navbar'],
             user : null,
             books: books,
-            publisher: publisher[0]
+            publisher: publisher[0],
+            Quotes : quotes[0]
             
             //books
             //errors : errors
@@ -285,6 +312,9 @@ router.get('/genres/:id', async (req,res)=>{
         res.redirect('/login');
     }
     else{
+        let quotes = await DB_quotes.getRandomQuote();
+
+
         const id = req.params.id;
         
         let books;
@@ -293,7 +323,11 @@ router.get('/genres/:id', async (req,res)=>{
         genre = await DB_getByID.getByGenreID(id);
         books = await DB_RelSearches.getBooksByGenreID(id);
         authors = await DB_RelSearches.getAuthorsByGenreID(id);
- 
+        LikeStatus = await DB_RelSearches.getReaderGenreStatus(session.userid, id);
+        let LS = LikeStatus.length;
+        //console.log(LS);
+
+
         // console.log(genre[0]);
         // console.log(books);
         //console.log(authors);
@@ -307,12 +341,55 @@ router.get('/genres/:id', async (req,res)=>{
             user : null,
             books: books,
             genre: genre[0],
-            authors : authors
+            authors : authors,
+            FollowStatus : LS,
+            Quotes : quotes[0]
             
             //books
             //errors : errors
         })
 
+    }
+    
+});
+
+
+router.post('/genres/:id', async (req,res)=>{
+    session = req.session;
+    //No Login access tried, so redirect to login
+    if(!session.userid){
+        console.log('NO SESSION!!!!!');
+        res.redirect('/login');
+    }
+    else{
+        const id = req.params.id;
+        //console.log(mainGenre);
+        //LikeStatus = await DB_RelSearches.getReaderGenreStatus(session.userid, id);
+        // let LS = LikeStatus.length;
+        // console.log(LS);
+
+        let LS = req.body.like;
+        let r;
+       
+        LikeStatusResult = await DB_RelSearches.getReaderGenreStatus(session.userid, id);
+        LikeStatus = LikeStatusResult.length;
+        console.log(LS);
+        console.log(LikeStatus);
+
+
+        let str = '/genres/' + id;
+
+        if(LS != LikeStatus){
+            if(LS == 0){
+                r = await DB_Deletes.resetReaderGenre(session.userid, id);
+            }
+            else{
+                //console.log('Inserting FOllowAuthor');
+                r = await DB_inserts.insertReaderGenre(session.userid, id);
+            }
+       }
+
+        res.redirect(str);
     }
     
 });

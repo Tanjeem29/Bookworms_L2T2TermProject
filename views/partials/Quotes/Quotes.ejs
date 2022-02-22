@@ -1,0 +1,22 @@
+<footer>
+<div class="my-container container align-bottom ">
+    <div class="text-center">
+    <figure>
+        <blockquote>
+            <i>"<%=Quotes.TEXT_BODY %>"</i>
+        
+            <footer>
+            <%if(Quotes.CHARACTER != null){%>
+                -<%=Quotes.CHARACTER%>
+            <% } %>
+            <i>
+                <%if(Quotes.BOOK_ID != null){%>
+                    (<a = class = "single" href = "/books/<%=Quotes.BOOK_ID%>" ><%=  Quotes.TITLE  %> </a>)
+                <% } %>
+            </i>
+        </footer>
+        </blockquote>
+    </figure>
+    </div>
+</div>
+</footer>

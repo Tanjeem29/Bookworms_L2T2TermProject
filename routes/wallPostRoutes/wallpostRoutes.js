@@ -6,6 +6,9 @@ const router = express.Router( {mergeParams: true} );
 const DB_wallpost = require(process.env.ROOT + '\\DB\\DB_wallpost');
 const DB_reaction = require(process.env.ROOT + '\\DB\\DB_reaction');
 
+const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
+
+
 router.get('/wallpost/:id', async (req, res) => {
     session = req.session;
     if(!session.userid) {

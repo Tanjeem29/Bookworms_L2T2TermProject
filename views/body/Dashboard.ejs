@@ -24,7 +24,7 @@
                             <%if(books[i].STATUS == 3){%> 
                                 <b>"Will Read"</b>
                             <%}%>
-
+                            <i><%=books[i].TD%></i> ago
                             <%if(books[i].TD < 1){%> 
                                 <%if(Math.round(books[i].TD * 24) == 0){%>
                                     <i>less than an hour</i> ago

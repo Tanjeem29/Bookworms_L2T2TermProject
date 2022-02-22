@@ -57,7 +57,17 @@
         <% } %>
 
         <!-- footer -->
+        <div class="my-container container align-bottom">
+            <div class="text-center">
+        <% if(typeof Quotes != 'undefined') { %>
+           
+                <%- include('./partials/Quotes/Quotes.ejs') %>
+           
+        <% } %>
+        
         <%- include('./partials/footer/footer.ejs') %>
+            </div>
+        </div>
     </div>
 
     <!-- Bootstrap -->
