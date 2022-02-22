@@ -1,17 +1,21 @@
+
 <div class="container">
     <h4>Name: <%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%></h4>
     <h5><p>Username: <%=reader.USERNAME%></h5>
+    <hr style="border:1px solid #f1f1f18c">
     </div>
+
     
+
+
     <div class="container">
     <div class = "row">
     <div class = "col-sm-12">
-    <h6>
-        <b> Recent BookShelf Activities: </b> </h6>
+        <h3><small class="text-muted">Recent Bookshelf Activites:  </small></h3>
         <ul>
                 <%  for (var i = 0; i< bLen; i++) {  %>
                     
-                    <li>
+                    <li class="dashBoard">
                             Added 
                             <a = class = "single" href = "/books/<%=books[i].BOOK_ID%>" ><%=  books[i].TITLE  %> </a>
                             to 
@@ -48,13 +52,13 @@
                 <%  }  %>
         </ul>
     
-    
-        <h6>
-            <b> Recently started following these Authors: </b> </h6>
+    <hr style="border:1px solid #f1f1f1d0">
+
+        <h3><small class="text-muted">Recently Started Following These Authors: </small></h3>
             <ul>
                     <%  for (var i = 0; i< AfLen; i++) {  %>
                         
-                        <li>
+                        <li class="dashBoard">
                                 Followed 
                                 <a = class = "single" href = "/authors/<%=Afollows[i].AUTHOR_ID%>" ><%=  Afollows[i].FIRST_NAME + ' ' + Afollows[i].LAST_NAME   %> </a>
                                 <i><%=Afollows[i].TD%></i> ago
@@ -65,13 +69,13 @@
                     <%  }  %>
             </ul>
         
-        
-        <h6>
-            <b>  Recently started following these Readers: </b> </h6>
+            <hr style="border:1px solid #f1f1f1d0">
+
+            <h3><small class="text-muted">Recently Started Following These Readers: </small></h3>
             <ul>
                     <%  for (var i = 0; i< RfLen; i++) {  %>
                         
-                        <li>
+                        <li class="dashBoard">
                                 Followed 
                                 <a = class = "single" href = "/readers/<%=Rfollows[i].READER_ID%>" ><%=  Rfollows[i].FIRST_NAME + ' ' + Rfollows[i].LAST_NAME   %> </a>
                                 <i><%=Rfollows[i].TD%></i> ago
@@ -84,15 +88,14 @@
         
         
 
-
+            <hr style="border:1px solid #f1f1f1d0">
 
         
-            <h6>
-                <b> Recent Followers: </b> </h6>
+            <h3><small class="text-muted">Recent Followers: </small></h3>
                 <ul>
                         <%  for (var i = 0; i< fbLen; i++) {  %>
                             
-                            <li>
+                            <li class="dashBoard">
                                     <a = class = "single" href = "/readers/<%=followers[i].READER_ID%>" ><%=  followers[i].FIRST_NAME + ' ' + followers[i].LAST_NAME   %> </a>
                                     started following you
                                     <i><%=followers[i].TD%></i> ago
@@ -102,49 +105,62 @@
                             
                         <%  }  %>
                 </ul>
-            
+                <hr style="border:1px solid #f1f1f1d0">
             </div>
 
-            <div class="column" id="ownReviewSection">
-                <h6>
-                    <b> Recent Reviews: </b> 
-                </h6>
-                <% if(reviewLen) { %>
-                <ul>
-                    <% for(var i=0; i < reviewlen; i++) { %>
-                        <li>
-                            <p class="booktitle" name="title"><h5>Book: <a = class = "single" href = "/books/<%= review[i].BOOK_ID %>" ><%= review[i].TITLE %></a><h5>
-                            <p class="time-style" name="time"><b>Shared: <%= review[i].TIMEDIF%> ago</b></p>
-                            <p class="rating-style" name="rating"><b>Your Rating: <%= review[i].RATING%> star</b></p>
-                            <p class="post-body-style" name="postBody"><%= review[i].TEXT_BODY%></p>
-                            <button class="deleteReview" id="<%= review[i].REVIEW_ID %>-dashboard">Delete Review</a>
-                        </li>
-                    <% } %>
-                </ul>
-                <% } else { %>
-                    <p><b>You Have No Reviews To Show!</b></p>
-                <% } %>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-6" id="wallpostSection">
+                        <h3><small class="text-muted">Recent Wallpost: </small></h3>
+                            <% if(wallpost.length) { %>
+                        <ul>
+                            <% for(var i=0; i < wallpost.length; i++) { %>
+                            <li class="review">
+                                <div class="card" style="width: 30rem;">
+                                    <div class="card-body">
+                                      <h6 class="card-subtitle mb-2 text-muted">Posted <%= wallpost[i].TIMEDIF%> ago</h6>
+                                      <p class="card-text"><%= wallpost[i].POST_BODY%></p>
+                                      <h6 class="card-subtitle mb-2 text-muted"><%= wallpost[i].LIKE_COUNT%> People Reacted</h6>
+                                      <button class="btn btn-outline-dark btn-sm px-3" id="<%= wallpost[i].WALLPOST_ID %>"><span class="material-icons">delete</span></a>
+                                    </div>
+                                  </div>
+                                
+                            </li>
+                            <% } %>
+                        </ul>
+                        <% } else { %>
+                            <p><b>You Have No Wallpost To Show!</b></p>
+                        <% } %>
+                    </div>
+
+                    <div class="col-6" id="ownReviewSection">
+                        <h3><small class="text-muted">Recent Reviews: </small></h3>
+                        <% if(reviewLen) { %>
+                        <ul>
+                            <% for(var i=0; i < reviewlen; i++) { %>
+                                <li class="review">
+                                    
+                                    <div class="card" style="width: 30rem;">
+                                        <div class="card-body">
+                                        <h5 class="card-title">Book: <a href="/books/<%= review[i].BOOK_ID%>"><%= review[i].TITLE%></a></h5>
+                                          <h6 class="card-subtitle mb-2 text-muted">Shared <%= review[i].TIMEDIF%> ago</h6>
+                                          <p class="card-text"><%= review[i].TEXT_BODY%></p>
+                                          <h6 class="card-subtitle mb-2 text-muted">Rating: <%=review[i].RATING%></h6>
+                                          <button class="btn btn-outline-dark btn-sm px-3" id="<%= review[i].REVIEW_ID %>-dashboard"><span class="material-icons">delete</span></a>
+                                        </div>
+                                      </div>
+                                </li>
+                            <% } %>
+                        </ul>
+                        <% } else { %>
+                            <p><b>You Have No Reviews To Show!</b></p>
+                        <% } %>
+                        
+                    </div>
+                </div>
+            </div>
                 
-            </div>
-
-            <div class="column" id="wallpostSection">
-                <h6>
-                    <b> Recent Wallposts: </b> 
-                </h6>
-                <% if(wallpost.length) { %>
-                <ul>
-                    <% for(var i=0; i < wallpost.length; i++) { %>
-                        <li>
-                            <p class="post-body-style" name="postBody"><%= wallpost[i].POST_BODY%></p>
-                            <p class="reaction-body" name="react"><b><%= wallpost[i].LIKE_COUNT%> People Reacted</b></p>
-                            <p class="time-style" name="time"><b>Posted <%= wallpost[i].TIMEDIF%> ago</b></p>
-                            <button class="deleteWallpost" id="<%= wallpost[i].WALLPOST_ID %>">Delete Wallpost</a>
-                        </li>
-                    <% } %>
-                </ul>
-                <% } else { %>
-                    <p><b>You Have No Wallpost To Show!</b></p>
-                <% } %>
                 
             </div>
 </div>

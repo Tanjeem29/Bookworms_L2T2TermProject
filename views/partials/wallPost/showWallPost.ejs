@@ -1,23 +1,27 @@
+
+
 <div class="container">
   <div class="row">
     <div class="col-8">
       <h3><small class="text-muted">Timeline: </small></h3>
-      <div class="col-sm-11 bg-light p-3 border" id="wallpostSection">
-        <ul class="list-group list-group-flush">
+      <div id="wallpostSection">
+        <ul>
           <% for(var i = 0; i < wallposts.length; i++) { %>
-            <li class="list-group-item">
-              <div class="card" style="width: 37rem;">
-                <h5 class="card-header"><%= wallposts[i].USERNAME %><small class="text-muted"> <i>posted <%= wallposts[i].TIMEDIF%> ago</i></small></h5>
-                <div class="card-body">
-                  <p class="card-text"><%= wallposts[i].POST_BODY%></p>
-                <% if(wallposts[i].REACTION_STATUS) { %>
-                    <button class="btn btn-primary btn-sm" id="unlike/<%= wallposts[i].WALLPOST_ID %>"><span class="material-icons">thumb_up</span></button>
-                  <% } else { %>
-                    <button class="btn btn-secondary btn-sm" id="like/<%= wallposts[i].WALLPOST_ID %>"><span class="material-icons">thumb_up</span></button>
-                  <% } %>
-                  <i><%= wallposts[i].LIKE_COUNT %> people liked</i>
-                </div>
-              </div>
+            <li class="review">
+                <div class="card" style="width: 38rem;">
+  <div class="card-body">
+      <h5 class="card-title"><a href="/readers/<%= wallposts[i].READER_ID %>"><%= wallposts[i].USERNAME %></a></h5>
+    <h6 class="card-subtitle mb-2 text-muted">Shared <%= wallposts[i].TIMEDIF %> ago</h6>
+      <p class="card-text"><%= wallposts[i].POST_BODY%></p>
+    <p class="card-text"><%= wallposts[i].TEXT_BODY%></p>
+    <% if(wallposts[i].REACTION_STATUS) { %>
+      <button class="btn btn-primary btn-sm" id="unlike/<%= wallposts[i].WALLPOST_ID %>"><span class="material-icons">thumb_up</span></button>
+    <% } else { %>
+      <button class="btn btn-secondary btn-sm" id="like/<%= wallposts[i].WALLPOST_ID %>"><span class="material-icons">thumb_up</span></button>
+    <% } %>
+    <i><%= wallposts[i].LIKE_COUNT %> people liked</i>
+  </div>
+</div>
             </li>
           <% } %>
         </ul>

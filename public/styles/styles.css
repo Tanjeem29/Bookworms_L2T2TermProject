@@ -65,17 +65,36 @@
       padding: 5px 12px;
   }
 
+  .genreSuggestion {
+    display: block;
+    margin: 30px 0;
+    padding-left: 20px;
+    border-left: 5px solid rgb(83, 168, 238);
+  }
+
   .bookSuggestion {
       display: block;
       margin: 30px 0;
       padding-left: 20px;
-      border-left: 6px solid crimson;
+      border-left: 5px solid rgb(83, 168, 238);
   }
 
   .bookSuggestion :hover {
       color: palevioletred;
       text-decoration: none;
   }
+
+  .dashBoard {
+    display: block;
+    margin: 30px 0;
+    padding-left: 20px;
+    border-left: 4px solid rgb(245, 126, 126);
+}
+
+.dashBoard :hover {
+  color: palevioletred;
+  text-decoration: none;
+}
 
   .readerSuggestion {
     display: block;
@@ -94,15 +113,17 @@
     text-decoration: none;
 }
 
-  .single {
-      color : black;
-
-  }
-
   .reviewSummary {
       padding : 20px 20px;
   }
   
+  .review {
+    display: block;
+    margin: 20px 0;
+    padding-left: 10px;
+    border-left: 6px solid rgb(160, 196, 243);
+  }
+
   /* Responsive layout - make the columns stack on top of each other instead of next to each other */
   @media (max-width: 400px) {
     .side, .middle {
