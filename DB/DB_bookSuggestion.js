@@ -15,7 +15,7 @@ async function bookSuggestionByFollowedReader(rid) {
         ) T
         JOIN BOOKS B ON B.BOOK_ID = T.BOOK_ID 
         ORDER BY READ_COUNT DESC
-        FETCH NEXT 4 ROWS ONLY
+        FETCH NEXT 3 ROWS ONLY
     `;
     const binds = {
         RID : rid
