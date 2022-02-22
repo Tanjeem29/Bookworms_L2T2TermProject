@@ -4,15 +4,17 @@
         <div class="row">
 
         <%  for (var j = 0; j< 4 && 4*i + j < genres.length; j++) {  %>
-            
+            <%if(genres[4*i+j].length>0){%>
             <div class="col-sm-3">
                 
                 <div class="container">
                     <ul>
                     <h4>
+                        
                         <a = class = "single" href = "/genres/<%=genres[4*i+j][0].GENRE_ID%>" style="color: rgb(10, 31, 99)">
                             <i><%=genres[4*i+j][0].GENRE_NAME%></i>
                         </a>
+                        
                     </h4>
                     <%  for (var k = 0; k < Math.min(genres[4*i+j].length, 3); k++) {  %>
                         <li>
@@ -23,6 +25,7 @@
                     </ul>
                 </div>
             </div>
+            <%}%>
         <%  }  %>
         </div>
 
