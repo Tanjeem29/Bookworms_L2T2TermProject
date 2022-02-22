@@ -4,6 +4,7 @@ const db = require('./DB_Basics');
 async function getGenres(){
     const sql = `
     SELECT * FROM GENRE
+    ORDER BY GENRE_ID
     `;
     const binds = {
     }

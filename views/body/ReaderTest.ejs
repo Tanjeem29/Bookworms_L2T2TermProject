@@ -53,7 +53,7 @@
     <h5>Readers with common Authors followed:</h5>
     <%if(readers1.length > 0){ %>
       <ul>
-      <%  for (var i = 0; i< RLen; i++) {  %>
+      <%  for (var i = 0; i< Math.min(5,readers1.length); i++) {  %>
           
         <li>
                 <%=readers1[i].FIRST_NAME + ' ' + readers1[i].LAST_NAME%> <a = class = "single" href = "/readers/<%=readers1[i].READER_ID%>" > <i> <%=" (" + readers1[i].USERNAME + ") "   %> </i></a>
