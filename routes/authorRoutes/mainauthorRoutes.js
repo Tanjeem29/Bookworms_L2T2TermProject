@@ -135,8 +135,14 @@ router.get('/authors/:id', async (req,res)=>{
 
         books = await DB_RelSearches.getBooksByAuthorID(id);
 
-        console.log(books);
-
+        //console.log(books);
+        if(author[0].PHOTO == null) {
+            console.log("Dummy Photo rendering");
+            path = "/author/dummy.png";
+        }
+        else {
+            path = "/author/" + author[0].PHOTO;
+        }
 
 
         res.render('layout.ejs', {
@@ -146,7 +152,8 @@ router.get('/authors/:id', async (req,res)=>{
             author: author[0],
             FollowStatus : FS,
             books : books,
-            Quotes : quotes[0]
+            Quotes : quotes[0],
+            photo : path,
             //books
             //errors : errors
         })

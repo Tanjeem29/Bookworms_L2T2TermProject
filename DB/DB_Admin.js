@@ -339,6 +339,46 @@ async function deleteAuthorGenre(GID, AID){
     return (await db.execute(sql, binds, db.options));
 }
 
+
+async function addAuthorPhoto(path, uid) {
+    const sql = `
+    UPDATE AUTHOR 
+    SET PHOTO = :PATH
+    WHERE AUTHOR_ID = :AID
+    `;
+    const binds = {
+        PATH : path,
+        AID : uid
+    }
+    return await db.execute(sql, binds, db.options);
+}
+
+async function addBookPhoto(path, uid) {
+    const sql = `
+    UPDATE BOOKS 
+    SET COVER = :PATH
+    WHERE BOOK_ID = :BID
+    `;
+    const binds = {
+        PATH : path,
+        BID : uid
+    }
+    return await db.execute(sql, binds, db.options);
+}
+
+async function addGenrePhoto(path, uid) {
+    const sql = `
+    UPDATE GENRE 
+    SET PHOTO = :PATH
+    WHERE GENRE_ID = :BID
+    `;
+    const binds = {
+        PATH : path,
+        BID : uid
+    }
+    return await db.execute(sql, binds, db.options);
+}
+
 module.exports = {
     getBooks,
     getAuthors,
@@ -365,7 +405,11 @@ module.exports = {
     deleteBookGenre,
     getAuthorGenre,
     insertAuthorGenre,
-    deleteAuthorGenre
+    deleteAuthorGenre,
+    addAuthorPhoto,
+    addBookPhoto,
+    addGenrePhoto
+
 
 
 

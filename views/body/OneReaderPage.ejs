@@ -17,7 +17,7 @@
         <b>Not Followed </b>
     </h6>
     <form action="/readers/follow/<%=reader.READER_ID%>" method="POST">
-        <button name="follow" value="1">Follow this Reader</button>
+        <button type="submit" class="btn btn-outline-secondary" name="follow" value="1">Follow This Reader</button>
     </form>
     
 <% } %>
@@ -28,7 +28,7 @@
         <b> Following this Reader </b>
     </h6>
     <form action="/readers/follow/<%=reader.READER_ID%>" method="POST">
-        <button name="follow" value="0">Unfollow this Reader</button>
+        <button type="submit" class="btn btn-outline-primary" name="follow" value="0">Unfollow This Reader</button>
     </form>
     
 <% } %>

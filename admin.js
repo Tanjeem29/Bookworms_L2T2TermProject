@@ -1,7 +1,8 @@
 
 require('dotenv').config();
 const DB = require(process.env.ROOT + '\\DB\\DB_Basics');
-
+const path = require('path');
+const fs = require('fs');
 const prompt = require("prompt-sync")({ sigint: true });
 const DB_Admin = require(process.env.ROOT + '\\DB\\DB_Admin');
 
@@ -36,7 +37,8 @@ async function run(){
                 console.log(`Function:
             1. Show all
             2. Add
-            3. Delete
+            3. Add Photo
+            4. Delete
             0. Back
                     `);
                 func = prompt();
@@ -54,10 +56,44 @@ async function run(){
                     email = prompt("Enter email: (Max: 30 letters)  ")
                     bio = prompt("Enter Bio: (Max: 3500 letters)  ")
                     born = prompt("Enter Birth Date: (Format: DD/MM/YYYY)  ")
+                    //photo = prompt("Enter photo absolute path")
 
                     results = await DB_Admin.insertAuthor(fname, lname, email,bio, born);
                 }
                 else if(func == 3){
+
+
+                    id = prompt("Enter AUTHOR_ID of the Author whose photo you want to add: ")
+                    abspath = prompt("Enter absolute path of the photo: ")
+                    let savePath = path.join("./public/author/"+id);
+
+                    if(path.extname(abspath).toLowerCase() === ".png") {
+                        extension = ".png";
+                        fs.rename(abspath, savePath+extension, (err) => {
+                            console.log("******Some Error Occured Uploading*******");
+                            if(err) {
+                                return err;
+                            }
+                        });
+                        console.log("Photo Saved as .png!");
+                    }
+                    else if(path.extname(abspath).toLowerCase() === ".jpg") {
+                        extension = ".jpg";
+                        fs.rename(abspath, savePath+extension, (err) => {
+                            if(err) {
+                                console.log("******Some Error Occured Uploading*******");
+                                return err;
+                            }
+                        });
+                        console.log("Photo Saved as .jpg!");
+                    }
+
+
+                    results = await DB_Admin.addAuthorPhoto(id+extension, id);
+
+
+                }
+                else if(func == 4){
                     id = prompt("Enter AUTHOR_ID of the Author you want to delete: ")
                     results = await DB_Admin.deleteAuthor(id);
                 }
@@ -106,7 +142,8 @@ async function run(){
                 console.log(`Function:
             1. Show all
             2. Add
-            3. Delete
+            3. Add cover
+            4. Delete
             0. Back
                     `);
                 func = prompt();
@@ -131,6 +168,39 @@ async function run(){
                     
                 }
                 else if(func == 3){
+
+
+                    id = prompt("Enter BOOK_ID of the Book whose photo you want to add: ")
+                    abspath = prompt("Enter absolute path of the photo: ")
+                    let savePath = path.join("./public/book/"+id);
+
+                    if(path.extname(abspath).toLowerCase() === ".png") {
+                        extension = ".png";
+                        fs.rename(abspath, savePath+extension, (err) => {
+                            console.log("******Some Error Occured Uploading*******");
+                            if(err) {
+                                return err;
+                            }
+                        });
+                        console.log("Photo Saved as .png!");
+                    }
+                    else if(path.extname(abspath).toLowerCase() === ".jpg") {
+                        extension = ".jpg";
+                        fs.rename(abspath, savePath+extension, (err) => {
+                            if(err) {
+                                console.log("******Some Error Occured Uploading*******");
+                                return err;
+                            }
+                        });
+                        console.log("Photo Saved as .jpg!");
+                    }
+
+
+                    results = await DB_Admin.addBookPhoto(id+extension, id);
+
+
+                }
+                else if(func == 4){
                     id = prompt("Enter BOOK_ID of the Book you want to delete: ")
                     results = await DB_Admin.deleteBook(id);
                 }
@@ -151,7 +221,8 @@ async function run(){
                 console.log(`Function:
             1. Show all
             2. Add
-            3. Delete
+            3. Add Photo
+            4. Delete
             0. Back
                     `);
                 func = prompt();
@@ -170,6 +241,39 @@ async function run(){
                     
                 }
                 else if(func == 3){
+
+
+                    id = prompt("Enter GENRE_ID of the GENRE whose photo you want to add: ")
+                    abspath = prompt("Enter absolute path of the photo: ")
+                    let savePath = path.join("./public/genre/"+id);
+
+                    if(path.extname(abspath).toLowerCase() === ".png") {
+                        extension = ".png";
+                        fs.rename(abspath, savePath+extension, (err) => {
+                            //console.log("******Some Error Occured Uploading*******");
+                            if(err) {
+                                return err;
+                            }
+                        });
+                        console.log("Photo Saved as .png!");
+                    }
+                    else if(path.extname(abspath).toLowerCase() === ".jpg") {
+                        extension = ".jpg";
+                        fs.rename(abspath, savePath+extension, (err) => {
+                            if(err) {
+                                //console.log("******Some Error Occured Uploading*******");
+                                return err;
+                            }
+                        });
+                        console.log("Photo Saved as .jpg!");
+                    }
+
+
+                    results = await DB_Admin.addGenrePhoto(id+extension, id);
+
+
+                }
+                else if(func == 4){
                     id = prompt("Enter GENRE_ID of the Genre you want to delete: ")
                     results = await DB_Admin.deleteGenre(id);
                 }

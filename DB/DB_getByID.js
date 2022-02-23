@@ -13,7 +13,7 @@ async function getByBookID(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
-async function getByReaderID(strin){
+async function getByReaderID2(strin){
     const sql = `
     SELECT TO_CHAR(born, 'MON DD, YYYY') BORN, READER_ID, FIRST_NAME, LAST_NAME, BIO, EMAIL, USERNAME, PHOTO 
     FROM READER R
@@ -26,13 +26,41 @@ async function getByReaderID(strin){
     return (await db.execute(sql, binds, db.options)).rows;
 }
 
+async function getByReaderID(strin){
+    const sql = `
+        SELECT READER_ID, USERNAME, FIRST_NAME, LAST_NAME, BIO, TO_CHAR(BORN, 'DD Month, YYYY') BORN, EMAIL, PHOTO, COUNT(FOLLOWER_ID) FOLLOWER_COUNT
+        FROM READER LEFT OUTER JOIN FOLLOWER_READER
+        USING (READER_ID)
+        WHERE READER_ID = :RID
+        GROUP BY READER_ID, FIRST_NAME, LAST_NAME, BIO, BORN, EMAIL, PHOTO, USERNAME
+    `;
+    const binds = {
+        RID : strin
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
 
 //console.log(getByBookID(1));
 
-async function getByAuthorID(strin){
+async function getByAuthorID2(strin){
     const sql = `
     select * from AUTHOR
     where AUTHOR.AUTHOR_ID = :AID
+    `;
+    const binds = {
+        AID : strin
+    }
+
+    return (await db.execute(sql, binds, db.options)).rows;
+}
+
+async function getByAuthorID(strin){
+    const sql = `
+    select AUTHOR_ID, FIRST_NAME, LAST_NAME, BIO, BORN, EMAIL, PHOTO, COUNT(FOLLOWER_ID) FOLLOWER_COUNT from AUTHOR NATURAL JOIN FOLLOWER_AUTHOR
+    where AUTHOR_ID = :AID
+    GROUP BY AUTHOR_ID, FIRST_NAME, LAST_NAME, BIO, BORN, EMAIL, PHOTO
     `;
     const binds = {
         AID : strin

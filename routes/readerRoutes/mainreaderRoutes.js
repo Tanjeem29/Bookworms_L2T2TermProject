@@ -148,6 +148,7 @@ router.get('/readers/:id', async (req,res)=>{
             
             //Pic Add (NOTOWRKING)
             console.log('BEFOREEEEEEE')
+            console.log(reader);
             if(reader[0].PHOTO == null) {
                 console.log("Dummy Photo rendering");
                 path = "/reader/dummy.png";

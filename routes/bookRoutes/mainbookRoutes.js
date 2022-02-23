@@ -111,6 +111,13 @@ router.get('/books/:id', async (req,res)=>{
         if(ReadStatus.length == 0) newReadStatus = 0;
         else newReadStatus = ReadStatus[0].STATUS;
 
+        if(books[0].COVER == null) {
+            console.log("Dummy Photo rendering");
+            path = "/book/dummy.png";
+        }
+        else {
+            path = "/book/" + books[0].COVER;
+        }
 
         res.render('layout.ejs', {
             title : 'Books',
@@ -125,7 +132,8 @@ router.get('/books/:id', async (req,res)=>{
             ownReview : userReview,
             othersReview : otherReview,
             summary : reviewSummary,
-            Quotes : quotes[0]
+            Quotes : quotes[0],
+            photo : path
             
             //books
             //errors : errors
@@ -332,7 +340,13 @@ router.get('/genres/:id', async (req,res)=>{
         // console.log(genre[0]);
         // console.log(books);
         //console.log(authors);
-
+        if(genre[0].PHOTO == null) {
+            console.log("Dummy Photo rendering");
+            path = "/genre/dummy.jpg";
+        }
+        else {
+            path = "/genre/" + genre[0].PHOTO;
+        }
         
 
 
@@ -344,7 +358,8 @@ router.get('/genres/:id', async (req,res)=>{
             genre: genre[0],
             authors : authors,
             FollowStatus : LS,
-            Quotes : quotes[0]
+            Quotes : quotes[0],
+            photo : path
             
             //books
             //errors : errors

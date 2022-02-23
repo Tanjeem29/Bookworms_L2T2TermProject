@@ -1,6 +1,16 @@
+<div class="container">
+    <img src="<%=photo%>" alt="Profile picture" width="150">
+</div> 
+
 
 <div class="container">
 <h2>Name: <%=author.FIRST_NAME + ' ' + author.LAST_NAME%></h2>
+
+<div class="container">
+    Followers: <%=author.FOLLOWER_COUNT%>
+    
+</div>
+
 
 <% if(books.length == 0) {  %>
     <p>No Books By This Author</p>
@@ -39,7 +49,7 @@
         <b>Not Followed </b>
     </h6>
     <form action="/authors/<%=author.AUTHOR_ID%>" method="POST">
-        <button name="follow" value="1">Follow this Author</button>
+        <button type="submit" class="btn btn-outline-primary" name="follow" value="1">Follow This Author</button>
     </form>
     
 <% } %>
@@ -50,7 +60,7 @@
         <b> Following this Author </b>
     </h6>
     <form action="/authors/<%=author.AUTHOR_ID%>" method="POST">
-        <button name="follow" value="0">Unfollow this Author</button>
+        <button type="submit" class="btn btn-outline-secondary" name="primary" value="0">Unfollow This Author</button>
     </form>
     
 <% } %>
