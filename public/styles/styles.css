@@ -1,3 +1,9 @@
+*{
+  font-size: 100%;
+  font-family: Arial;
+
+}
+
 .heading {
     font-size: 25px;
     margin-right: 25px;
@@ -72,6 +78,19 @@
     border-left: 5px solid rgb(83, 168, 238);
   }
 
+  .authorSuggestion{
+    display: block;
+    margin: 30px 0;
+    padding-left: 20px;
+    border-left: 5px solid rgba(220, 20, 60, 0.692);
+  }
+.authorSuggestion li {
+  display: block;
+      margin: 5px 0;
+      padding-left: 20px;
+      border-left: 5px solid rgba(202, 80, 105, 0.692);
+}
+
   .bookSuggestion {
       display: block;
       margin: 30px 0;
@@ -86,10 +105,12 @@
 
   .dashBoard {
     display: block;
-    margin: 30px 0;
+    margin: 15px 0;
     padding-left: 20px;
     border-left: 4px solid rgb(245, 126, 126);
 }
+
+
 
 .dashBoard :hover {
   color: palevioletred;
@@ -100,12 +121,19 @@
     display: block;
     margin: 40px 0;
     padding-left: 30px;
-    border-left: 6px solid crimson;
+    border-left: 6px solid rgba(220, 20, 60, 0.596);
   }
 
 .readerSuggestion li :hover {
-    color:palevioletred;
+    color:#d87093;
     text-decoration: none;
+}
+
+.readerSuggestion li {
+  display: block;
+    margin: 5px 0;
+    padding-left: 30px;
+    border-left: 6px solid rgba(202, 80, 105, 0.692);
 }
 
 .userSuggestion i:hover {

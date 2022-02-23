@@ -15,7 +15,8 @@ async function getByBookID(strin){
 
 async function getByReaderID(strin){
     const sql = `
-    SELECT * FROM READER R
+    SELECT TO_CHAR(born, 'MON DD, YYYY') BORN, READER_ID, FIRST_NAME, LAST_NAME, BIO, EMAIL, USERNAME, PHOTO 
+    FROM READER R
     WHERE R.READER_ID = :RID
     `;
     const binds = {

@@ -9,7 +9,8 @@
     <%  for (var i = 0; i< SearchResults.length; i++) {  %>
         <% console.log('this is ' + i + ' ' + SearchResults[0].title)  %>
         
-        <li><h5><a = class = "single" href = "/books/<%=SearchResults[i].BOOK_ID%>" ><%=  SearchResults[i].TITLE  %> </a></h5>
+        <li class = "bookSuggestion">
+            <h5><a = class = "single" href = "/books/<%=SearchResults[i].BOOK_ID%>" ><%=  SearchResults[i].TITLE  %> </a></h5>
             <% if(fl == 2) { %>
                 
                 <h6>
