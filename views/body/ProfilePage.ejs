@@ -6,104 +6,106 @@
 
         <div class="col-9" style="padding-top: 20px;">
             <h4><%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%> <span class="card-subtitle mb-2 text-muted">(<i><%=reader.USERNAME%>)</i></span></h4>
-            <p class="h6"><span class="card-subtitle mb-2 text-muted"><b>xx </b>Follower</span></p>
-            <p class="h6"><span class="card-subtitle mb-2 text-muted"><b>xx </b>Following</span></p>
+            <p class="h6"><span class="card-subtitle mb-2 text-muted"><b><%=reader.FOLLOWER_COUNT%> </b>Followers</span></p>
             <p class="h6"><span class="card-subtitle mb-2 text-muted">Born: <%=reader.BORN%> </span></p>
             <p class="h6"><span class="card-subtitle mb-2 text-muted"><b> BIO: </b>"<%=reader.BIO%>" </span></p>
         </div>
 
     </div>
+    <hr style="border:1px solid #f1f1f1d0">
 </div>   
 
 <form action="/upload" method="get">
     <button type="submit" name="Submit" id="frm1_submit" class="btn btn-outline-danger btn-sm"
     style="position: absolute;
     left: 800px;
-    top: 260px;">
+    top: 233px;">
     Edit Profile</span></button>
 </form>
 
-<div class="container">
-    Followers: <%=reader.FOLLOWER_COUNT%>
-    
-</div>
+
 
 <div class="container">
-<h6>
-    <b> Books Already Read  (Total: <%=booksread.length%>) </b></h6>
-    <% if(booksread.length == 0) {  %>
-        <p>No Books Finished Reading yet</p>
-    <% } %>
-    
-    <ul>
-        <% if(booksread.length > 0) { %>
-            <%  for (var i = 0; i< booksread.length; i++) {  %>
-                <% console.log('this is ' + i + ' ' + booksread[0].title)  %>
-                
-                <li>
-                    
-                        <a = class = "single" href = "/books/<%=booksread[i].BOOK_ID%>" ><%=  booksread[i].TITLE  %> </a>
-                    
-                </li>
-                
-                
-            <%  }  %>
-        <% } %>
-    </ul>
+    <h5><span class="card-subtitle mb-2 text-muted" style="text-align : center;">Book-shelf</span></h5>
 
 </div>
 
 
-<div class="container">
-<h6>
-    <b> Books Currently Reading (Total: <%=booksreading.length%>) </b> </h6>
-    <% if(booksreading.length == 0) {  %>
-        <p>No Books Currently Reading</p>
-    <% } %>
-    
-    <ul>
-        <% if(booksreading.length > 0) { %>
-            <%  for (var i = 0; i< booksreading.length; i++) {  %>
-                <% console.log('this is ' + i + ' ' + booksreading[0].title)  %>
-                
-                <li>
-                    
-                        <a = class = "single" href = "/books/<%=booksreading[i].BOOK_ID%>" ><%=  booksreading[i].TITLE  %> </a>
-                    
-                </li>
-                
-                
-            <%  }  %>
-        <% } %>
-    </ul>
+<div class="row">
+    <div class="col-4">
+        <h6>
+            <b> Books Already Read  (Total: <%=booksread.length%>) </b></h6>
+            <% if(booksread.length == 0) {  %>
+                <p>No Books Finished Reading yet</p>
+            <% } %>
+            
+            <ul>
+                <% if(booksread.length > 0) { %>
+                    <%  for (var i = 0; i< booksread.length; i++) {  %>
+                        <% console.log('this is ' + i + ' ' + booksread[0].title)  %>
+                        
+                        <li class="bookSuggestion" style="margin : 8px 0">
+                            
+                                <a = class = "single" href = "/books/<%=booksread[i].BOOK_ID%>" ><%=  booksread[i].TITLE  %> </a>
+                            
+                        </li>
+                        
+                        
+                    <%  }  %>
+                <% } %>
+            </ul>
+    </div>
 
 
+    <div class="col-4">
+        <h6>
+            <b> Books Currently Reading (Total: <%=booksreading.length%>) </b> </h6>
+            <% if(booksreading.length == 0) {  %>
+                <p>No Books Currently Reading</p>
+            <% } %>
+            
+            <ul>
+                <% if(booksreading.length > 0) { %>
+                    <%  for (var i = 0; i< booksreading.length; i++) {  %>
+                        <% console.log('this is ' + i + ' ' + booksreading[0].title)  %>
+                        
+                        <li class="bookSuggestion" style="margin : 8px 0">
+                            
+                                <a = class = "single" href = "/books/<%=booksreading[i].BOOK_ID%>" ><%=  booksreading[i].TITLE  %> </a>
+                            
+                        </li>
+                        
+                        
+                    <%  }  %>
+                <% } %>
+            </ul>
+        
+    </div>
+    <div class="col-4">
+        <h6>
+            <b> Books to be Read (Total: <%=bookswillread.length%>) </b> </h6>
+            <% if(booksreading.length == 0) {  %>
+                <p>No Books to be Read</p>
+            <% } %>
+            
+            <ul>
+                <% if(bookswillread.length > 0) { %>
+                    <%  for (var i = 0; i< bookswillread.length; i++) {  %>
+                        <% console.log('this is ' + i + ' ' + bookswillread[0].title)  %>
+                        
+                        <li class="bookSuggestion" style="margin : 8px 0">
+                            
+                                <a = class = "single" href = "/books/<%=bookswillread[i].BOOK_ID%>" ><%=  bookswillread[i].TITLE  %> </a>
+                            
+                        </li>
+                        
+                        
+                    <%  }  %>
+                <% } %>
+            </ul>
 
-</div>
-
-
-<div class="container">
-<h6>
-    <b> Books to be Read (Total: <%=bookswillread.length%>) </b> </h6>
-    <% if(booksreading.length == 0) {  %>
-        <p>No Books to be Read</p>
-    <% } %>
-    
-    <ul>
-        <% if(bookswillread.length > 0) { %>
-            <%  for (var i = 0; i< bookswillread.length; i++) {  %>
-                <% console.log('this is ' + i + ' ' + bookswillread[0].title)  %>
-                
-                <li>
-                    
-                        <a = class = "single" href = "/books/<%=bookswillread[i].BOOK_ID%>" ><%=  bookswillread[i].TITLE  %> </a>
-                    
-                </li>
-                
-                
-            <%  }  %>
-        <% } %>
-    </ul>
+        
+    </div>
 
 
 </div>
@@ -122,7 +124,7 @@
         
             <%  for (var i = 0; i< commonAuthors.length; i++) {  %>
                 
-                <li>
+                <li class="bookSuggestion" style="margin : 8px 0">
                     
                         <a = class = "single" href = "/authors/<%=commonAuthors[i].AUTHOR_ID%>" ><%=  commonAuthors[i].FIRST_NAME + ' ' + commonAuthors[i].LAST_NAME  %> </a>
                 
