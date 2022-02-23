@@ -3,10 +3,10 @@
 <hr style="border:1px solid #f1f1f1a1">
 <div class="reviewSummary">
 <span class="heading">User Rating</span>
-<% for(var i = 0;i < summary.avgRating ; i++) { %>
+<% for(var i = 0;i < Math.ceil(summary.avgRating) ; i++) { %>
     <span class="fa fa-star checked"></span>
 <% } %>
-<% for(var i = summary.avgRating; i < 5; i++) { %>
+<% for(var i = Math.ceil(summary.avgRating); i < 5; i++) { %>
     <span class="fa fa-star"></span>
 <% } %>
 
