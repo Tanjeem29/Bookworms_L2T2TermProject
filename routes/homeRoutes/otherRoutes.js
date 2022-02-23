@@ -37,7 +37,7 @@ router.get('/profile', async (req,res)=>{
         //FollowStatus = await DB_RelSearches.getFollowReader(session.userid, id);
         //console.log(FollowStatus);
         //let FS = FollowStatus.length;
-
+        console.log(reader)
 
         let booksread = await DB_RelSearches.getBooksByReaderIDStatus(id, 1);
         let booksreading = await DB_RelSearches.getBooksByReaderIDStatus(id, 2);
