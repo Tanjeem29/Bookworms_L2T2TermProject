@@ -1,17 +1,27 @@
-<form action="/upload" method="get">
-    <input type="submit" value="Edit Profile" 
-         name="Submit" id="frm1_submit" />
-</form>
-
 <div class="container">
-    <img src="<%=photo%>" alt="Profile picture" width="150">
+    <div class="row">
+        <div class="col-3">
+            <img src="<%=photo%>" alt="Responsive image" class="img-thumbnail" width="200" style="border-radius: 100%;">
+        </div>
+
+        <div class="col-9" style="padding-top: 20px;">
+            <h4><%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%> <span class="card-subtitle mb-2 text-muted">(<i><%=reader.USERNAME%>)</i></span></h4>
+            <p class="h6"><span class="card-subtitle mb-2 text-muted"><b>xx </b>Follower</span></p>
+            <p class="h6"><span class="card-subtitle mb-2 text-muted"><b>xx </b>Following</span></p>
+            <p class="h6"><span class="card-subtitle mb-2 text-muted">Born: <%=reader.BORN%> </span></p>
+            <p class="h6"><span class="card-subtitle mb-2 text-muted"><b> BIO: </b>"<%=reader.BIO%>" </span></p>
+        </div>
+
+    </div>
 </div>   
 
-
-<div class="container">
-<h4><%=reader.FIRST_NAME + ' ' + reader.LAST_NAME%></h4>
-<h5><p><%=reader.USERNAME%></h5>
-</div>
+<form action="/upload" method="get">
+    <button type="submit" name="Submit" id="frm1_submit" class="btn btn-outline-danger btn-sm"
+    style="position: absolute;
+    left: 50%;
+    top: 32%;">
+    Edit Profile</span></button>
+</form>
 
 <div class="container">
     Followers: <%=reader.FOLLOWER_COUNT%>

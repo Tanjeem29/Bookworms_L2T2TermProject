@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="padding: 10px 0px; text-align : left">
     <%  for (var i = 0; i< Math.ceil(genres.length/4); i++) {  %>
         <%console.log(genres.length);%>
         <div class="row">
@@ -17,7 +17,7 @@
                         
                     </h4>
                     <%  for (var k = 0; k < Math.min(genres[4*i+j].length, 3); k++) {  %>
-                        <li>
+                        <li class="genreSuggestion">
                             <a = class = "single" href = "/books/<%=genres[4*i+j][k].BOOK_ID%>" style="color: rgb(33, 81, 240)"><%=  genres[4*i+j][k].TITLE  %> </a>
                             <i><br>ISMDB Rating: <%=genres[4*i+j][k].ISMDB_RATINGS %></i>
                         </li>
@@ -30,6 +30,9 @@
         </div>
 
     <%  }  %>
+        </div>
+      </div>
+
 
 
 </div>

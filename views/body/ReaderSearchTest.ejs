@@ -10,7 +10,7 @@
         <%  for (var i = 0; i< SearchResults.length; i++) {  %>
             <% console.log('this is ' + i + ' ' + SearchResults[0].title)  %>
             
-            <li>
+            <li class = "bookSuggestion">
                 <h5>
                     <a = class = "single" href ="/readers/<%=SearchResults[i].READER_ID%>" ><%=  SearchResults[i].FIRST_NAME + ' ' + SearchResults[i].LAST_NAME  %> </a>
                     <% if(SearchResults[i].READER_ID == uid) { %>

@@ -160,6 +160,7 @@ router.post('/books/search', async (req, res) => {
         //Check parameter for type of search
         let results;
         let fl = req.body.fl;
+        console.log(req.body.fl);
         
         if(fl == 1){
             results = await DB_Searches.searchByBookname(req.body.search);

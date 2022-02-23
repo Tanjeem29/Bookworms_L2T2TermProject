@@ -32,7 +32,7 @@ async function deleteReview(rid) {
 
 async function getOthersReviewByBookID(bid, uid) {
     const sql = `
-        SELECT R.USERNAME, TEXT_BODY, TIMEDIFF(DATED) TIMEDIF, REVIEW_ID, RATING
+        SELECT READER_ID, R.USERNAME, TEXT_BODY, TIMEDIFF(DATED) TIMEDIF, REVIEW_ID, RATING
         FROM REVIEW NATURAL JOIN READER R
         WHERE BOOK_ID = :BID AND READER_ID <> :RID 
         ORDER BY DATED DESC
