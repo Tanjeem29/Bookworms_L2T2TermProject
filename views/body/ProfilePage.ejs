@@ -13,17 +13,19 @@
         </div>
 
     </div>
+    <hr style="border:1px solid #f1f1f1d0">
 </div>   
 
 <form action="/upload" method="get">
     <button type="submit" name="Submit" id="frm1_submit" class="btn btn-outline-danger btn-sm"
     style="position: absolute;
-    left: 50%;
-    top: 32%;">
+    left: 870px;
+    top: 260px;">
     Edit Profile</span></button>
 </form>
 
 <div class="container">
+
 <h6>
     <b> Books Already Read  (Total: <%=booksread.length%>) </b></h6>
     <% if(booksread.length == 0) {  %>
@@ -35,7 +37,7 @@
             <%  for (var i = 0; i< booksread.length; i++) {  %>
                 <% console.log('this is ' + i + ' ' + booksread[0].title)  %>
                 
-                <li>
+                <li class="bookSuggestion" style="margin : 8px 0">
                     
                         <a = class = "single" href = "/books/<%=booksread[i].BOOK_ID%>" ><%=  booksread[i].TITLE  %> </a>
                     

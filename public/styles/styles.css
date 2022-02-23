@@ -4,6 +4,10 @@
 
 }
 
+.myHeader {
+  margin : 1px 0;
+}
+
 .heading {
     font-size: 25px;
     margin-right: 25px;

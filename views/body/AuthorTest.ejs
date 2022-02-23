@@ -1,23 +1,22 @@
 
   <div class="input-group">
 
-    <form action="/authors/search" method="POST">
-        <label for="fl">Search Type:</label>
-        <select name="fl" id="fl">
-          <option selected disabled>Choose Type</option>
+    <form action="/authors/search" method="POST" class="form-inline my-2 my-lg-0">
+      <div class="input-group mb-3" style="margin: 16px 0">
+          <div class="input-group-prepend" >
+            <label class="input-group-text" for="f1">Search By: </label>
+          </div>
+          <select class="custom-select" id="fl" name="fl">
+            <option selected disabled>Choose Type</option>
             <option value="1">All Authors</option>
             <option value="2">Followed</option>
-            <option value="3">Not followed</option>
-        </select>
-        <input
-          type="text"
-          name="search"
-          id="search"
-          placeholder="Search for Authors"
-          class="search"
-        />
-        <button class="search-btn" type="submit">Search</button>
-    </form>
+            <option value="3">Not Followed</option>
+          </select>
+        </div>
+      <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search for Authors" aria-label="Search">
+      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>
 <div class="imae"></div>
 
 
