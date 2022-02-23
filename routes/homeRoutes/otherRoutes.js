@@ -14,6 +14,7 @@ const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
 const DB_queryPhoto = require(process.env.ROOT + '\\DB\\DB_update_profile_picture');
 const DB_wallpost = require(process.env.ROOT + '\\DB\\DB_wallpost');
 const DB_review = require(process.env.ROOT + '\\DB\\DB_review');
+const DB_Genre = require(process.env.ROOT + '\\DB\\DB_Genre');
 
 const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
 
@@ -66,6 +67,8 @@ router.get('/profile', async (req,res)=>{
         //let wallposts = await DB_RelSearches.getWallpostByReaderID(id);
         //console.log(wallposts);
 
+        genre = await DB_Genre.getGenreByReaderID(id);
+        console.log(genre);
 
         res.render('layout.ejs', {
             title : 'Profile Page:',
@@ -79,7 +82,8 @@ router.get('/profile', async (req,res)=>{
             //otherAuthors : otherAuthorsFollowed,
             commonAuthors : commonAuthorsFollowed,
             photo : path,
-            Quotes : quotes[0]
+            Quotes : quotes[0],
+            genre : genre
             //books : books
             //books
             //errors : errors

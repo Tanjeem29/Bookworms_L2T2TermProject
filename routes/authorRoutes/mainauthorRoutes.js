@@ -12,6 +12,8 @@ const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
 const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
 const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
 
+const DB_Genre = require(process.env.ROOT + '\\DB\\DB_Genre');
+
 router.get('/authors', async (req,res)=>{
     session = req.session;
     //No Login access tried, so redirect to login
@@ -145,6 +147,8 @@ router.get('/authors/:id', async (req,res)=>{
         }
 
 
+
+        genre = await DB_Genre.getGenreByReaderID(id);
         res.render('layout.ejs', {
             title : 'Author',
             body : ['OneAuthorPage','partials/navbar/navbar'],
@@ -154,6 +158,7 @@ router.get('/authors/:id', async (req,res)=>{
             books : books,
             Quotes : quotes[0],
             photo : path,
+            genre : genre,
             //books
             //errors : errors
         })

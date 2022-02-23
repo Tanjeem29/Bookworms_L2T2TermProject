@@ -1,10 +1,9 @@
 
-<div class="photo-group">
-    <label for="photo">Profile Picture:</label>    
-    <img src="<%= (typeof form != 'undefined')? form.photo : '' %>" alt="Profile picture" width="200">
+<div class="photo-group">    
+    <img src="<%= (typeof form != 'undefined')? form.photo : '' %>" alt="Responsive image" class="img-thumbnail" width="200" style="border-radius : 100%">
     <form method="post" enctype="multipart/form-data" action="/save_photo">
         <input type="file" name="photo">
-        <input type="submit" value="Change Profile Picture">
+        <button type="submit" class="btn btn-outline-primary">Change Profile Picture</button>
     </form>
 </div>
 
@@ -62,7 +61,7 @@
   
       <div class="form-group row">
           <label style="color:#ffffff"> --- - - - - - ----------------</label>
-        <input  type="submit" value="Done" class="btn btn-outline-dark btn-lg px-6">
+        <input  type="submit" value="Done" class="btn btn-outline-primary btn-md px-6">
       </div>
     </form>
 

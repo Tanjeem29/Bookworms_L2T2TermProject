@@ -11,6 +11,7 @@ const DB_inserts = require(process.env.ROOT + '\\DB\\DB_inserts');
 const DB_Deletes = require(process.env.ROOT + '\\DB\\DB_Deletes');
 const DB_RelSearches = require(process.env.ROOT + '\\DB\\DB_RelSearches');
 
+const DB_Genre = require(process.env.ROOT + '\\DB\\DB_Genre');
 const DB_quotes = require(process.env.ROOT + '\\DB\\DB_Quotes');
 
 router.get('/readers', async (req,res)=>{
@@ -148,6 +149,7 @@ router.get('/readers/:id', async (req,res)=>{
             
             //Pic Add (NOTOWRKING)
             console.log('BEFOREEEEEEE')
+            console.log(reader);
             if(reader[0].PHOTO == null) {
                 console.log("Dummy Photo rendering");
                 path = "/reader/dummy.png";
@@ -166,7 +168,8 @@ router.get('/readers/:id', async (req,res)=>{
             // console.log(bookswillread);
             // console.log(commonAuthorsFollowed);
             // console.log(otherAuthorsFollowed);
-
+            genre = await DB_Genre.getGenreByReaderID(id);
+        console.log(genre);
 
 
             res.render('layout.ejs', {
@@ -181,7 +184,8 @@ router.get('/readers/:id', async (req,res)=>{
                 otherAuthors : otherAuthorsFollowed,
                 commonAuthors : commonAuthorsFollowed,
                 photo : path,
-                Quotes : quotes[0]
+                Quotes : quotes[0],
+                genre : genre
             })
 
         }

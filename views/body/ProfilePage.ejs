@@ -25,6 +25,7 @@
 
 
 
+
 <div class="container">
     <h5><span class="card-subtitle mb-2 text-muted" style="text-align : center;">Book-shelf</span></h5>
 
@@ -112,6 +113,10 @@
 
 
 <div class="container">
+    <hr style="border:1px solid #f1f1f1d0">
+</div>
+
+<div class="container">
 
 
 <h6>
@@ -136,7 +141,32 @@
     <% } %>
 
 </div>
+<div class="container">
+    <hr style="border:1px solid #f1f1f1d0">
+</div>
+<div class="container">
+<h6>
+    <% if(genre.length == 0) {  %>
+        <b>No Favorite Genres</b>
+    <% } %>
+    <% if(genre.length > 0) {  %>
+        <b>Favorite Genres (<%=genre.length%>)</b> </h6>
+        <ul>
+        
+            <%  for (var i = 0; i< genre.length; i++) {  %>
+                
+                <li class="bookSuggestion" style="margin : 8px 0">
+                    
+                        <a = class = "single" href = "/genres/<%=genre[i].GENRE_ID%>" ><%=  genre[i].GENRE_NAME  %> </a>
+                
+                </li>
+        
+            
+        <%  }  %>
+        </ul>
+    <% } %>
 
+</div>
     
 
 

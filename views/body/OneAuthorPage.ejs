@@ -1,15 +1,42 @@
 <div class="container">
-    <img src="<%=photo%>" alt="Profile picture" width="150">
-</div> 
+    <div class="row">
+        <div class="col-3">
+            <img src="<%=photo%>" alt="Responsive image" class="img-thumbnail" width="200" style="border-radius: 100%;">
+        </div>
+
+        <div class="col-9" style="padding-top: 20px;">
+            <h4><%=author.FIRST_NAME + ' ' + author.LAST_NAME%> <span class="card-subtitle mb-2 text-muted"></span></h4>
+            <p class="h6"><span class="card-subtitle mb-2 text-muted"><b><%=author.FOLLOWER_COUNT%> </b>Followers</span></p>
+            <p class="h6"><span class="card-subtitle mb-2 text-muted">Born: <%=author.BORN%> </span></p>
+            <p class="h6"><span class="card-subtitle mb-2 text-muted"><b> BIO: </b>"<%=author.BIO%>" </span></p>
+            <% if(FollowStatus == 0) { %>
+                
+                <h6>
+                    <b>Not Followed </b>
+                </h6>
+                <form action="/authors/<%=author.AUTHOR_ID%>" method="POST">
+                    <button type="submit" class="btn btn-outline-primary" name="follow" value="1">Follow This Author</button>
+                </form>
+                
+            <% } %>
+            
+            <% if(FollowStatus == 1) { %>
+                            
+                <h6>
+                    <b> Following this Author </b>
+                </h6>
+                <form action="/authors/<%=author.AUTHOR_ID%>" method="POST">
+                    <button type="submit" class="btn btn-outline-secondary" name="follow" value="0">Unfollow This Author</button>
+                </form>
+                
+            <% } %>
+        </div>
+
+    </div>
+    <hr style="border:1px solid #f1f1f1d0">
+</div>   
 
 
-<div class="container">
-<h2>Name: <%=author.FIRST_NAME + ' ' + author.LAST_NAME%></h2>
-
-<div class="container">
-    Followers: <%=author.FOLLOWER_COUNT%>
-    
-</div>
 
 
 <% if(books.length == 0) {  %>
@@ -18,50 +45,54 @@
 </div>
 
 <div class="container">
-<ul>
-    <% if(books.length > 0) { %>
-        <p>We have <%=books.length%> Books by This Author</p>
-        <%  for (var i = 0; i< books.length; i++) {  %>
-            <% console.log('this is ' + i + ' ' + books[0].title)  %>
-            
-            <li>
-                <h5>
-                    <a = class = "single" href = "/books/<%=books[i].BOOK_ID%>" ><%=  books[i].TITLE  %> </a>
-                </h5>
-                <h6>
-                    <b>Publisher: </b>
-                    <%= books[i].NAME  %>
-                </h6>
-            </li>
-            
-            
-        <%  }  %>
-    <% } %>
-</ul>
+    <div class="row">
+        <div class="col-6">
 
+            <ul>
+                <% if(books.length > 0) { %>
+                    <p>We have <%=books.length%> Books by This Author</p>
+                    <%  for (var i = 0; i< books.length; i++) {  %>
+                        <% console.log('this is ' + i + ' ' + books[0].title)  %>
+                        
+                        <li class="bookSuggestion" style="margin : 8px 0">
+                            <h5>
+                                <a = class = "single" href = "/books/<%=books[i].BOOK_ID%>" ><%=  books[i].TITLE  %> </a>
+                            </h5>
+                            <h6>
+                                <b>Publisher: </b>
+                                <%= books[i].NAME  %>
+                            </h6>
+                        </li>
+                        
+                        
+                    <%  }  %>
+                <% } %>
+            </ul>
+
+        </div>
+    </div>
 </div>
 
 <div class="container">
-
-<% if(FollowStatus == 0) { %>
-                
     <h6>
-        <b>Not Followed </b>
-    </h6>
-    <form action="/authors/<%=author.AUTHOR_ID%>" method="POST">
-        <button name="follow" value="1">Follow this Author</button>
-    </form>
-    
-<% } %>
-
-<% if(FollowStatus == 1) { %>
+        <% if(genre.length == 0) {  %>
+            <b>No Specialized Genre added</b>
+        <% } %>
+        <% if(genre.length > 0) {  %>
+            <b>Specialized Genres (<%=genre.length%>)</b> </h6>
+            <ul>
+            
+                <%  for (var i = 0; i< genre.length; i++) {  %>
+                    
+                    <li class="bookSuggestion" style="margin : 8px 0">
+                        
+                            <a = class = "single" href = "/genres/<%=genre[i].GENRE_ID%>" ><%=  genre[i].GENRE_NAME  %> </a>
+                    
+                    </li>
+            
                 
-    <h6>
-        <b> Following this Author </b>
-    </h6>
-    <form action="/authors/<%=author.AUTHOR_ID%>" method="POST">
-        <button name="follow" value="0">Unfollow this Author</button>
-    </form>
+            <%  }  %>
+            </ul>
+        <% } %>
     
-<% } %>
-</div>
+    </div>

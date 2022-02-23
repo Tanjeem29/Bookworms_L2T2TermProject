@@ -1,4 +1,4 @@
-<h2>Name: <%=publisher.NAME%></h2>
+<h3 class = "text-muted">Name: <%=publisher.NAME%></h3>
 
 
 <ul>
@@ -7,7 +7,7 @@
         <%  for (var i = 0; i< books.length; i++) {  %>
             <% console.log('this is ' + i + ' ' + books[0].title)  %>
             
-            <li>
+            <li class = "bookSuggestion" style="margin : 8px 0">
                 <h5>
                     <a = class = "single" href = "/books/<%=books[i].BOOK_ID%>" ><%=  books[i].TITLE  %> </a>
                 </h5>

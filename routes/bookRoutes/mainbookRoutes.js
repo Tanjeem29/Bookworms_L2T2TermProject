@@ -117,8 +117,13 @@ router.get('/books/:id', async (req,res)=>{
         }
         else {
             path = "/book/" + books[0].COVER;
+            
         }
 
+
+
+        genre = await DB_Genre.getGenreByBookID(id);
+        console.log(genre);
         res.render('layout.ejs', {
             title : 'Books',
             body : ['OneBookPage','partials/navbar/navbar'],
@@ -133,7 +138,8 @@ router.get('/books/:id', async (req,res)=>{
             othersReview : otherReview,
             summary : reviewSummary,
             Quotes : quotes[0],
-            photo : path
+            photo : path,
+            genre : genre
             
             //books
             //errors : errors

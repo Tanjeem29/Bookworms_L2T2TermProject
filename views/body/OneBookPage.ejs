@@ -1,111 +1,146 @@
 <div class="container">
-    <img src="<%=photo%>" alt="Profile picture" width="20%">
-</div> 
+    <div class="row">
+        <div class="col-3">
+            <img src="<%=photo%>" alt="Responsive image" class="img-thumbnail" width="200" >
+        </div>
+
+        <div class="col-9" style="padding-top: 20px;">
+            <h4><%=book.TITLE%> <span class="card-subtitle mb-2 text-muted"></span></h4>
+            <p class="h6"><span class="card-subtitle mb-2 text-muted"><b>Preview:</b> <%=book.PREVIEW%> </span></p>
+            <% if(ReadStatus == 0) { %>
+                
+                <h6>
+                    <b>Not added to bookshelf </b>
+                </h6>
+                <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
+                <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
+                    <option value="none" selected disabled hidden>Add to Bookshelf</option>
+                    <option value="1">Already Read</option>
+                    <option value="2">Currently Reading</option>
+                    <option value="3">Want to Read</option>
+                </select>
+                </form>
+                
+            <% } %>
+            
+            <% if(ReadStatus == 1) { %>
+                            
+                <h6>
+                    <b> Already Read </b>
+                </h6>
+                <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
+                    <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
+                        <option value="none" selected disabled hidden>Already Read </option>
+                        <option value="2">Currently Reading</option>
+                        <option value="3">Want to Read</option>
+                        <option value="4">Remove From Shelf</option>
+                    </select>
+                </form>
+                
+            <% } %>
+            
+            <% if(ReadStatus == 2) { %>
+                            
+                <h6>
+                    <b> Currently Reading </b>
+                </h6>
+                <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
+                    <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
+                        <option value="none" selected disabled hidden>Currently Reading</option>
+                        <option value="1">Already Read</option>
+                        <option value="3">Want to Read</option>
+                        <option value="4">Remove From Shelf</option>
+                    </select>
+                </form>
+                
+            <% } %>
+            
+            <% if(ReadStatus == 3) { %>
+                            
+                <h6>
+                    <b> Want to read </b>
+                </h6>
+                <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
+                    <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
+                        <option value="none" selected disabled hidden>Want to read</option>
+                        <option value="1">Already Read</option>
+                        <option value="2">Currently Reading</option>
+                        <option value="4">Remove From Shelf</option>
+                    </select>
+                </form>
+                
+            <% } %>
+        </div>
+
+    </div>
+    <hr style="border:1px solid #f1f1f1d0">
+</div>   
+
 
 
 <div class="container">
     <div class="row">
-        <h4>Title: <%=book.TITLE%><br></h4>
+        <div class="col-4">
+                 
+        <ul>
+        <b>Authors:</b>
+        <%  for (var i = 0; i< authors.length; i++) {  %>
+            <li class = "bookSuggestion">
+                    <a = class = "single" href ="/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME  %> </a>
+            </li>
+        <%  }  %>
+            </ul>
+        </div>
+
+        <div class="col-4">
+            <b>Publisher:</b> 
+            <div class = "bookSuggestion">
+                <a = class = "single" href = "/publishers/<%=book.PUBLISHER_ID%>" ><%=  publisher[0].NAME  %></a>
+            </div>
+            
+        </div>
+
+        <div class="col-4">
+            
+<div class="container">
+    <h6>
+        <% if(genre.length == 0) {  %>
+            <b>No Genre added</b>
+        <% } %>
+        <% if(genre.length > 0) {  %>
+            <b>Belongs to Genres: (<%=genre.length%>)</b> </h6>
+            <ul>
+            
+                <%  for (var i = 0; i< genre.length; i++) {  %>
+                    
+                    <li class="bookSuggestion" style="margin : 8px 0">
+                        
+                            <a = class = "single" href = "/genres/<%=genre[i].GENRE_ID%>" ><%=  genre[i].GENRE_NAME  %> </a>
+                    
+                    </li>
+            
+                
+            <%  }  %>
+            </ul>
+        <% } %>
+    
     </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <p>
-        Preview: <%=book.PREVIEW%> <br>
-        </p>
+
+
+
+        </div>
+
+
+        </div>
+
+
     </div>
-</div>
 
-<div class="row">
-<div class="container">
-    
-    <ul>
-Authors:
-<%  for (var i = 0; i< authors.length; i++) {  %>
-    <li>
-            <a = class = "single" href ="/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME  %> </a>
-    </li>
-<%  }  %>
-    </ul>
 </div>
 
 
 
-<div class="container">
-<p><br>
-    Publisher: 
-    <a = class = "single" href = "/publishers/<%=book.PUBLISHER_ID%>" ><%=  publisher[0].NAME  %></a>
-    <br>
-</p>
-</div>
-</div>
-
-<div class="container">
-<% if(ReadStatus == 0) { %>
-                
-    <h6>
-        <b>Not added to bookshelf </b>
-    </h6>
-    <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
-    <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
-        <option value="none" selected disabled hidden>Add to Bookshelf</option>
-        <option value="1">Already Read</option>
-        <option value="2">Currently Reading</option>
-        <option value="3">Want to Read</option>
-    </select>
-    </form>
-    
-<% } %>
-
-<% if(ReadStatus == 1) { %>
-                
-    <h6>
-        <b> Already Read </b>
-    </h6>
-    <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
-        <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
-            <option value="none" selected disabled hidden>Already Read </option>
-            <option value="2">Currently Reading</option>
-            <option value="3">Want to Read</option>
-            <option value="4">Remove From Shelf</option>
-        </select>
-    </form>
-    
-<% } %>
-
-<% if(ReadStatus == 2) { %>
-                
-    <h6>
-        <b> Currently Reading </b>
-    </h6>
-    <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
-        <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
-            <option value="none" selected disabled hidden>Currently Reading</option>
-            <option value="1">Already Read</option>
-            <option value="3">Want to Read</option>
-            <option value="4">Remove From Shelf</option>
-        </select>
-    </form>
-    
-<% } %>
-
-<% if(ReadStatus == 3) { %>
-                
-    <h6>
-        <b> Want to read </b>
-    </h6>
-    <form action="/books/readStatus/<%=book.BOOK_ID%>" method="POST">
-        <select name="ReadStatus" id="ReadStatus" onchange="this.form.submit()">
-            <option value="none" selected disabled hidden>Want to read</option>
-            <option value="1">Already Read</option>
-            <option value="2">Currently Reading</option>
-            <option value="4">Remove From Shelf</option>
-        </select>
-    </form>
-    
-<% } %>
-</div>
 
 <div class="container">
     <%- include('../partials/review/reviewSummary.ejs') %>

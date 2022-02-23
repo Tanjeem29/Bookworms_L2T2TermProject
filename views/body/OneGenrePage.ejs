@@ -1,58 +1,65 @@
+
+
+
+
 <div class="container">
-    <img src="<%=photo%>" alt="Profile picture" width="40%">
+    <img src="<%=photo%>" alt="Responsive image" class="img-thumbnail" width="40%" >
 </div> 
 
 
 <div class="container">
-    <div class="row">
-        <h4> <i><%=genre.GENRE_NAME%><br></i></h4>
+    <div class="row" style="padding-top: 50px;">
+        <div class="col-3">
+        <h2> <i><%=genre.GENRE_NAME%><br></i></h2>
+    </div>
+    <div class="col-9">
+        <% if(FollowStatus == 0) { %>
+                        
+            
+                <b>Not Added to Favorites </b>
+            
+            <form action="/genres/<%=genre.GENRE_ID%>" method="POST">
+                <button class="btn btn-outline-primary" name="like" value="1">Add to Favorites</button>
+            </form>
+            
+        <% } %>
+
+        <% if(FollowStatus == 1) { %>
+                        
+            
+                <b> Added to favorites </b>
+            
+            <form action="/genres/<%=genre.GENRE_ID%>" method="POST">
+                <button class="btn btn-outline-primary" name="like" value="0">Remove from Favorites</button>
+            </form>
+            
+        <% } %>
+    </div>
     </div>
 </div>
-
-
-<% if(FollowStatus == 0) { %>
-                
-    <h6>
-        <b>Not Added to Favorites </b>
-    </h6>
-    <form action="/genres/<%=genre.GENRE_ID%>" method="POST">
-        <button name="like" value="1">Add to Favorites</button>
-    </form>
-    
-<% } %>
-
-<% if(FollowStatus == 1) { %>
-                
-    <h6>
-        <b> Added to favorites </b>
-    </h6>
-    <form action="/genres/<%=genre.GENRE_ID%>" method="POST">
-        <button name="like" value="0">Remove from Favorites</button>
-    </form>
-    
-<% } %>
+<div class="container">
+<hr style="border:1px solid #f1f1f1d0">
 </div>
-
 <div class="container">
     <div class="row">
         <p>
-        Preview: <%=genre.SUMMARY%> <br>
+        <b><i>Preview:</i></b> <%=genre.SUMMARY%> <br>
         </p>
     </div>
 </div>
-
+</div>
 
 
 
 <div class="container">
 <div class="row">
-
+    <div class="col-6">
     <% if(books.length > 0) { %>
         
         <ul><p>We have <b><i><%=books.length%></i></b> Books  In this Genre</p>
         <%  for (var i = 0; i< books.length; i++) {  %>
             
-            <li>
+            <li class = "bookSuggestion" style="margin : 8px 0">
                 
                     <a = class = "single" href = "/books/<%=books[i].BOOK_ID%>" ><%=  books[i].TITLE  %> </a>
                 
@@ -62,16 +69,14 @@
         </ul>
     <% } %>
 </div>
-</div>
 
-<div class="container">
-<div class="row">
+<div class="col-6">
     <% if(authors.length > 0) { %>
         
         <ul><p>We have <b><i><%=authors.length%></i></b> Authors specializing in this Genre</p>
         <%  for (var i = 0; i< authors.length; i++) {  %>
             
-            <li>
+            <li class = "authorSuggestion" style="margin : 8px 0">
                 
                     <a = class = "single" href = "/authors/<%=authors[i].AUTHOR_ID%>" ><%=  authors[i].FIRST_NAME + ' ' + authors[i].LAST_NAME  %> </a>
                 
@@ -82,3 +87,4 @@
     <% } %>
 </div>
 </div>
+</div>>
