@@ -59,13 +59,30 @@ grant dba to c##bookworms
 #### Disclaimers:
 - You may need to comment out "DROP TABLE" queries in the dump, for it to work correctly
 
+### .env file
+your .env file int he root directory should contain the following:
+```
+DB_USER = "c##bookworms"
+DB_PASS = "bookworms"
+DB_CONNECTSTRING = "localhost/orcl"
+ROOT = **ENTER YOUR ROOT DIRECTORY HERE**
+```
+Upon correct entry of the root directory, the .env file should be good to go.
 
+###Running the Project:
 
-npm install
+- Running the main app for READERS:
+    - In terminal, run
+    ```
+    node app.js
+    ```
+    OR
+    ```
+    nodemon app.js
+    ```
+    - go to `http://localhost:3000/` on browser. 
+    - Explore!
+- Running the Admin app
+    - node admin.js
+    - can add books, authors etc to database
 
-
-.env-> edit ROOT to OracleExpress folder directory
-
-
-Run:
-nodemon app.js
