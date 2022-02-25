@@ -8,6 +8,56 @@ An online readers' community where users can customize their "BookShelf" with bo
 - [Tanjeem Azwad Zaman](https://github.com/Tanjeem29)
 - [MD Rownok Zahan Ratul](https://github.com/RownokRatul)
 
+## Built With
+- Oracle 19c (Database)
+- Nodejs (Backend)
+- EJS and Bootstrap (Frontend)
+
+## Get Started
+### Prerequisite Software:
+1. Install [Nodejs](https://nodejs.org/en/download/)
+2. Install [Oracle 19c](https://www.oracle.com/database/technologies/oracle19c-windows-downloads.html) and create and account
+
+### Getting Our Git Repository
+1. Do you have git installed?
+    1. If yes, clone the repo in a directory of your choice:
+    ```
+    git clone https://github.com/Tanjeem29/Bookworms_L2T2TermProject.git
+    ```
+    2. If no, then just download the zip
+    
+2. Go to the directory you cloned/extracted zip, open cmd line, and install npm packages using:
+```
+npm install
+```
+3. Edit `.env` file and assign the current directory to `ROOT` variable.<br /> Example `ROOT = "D:\L2T2\CSE216\SampleTP\OracleExpressEjs"` 
+
+### Database Setup
+1. Open command line and go to sqlplus
+```
+sqlplus
+```
+2. Connect to dba
+    1. username: 
+    ```
+    sys as sysdba
+    ```
+    2. password:
+    ```
+    password
+    ```
+
+3. Create a new user
+```
+create user c##booksworms identified by bookworms
+grant dba to c##bookworms
+```
+
+4. Find SQL dump file in `sqldump/C##BOOKWORMS.sql`
+5. Connect to bookworms database using GUI (we used Navicat, but any suitable substitutes like Datagrip etc. can be used)
+6. Use the sql dump to create a database identical to ours.
+#### Disclaimers:
+- You may need to comment out "DROP TABLE" queries in the dump, for it to work correctly
 
 
 
