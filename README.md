@@ -6,7 +6,8 @@ An online readers' community where users can customize their "BookShelf" with bo
 <details open>
 <summary>Table of Content</summary>
 <br>
-- [BookWorms](#bookworms)
+ 
+ - [BookWorms](#bookworms)
   * [Authors](#authors)
   * [Supervisor](#supervisor)
   * [Built With](#built-with)
@@ -17,6 +18,7 @@ An online readers' community where users can customize their "BookShelf" with bo
       - [Disclaimers:](#disclaimers-)
     + [.env file](#env-file)
     + [Running the Project:](#running-the-project-)
+
 </details>
 
 
