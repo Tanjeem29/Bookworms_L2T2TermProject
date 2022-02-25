@@ -88,6 +88,8 @@ Upon correct entry of the root directory, the .env file should be good to go.
     - go to `http://localhost:3000/` on browser. 
     - Explore!
 - Running the Admin app
-    ```node admin.js```
+    ```
+    node admin.js
+    ```
     - can add books, authors etc to database
 
