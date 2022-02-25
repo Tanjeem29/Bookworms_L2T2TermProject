@@ -3,7 +3,9 @@
 An online readers' community where users can customize their "BookShelf" with books they like, follow like-minded readers and keep up with their favorite authors. Smart suggestions for new books, authors and readers make BookWorms feel more personalized. Users can also share their own wallposts and reviews, and interact with others' posts to boost the community. 
 <br />
 <br />
-
+<details open>
+<summary>Table of Content</summary>
+<br>
 - [BookWorms](#bookworms)
   * [Authors](#authors)
   * [Supervisor](#supervisor)
@@ -15,6 +17,8 @@ An online readers' community where users can customize their "BookShelf" with bo
       - [Disclaimers:](#disclaimers-)
     + [.env file](#env-file)
     + [Running the Project:](#running-the-project-)
+</details>
+
 
 ## Authors
 - [Tanjeem Azwad Zaman](https://github.com/Tanjeem29)
