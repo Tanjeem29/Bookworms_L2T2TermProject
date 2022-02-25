@@ -8,6 +8,11 @@ An online readers' community where users can customize their "BookShelf" with bo
 - [Tanjeem Azwad Zaman](https://github.com/Tanjeem29)
 - [MD Rownok Zahan Ratul](https://github.com/RownokRatul)
 
+## Supervisor
+- [Tahmid Hasan](https://tahmid04.github.io/)
+    -  Lecturer, Department of Computer Science and Engineering
+    -  Bangladesh University of Engineering and Technology
+
 ## Built With
 - Oracle 19c (Database)
 - Nodejs (Backend)
@@ -69,7 +74,7 @@ ROOT = **ENTER YOUR ROOT DIRECTORY HERE**
 ```
 Upon correct entry of the root directory, the .env file should be good to go.
 
-###Running the Project:
+### Running the Project:
 
 - Running the main app for READERS:
     - In terminal, run
