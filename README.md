@@ -4,6 +4,18 @@ An online readers' community where users can customize their "BookShelf" with bo
 <br />
 <br />
 
+- [BookWorms](#bookworms)
+  * [Authors](#authors)
+  * [Supervisor](#supervisor)
+  * [Built With](#built-with)
+  * [Get Started](#get-started)
+    + [Prerequisite Software:](#prerequisite-software-)
+    + [Getting Our Git Repository](#getting-our-git-repository)
+    + [Database Setup](#database-setup)
+      - [Disclaimers:](#disclaimers-)
+    + [.env file](#env-file)
+    + [Running the Project:](#running-the-project-)
+
 ## Authors
 - [Tanjeem Azwad Zaman](https://github.com/Tanjeem29)
 - [MD Rownok Zahan Ratul](https://github.com/RownokRatul)
