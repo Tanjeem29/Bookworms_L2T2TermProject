@@ -65,7 +65,7 @@ grant dba to c##bookworms
 - You may need to comment out "DROP TABLE" queries in the dump, for it to work correctly
 
 ### .env file
-your .env file int he root directory should contain the following:
+your .env file in the root directory should contain the following:
 ```
 DB_USER = "c##bookworms"
 DB_PASS = "bookworms"
