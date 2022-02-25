@@ -68,7 +68,7 @@ router.get('/profile', async (req,res)=>{
         //console.log(wallposts);
 
         genre = await DB_Genre.getGenreByReaderID(id);
-        console.log(genre);
+        //console.log(genre);
 
         res.render('layout.ejs', {
             title : 'Profile Page:',

@@ -169,7 +169,7 @@ router.get('/readers/:id', async (req,res)=>{
             // console.log(commonAuthorsFollowed);
             // console.log(otherAuthorsFollowed);
             genre = await DB_Genre.getGenreByReaderID(id);
-        console.log(genre);
+        //console.log(genre);
 
 
             res.render('layout.ejs', {
